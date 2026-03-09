@@ -1,0 +1,81 @@
+/* body{
+    color:#000;
+} */
+h1.page-heading {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  position: relative;
+  text-transform: uppercase;
+  color:#000;
+}
+.footer-pages .rte p {
+  margin-bottom: 0px;
+  margin-top: 0px;
+  font-size: 14px;
+}
+.footer-pages .rte ul li{
+    font-size: 14px;
+}
+.footer-pages .page-title {
+  margin-bottom: 0px;
+}
+.footer-pages .section--padding {
+  /* padding-bottom: 0px; */
+}
+h1.page-heading:after {
+  height: 2px;
+  width: 60px;
+  content: "";
+  display: block;
+  margin: 10px auto 20px;
+  background-color: #fbb03b;
+}
+.page_sub_heading {
+  font-size: 17px;
+  line-height: 24px;
+  margin-top: 0px;
+  margin-bottom: 8px;
+}
+.page_para {
+  font-size: 14px;
+  margin-top: 0px;
+  margin-bottom: 8px;
+  line-height: 19px;
+}
+
+/* -------support-page-------------- */
+.content-pages-support {
+  max-width: 650px;
+  margin: auto;
+  background-color: #f9f9f9;
+}
+ul.list-style {
+  padding-bottom: 1px;
+}
+
+.content-pages-support {
+  line-height: 100%;
+}
+.list-style {
+  list-style: none;
+}
+.content-pages-support h2 {
+  font-size: 32px;
+  text-transform: math-auto;
+  margin-bottom: auto;
+}
+.footer-support a:hover {
+  color: #007bff;
+  text-decoration-color: #007bff;
+  text-decoration-line: underline;
+  background-image: none;
+}
+:root {
+  --color-link: none;
+}
+/* ------FASHION AWARDS------- */
+.parent-fashion {
+  font-size: 14px;
+  line-height: 20px;
+}

@@ -1,0 +1,91 @@
+{% comment %} Font Faces {% endcomment %}
+<link rel="stylesheet" href="{{ 'fontfaces.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="{{ 'fontfaces.css' | asset_url }}"></noscript>
+
+{% comment %} Mobile Size Card Product {% endcomment %}
+{% if template.name == 'product' %}
+  {% render 'lazy-css', filename: 'mobile-size-card-product.css', loading: 'lazy' %}
+{% else %}
+  <link
+    rel="stylesheet"
+    href="{{ 'mobile-size-card-product.css' | asset_url }}"
+    media="print"
+    onload="this.media='all'"
+  >
+  <noscript><link rel="stylesheet" href="{{ 'mobile-size-card-product.css' | asset_url }}"></noscript>
+{% endif %}
+
+{% comment %} Font Awesome, Slick CSS {% endcomment %}
+{% if template.name != 'product' %}
+  <link rel="stylesheet" href="{{ 'font-awesome.min.css' | asset_url }}" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="{{ 'font-awesome.min.css' | asset_url }}"></noscript>
+{% endif %}
+
+{% if template.name != 'product' %}
+  <link rel="stylesheet" href="{{ 'slick.css' | asset_url }}" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="{{ 'slick.css' | asset_url }}"></noscript>
+{% else %}
+  {% render 'lazy-css', filename: 'slick.css', loading: 'low', device: 'desktop' %}
+{% endif %}
+
+{% render 'lazy-css', filename: 'custom.css', loading: 'low' %}
+
+{% comment %} Predictive Search {% endcomment %}
+{%- if settings.predictive_search_enabled -%}
+  {% if template.name == 'product' %}
+    {% render 'lazy-css', filename: 'component-predictive-search.css', loading: 'lazy' %}
+  {% else %}
+    <link
+      rel="stylesheet"
+      href="{{ 'component-predictive-search.css' | asset_url }}"
+      media="print"
+      onload="this.media='all'"
+    >
+    <noscript><link rel="stylesheet" href="{{ 'component-predictive-search.css' | asset_url }}"></noscript>
+  {% endif %}
+{%- endif -%}
+
+{% comment %} Quick View {% endcomment %}
+
+{%- if settings.quick_view_enabled -%}
+  {% if template.name == 'product' %}
+    {% render 'lazy-css', filename: 'component-quick-view.css', loading: 'lazy' %}
+  {% else %}
+    <link
+      rel="stylesheet"
+      href="{{ 'component-quick-view.css' | asset_url }}"
+      media="print"
+      onload="this.media='all'"
+    >
+    <noscript><link rel="stylesheet" href="{{ 'component-quick-view.css' | asset_url }}"></noscript>
+  {% endif %}
+{%- endif -%}
+
+{% comment %} Color Swatches {% endcomment %}
+{%- if settings.color_swatches_enabled -%}
+  {% if template.name == 'product' %}
+    {% render 'lazy-css', filename: 'component-color-swatches.css', loading: 'lazy' %}
+  {% else %}
+    <link
+      rel="stylesheet"
+      href="{{ 'component-color-swatches.css' | asset_url }}"
+      media="print"
+      onload="this.media='all'"
+    >
+    <noscript><link rel="stylesheet" href="{{ 'component-color-swatches.css' | asset_url }}"></noscript>
+  {% endif %}
+{%- endif -%}
+{% comment %} Gift Wrapping {% endcomment %}
+{%- if linklists['gift-wrapping'].links != blank and linklists['gift-wrapping'].links.first.type == 'product_link' -%}
+  {% if template.name == 'product' %}
+    {% render 'lazy-css', filename: 'component-gift-wrapping.css', loading: 'lazy' %}
+  {% else %}
+    <link
+      rel="stylesheet"
+      href="{{ 'component-gift-wrapping.css' | asset_url }}"
+      media="print"
+      onload="this.media='all'"
+    >
+    <noscript><link rel="stylesheet" href="{{ 'component-gift-wrapping.css' | asset_url }}"></noscript>
+  {% endif %}
+{%- endif -%}

@@ -1,0 +1,46 @@
+<div class="main_calcel_popup">
+  <div class="main_return_inner">
+   <span class="close__popup">X</span>
+    <div class="return_popup_content">
+      <div class="heading_return">Request Cancellation</div>
+      <div class="retrun_header head">
+        <div class="order_return">Cancel</div>
+        <div class="order_return">Name</div>
+        <div class="order_return">QTY</div>
+        <div class="order_return">Total</div>
+        <div class="order_return">Date</div>
+      </div>
+       <div class="retrun_header_main">
+         {% for item in order.line_items %}
+           {% for i in (1..item.quantity) %}
+             <div class="retrun_header">
+         <div class="order_return"><input class="order__details_btns" type="checkbox" name="order_details" id="{{ item.id }}{% if item.quantity > 1 %}-{{ forloop.index0 }}{% endif %}"></div>
+             <div class="order_return"><img src="{{ item.image |img_url:"master" }}" width="" height=""></div>
+             <div class="order_return">1</div>
+             <div class="order_return">{{ item.original_line_price |money }}</div>
+             <div class="order_return">{{ order.created_at | date: "%Y-%m-%d %H:%M:%S"  }}</div>
+            </div>
+             {% endfor %}
+          {% endfor %}
+       </div>
+      
+      <div class="return_resion">
+        <select>
+          <option selected="selected" disabled>--Select Cancellation Resion--</option>
+          <option value="Incomplete/Partial Item Received">Incomplete/Partial Item Received</option>
+          <option value="Damaged/Defective Item Received">Damaged/Defective Item Received</option>
+          <option value="Difference in Image and Physical Product">Difference in Image and Physical Product</option>
+          <option value="Wrong Product Received">Wrong Product Received</option>
+          <option value="Quality Issue with Product">Quality Issue with Product</option>
+          <option value="Fabric Issue with Product">Fabric Issue with Product</option> 
+          <option value="Better Price at Marketplace">Better Price at Marketplace</option>
+          <option value="Better Price at Website">Better Price at Website</option>
+          <option value="Customer Did not like the product">Customer Did not like the product</option>
+          <option value="Size Issue">Size Issue</option>
+          <option value="Order Placed by Mistake.">Order Placed by Mistake.</option>
+        </select>
+      </div>
+      <div class="calcel__butoon"><button type="button">Submit</button></div>
+    </div>
+  </div>
+</div>

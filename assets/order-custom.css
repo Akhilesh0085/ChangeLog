@@ -1,0 +1,86 @@
+ .main_account_container{
+    display:flex;
+    width:100%;
+    gap: 2rem;
+  }
+  .main_account_container .account_tab_heading{
+    width: 100%;
+    display: block;
+    padding: 15px 0;
+    border-bottom: 1px solid #b2b2b2;
+    font-size: 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #000;
+    letter-spacing: 0;
+  }
+  .main_account_container .account_tab_heading.active_tab{
+    color:#bf1616;
+  }
+.def_order span.order_number {
+    font-size: 12px;
+    color: #bf1616;
+}
+.def_order .order_status_btn {
+    background: #bf1616;
+    color: #fff;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0;
+    font-weight: 900;
+    padding: 6px;
+    border-radius: 5px;
+    width: fit-content;
+}
+.def_order .order_status_text {
+    font-size: 12px;
+    padding: 10px 0;
+}
+.def_order .order_item_custom{
+    display:flex;
+    width:100%;
+}
+.def_order .order_item_custom_left {
+    display: flex;
+    gap: 1rem;
+}
+.return_cancel_btn {
+    width: fit-content;
+    background: #bf1616;
+    color:#fff;
+    height: fit-content;
+    padding: 5px 20px;
+}
+@media(min-width:750px){
+.def_order .main_account_container .left_account_tab{
+    width:23%
+  }
+.def_order .main_account_container .right_account_details{
+    width:75% 
+  }
+.def_order .order_item_custom_right {
+    width: 70%;
+}
+.def_order .order_item_custom_left {
+    width: 30%;
+}
+.def_order .order_item_custom_left {
+    justify-content: flex-end;
+}
+}
+@media(max-width:749px){
+.def_order .main_account_container,
+.def_order .order_item_custom {
+    flex-wrap: wrap;
+}
+.def_order .main_account_container .left_account_tab,
+.def_order .main_account_container .right_account_details,
+.def_order .order_item_custom_right,
+.def_order .order_item_custom_left{
+    width:100%
+}
+
+.def_order .order_item_custom_left {
+    margin-bottom:30px;
+}
+}

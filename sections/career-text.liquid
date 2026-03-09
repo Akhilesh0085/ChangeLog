@@ -1,0 +1,124 @@
+<!-- ----- /section/career-text.liquid --------- -->
+<div class="page-width">
+  <div class="maintextcarees">
+    <h2 class="mainhd font-bold-heading">
+      <span>{{ section.settings['heading-main-carees'] }}</span>
+    </h2>
+  </div>
+  <p class="mainpr font-bold-heading">{{ section.settings['para-main-carees'] }}</p>
+  <div class="footer-text">
+    {% for block in section.blocks %}
+      <div class="hedmain-carees">
+        <h3 class="blockh3 font-bold-heading">{{ block.settings['heading-carees'] }}</h3>
+      </div>
+      <div class="para-main-carees">
+        <p class="mainparablock font-bold-heading">{{ block.settings['para-carees'] }}</p>
+      </div>
+    {% endfor %}
+  </div>
+  <div class="maintextcarees">
+    <p class="mainpr font-bold-heading">{{ section.settings['text-last'] }}</p>
+  </div>
+</div>
+<style>
+    h2.mainhd {
+        width: 100%;
+        text-align: center;
+        border-bottom: 2px solid #000;
+        line-height: 0.1em;
+        margin: 30px 0;
+    }
+     h2.mainhd span{
+        background:#fff;
+        padding:0 10px;
+        font-size:22px;
+        color: #bf1616;
+        font-weight: 700;
+     }
+    p.mainpr {
+        font-size: 15px;
+        line-height: 17px;
+        text-align: justify;
+        margin: 4% auto;
+    }
+    h3.blockh3 {
+        color: #bf1616;
+        font-weight: 500;
+        font-size: 28px;
+        line-height: normal;
+    }
+      p.mainparablock {
+        text-align: justify;
+        line-height: 18px;
+        font-size: 15px;
+        letter-spacing: 0px;
+    }
+    .footer-text {
+        margin: 4% 10%;
+    }
+    .maintextcarees a{
+        color: #bf1616;
+        cursor:pointer;
+        text-decoration:none;
+    }
+    .maintextcarees a:hover{
+        text-decoration: underline;
+    }
+  @media(min-width:750px){
+   h2.mainhd span{
+        padding:0 70px;
+   }
+  }
+  @media(max-width:749px){
+  h2.mainhd span{
+        padding:0 10px;
+   }
+  }
+</style>
+{% schema %}
+  {
+    "name": "career text",
+    "settings": [
+     {
+        "type":"text",
+        "id":"heading-main-carees",
+        "label":"Heading"
+      },
+       {
+        "type":"text",
+        "id":"para-main-carees",
+        "label":"Paragraph"
+      },
+       {
+        "type":"html",
+        "id":"text-last",
+        "label":" Easy Apply"
+      }
+    ],
+
+"blocks":[
+  {
+    "type":"text",
+    "name":"carees-text",
+    "settings":[
+      {
+        "type":"text",
+        "id":"heading-carees",
+        "label":" choose your heading"
+      },
+      {
+        "type":"text",
+        "id":"para-carees",
+        "label":" choose your para"
+      }
+    ]
+  }
+],
+"presets": [
+  {
+    "name": "Career-text",
+    "category": "Slider Section"
+  }
+]
+}
+{% endschema %}

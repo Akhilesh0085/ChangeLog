@@ -1,0 +1,135 @@
+<div class="main__cart_card">
+  <div class="inner_cart_card">
+    <div class="close__cart_card">
+      <svg class="icon icon-close" aria-hidden="true" focusable="false" style="width: 1rem;height: 1rem;">
+        <use href="#icon-close"></use>
+      </svg>
+    </div>
+    <div class="select__size_txt">Select Size</div>
+    <div class="card_content_remaining"></div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const removeErrors = () => document.querySelectorAll('.size_error').forEach((error) => error.remove());
+    const hideCartCard = () => {
+      const cartCard = document.querySelector('.main__cart_card');
+      if (cartCard) cartCard.style.display = 'none';
+    };
+
+    // Size selection handler
+    const handleSizeSelection = (e) => {
+      if (!e.target.matches('.cstm__size_coll a')) return;
+
+      e.preventDefault();
+      const clickedElement = e.target;
+      const cardBottom = clickedElement.closest('.cstm__card_bottom');
+
+      // Update active size
+      cardBottom.querySelectorAll('.cstm__size_coll a').forEach((option) => option.classList.remove('active_size'));
+      clickedElement.classList.add('active_size');
+
+      removeErrors();
+
+      // Update button with variant ID
+      const vid = clickedElement.dataset.attr;
+      const cardButton = cardBottom.querySelector('.cstm__card_button');
+      if (cardButton) cardButton.dataset.id = vid;
+
+      // Auto-trigger on mobile
+      if (window.innerWidth < 749) cardButton?.click();
+    };
+
+    // Add to cart handler
+    const handleAddToCart = async (e) => {
+      if (!e.target.matches('.cstm__card_button')) return;
+
+      const button = e.target;
+      const { id, amount, percent } = button.dataset;
+
+      removeErrors();
+
+      if (!id) {
+        button.insertAdjacentHTML('beforebegin', '<div class="size_error">Please select size</div>');
+        return;
+      }
+
+      button.classList.add('loading');
+
+      try {
+        // Add to cart
+        const cartResponse = await fetch('/cart/add.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({
+            id,
+            quantity: 1,
+            properties: {
+              'Discount Amount': amount,
+              'Discount Percentage': percent,
+            },
+          }),
+        });
+
+        if (!cartResponse.ok) throw new Error('Failed to add to cart');
+
+        // Fetch updated sections
+        const sectionsResponse = await fetch('/?sections=mini-cart,cart-icon-bubble,mobile-cart-icon-bubble');
+        const sections = await sectionsResponse.json();
+
+        // Update mini cart
+        const minicart = document.querySelector('mini-cart');
+        if (minicart?.renderContents) {
+          minicart.renderContents({ sections });
+        }
+
+        hideCartCard();
+      } catch (error) {
+        console.error('Error adding item to cart:', error);
+      } finally {
+        button.classList.remove('loading');
+      }
+    };
+
+    // Mobile cart icon handler
+    const handleMobileCartIcon = (e) => {
+      if (!e.target.matches('.mobile__cart__icon')) return;
+
+      const gridItem = e.target.closest('.grid__item');
+      const cardBottom = gridItem?.querySelector('.cstm__card_bottom');
+      const cardContentRemaining = document.querySelector('.card_content_remaining');
+
+      if (cardBottom && cardContentRemaining) {
+        cardContentRemaining.innerHTML = `<div class="cstm__card_bottom">${cardBottom.innerHTML}</div>`;
+
+        // Move cart card
+        const mediaElement = gridItem.querySelector('use-animate .card__media');
+        const mainCartCard = document.querySelector('.main__cart_card');
+
+        if (mediaElement && mainCartCard) {
+          mediaElement.insertAdjacentElement('afterend', mainCartCard);
+          mainCartCard.style.display = 'block';
+        }
+      }
+    };
+
+    // Close cart card handler
+    const handleCloseCartCard = (e) => {
+      if (e.target.matches('.close__cart_card')) {
+        hideCartCard();
+      }
+    };
+
+    // Event delegation
+    document.addEventListener('click', (e) => {
+      handleSizeSelection(e);
+      handleAddToCart(e);
+      handleMobileCartIcon(e);
+      handleCloseCartCard(e);
+    });
+  });
+</script>

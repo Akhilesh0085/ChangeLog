@@ -1,0 +1,168 @@
+<div class="wizzy-autocomplete-top-products">
+    <p class="top-products-title">[[topProductsTitle]]</p>
+    <ul class="autocomplete-top-products">
+        [[#products]]
+
+        <li class="topproduct-item" title="[[& name ]]" data-id="[[id]]"
+            data-groupId="[[#groupId]][[groupId]][[/groupId]][[#singleVarientGroupId]][[singleVarientGroupId]][[/singleVarientGroupId]]">
+             <div class="card-wrapper">
+               [[#new]]
+                <div class="badges_tag">
+                 <span>New Lauch</span>
+                 <!-- <img class="badge-img" src="https://cdn.shopify.com/s/files/1/0864/8697/4743/files/new-launch-aur.webp?v=1715940904" width="" height=""> -->
+               </div>
+               [[/new]]
+               [[#plusSize]]
+               <div class="badges_cstm kurtasold_dataplus-side">Plus Size</div>
+               [[/plusSize]]
+                <a href="[[url]]" class="full-unstyled-link">
+                <span class="visually-hidden">[[name]]</span>
+                </a>
+                <use-animate data-animate="zoom-fade-small" class="card card--product" tabindex="-1" animate="">
+                   <a href="[[url]]" class="card__media media-wrapper 123" tabindex="-1">
+                      <div class="card--image-animate image-animate media media--adapt media--hover-effect" style="--image-ratio-percent: 150.37593984962405%;">
+                         <img class="motion-reduce" 
+                           src="[[mainImage]]?v=1715408891" 
+                           alt="alt" width="665" height="1000" style="width:100%; height: auto;">
+                         <img class="motion-reduce" 
+                           src="[[hoverImage]]?v=1713503715" 
+                           alt="alt" width="665" height="1000" style="width:100%; height: auto;">
+                      </div>
+                   </a>
+                </use-animate>
+                <div class="card-information">
+                   <div class="card-information__wrapper">
+                      <a href="[[url]]" class="card-information__text h4 font-bold-heading" tabindex="-1">
+                      [[name]]
+                      </a>
+                      <span class="caption-large light"></span>
+                      <div class="price price--on-sale">
+                         <dl>
+                            <div class="price__regular">
+                               <dt>
+                                  <span class="visually-hidden visually-hidden--inline">Regular price</span>
+                               </dt>
+                               <dd>
+                                  <span class="price-item price-item--regular">
+                                     <price-money><bdi><span class="price__prefix">Rs.</span>[[ sellingPrice ]]</bdi></price-money>
+                                  </span>
+                               </dd>
+                            </div>
+                            <div class="price__sale">
+                               <dt class="price__compare">
+                                  <span class="visually-hidden visually-hidden--inline">Regular price</span>
+                               </dt>
+                              [[#discountPercentage]]
+                               <dd class="price__compare">
+                                  <s class="price-item price-item--regular">
+                                     <price-money><bdi><span class="price__prefix">Rs.</span>[[ price ]]</bdi></price-money>
+                                  </s>
+                               </dd>
+                              [[/discountPercentage]]
+                               <dt>
+                                  <span class="visually-hidden visually-hidden--inline">Sale price</span>
+                               </dt>
+                               <dd>
+                                  <span class="price-item price-item--sale">
+                                     <price-money><bdi><span class="price__prefix">Rs.</span>[[ sellingPrice ]]</bdi></price-money>
+                                  </span>
+                               </dd>
+                              [[#discountPercentage]]
+                               <span class="discount__percentage__grid font-bold">
+                               - [[discountPercentage]]%
+                               </span>
+                              [[/discountPercentage]]
+                            </div>
+                         </dl>
+                      </div>
+
+                     {% comment %}
+                     <div class="cstm__size_coll 6666">
+                     [[#swatches]]
+                        <div class="product-item-swatch-group
+                           [[#isPrimary]]swatch-group-primary[[/isPrimary]] swatch-group-[[key]]"
+                           data-swatchKey="[[key]]">
+                           [[#values]]
+                           <div data-variationId="[[variationId]]" title="[[#value]][[value]][[/value]]"
+                              class="product-item-swatch-item
+                              [[#isSelected]]swatch-selected[[/isSelected]]
+                              [[#inStock]]swatch-in-stock[[/inStock]]">
+                              [[#isSwatch]]
+                              <span class="wizzy-facet-item-swatch-wrapper [[#isVisualSwatch]]facet-visual-swatch[[/isVisualSwatch]]
+                                 [[^isVisualSwatch]]facet-text-swatch[[/isVisualSwatch]]">
+                              <span class="wizzy-facet-item-swatch [[#isVisualSwatch]]facet-visual-swatch[[/isVisualSwatch]]
+                                 [[^isVisualSwatch]]facet-text-swatch[[/isVisualSwatch]]"
+                                 style="[[#isVisualSwatch]][[#isURLSwatch]]background-image:url([[swatchValue]]);[[/isURLSwatch]]
+                                 [[^isURLSwatch]]background-color:[[swatchValue]];[[/isURLSwatch]][[/isVisualSwatch]]">
+                              [[^swatchValue]]
+                              [[#value]]
+                              <span class="wizzy-facet-swatch-individual-value">[[value]]</span>
+                              [[/value]]
+                              [[/swatchValue]]
+                              [[^isVisualSwatch]]
+                              <span class="wizzy-facet-swatch-value">[[swatchValue]]</span>
+                              [[/isVisualSwatch]]
+                              </span>
+                              </span>
+                              [[/isSwatch]]
+                           </div>
+                           [[/values]]
+                        </div>
+                        <!-- ending of product-item-swatch-group -->
+                        [[/swatches]]
+                     </div>
+                     {% endcomment %}
+                     
+                   </div>
+          
+                    <div class="card-information__button">
+          
+                    </div>
+          
+                  {% comment %}
+                   <div class="main_similar" product-handle="light-red-printed-kurta-pants-dupatta-co-ord-set-23fews19768-122423">
+                      <span>Similar Products</span>
+                      <img src="https://cdn.shopify.com/s/files/1/0776/0419/2550/files/similar.25570fb.png?v=1688710838">
+                   </div>
+                  {% endcomment %}
+
+                  {% comment %}
+                   <div class="card-information__button">
+                      <!-- Add this for redirect to pdp page -->
+                       <add-to-cart class="button button--small" data-variant-id="[[id]]">Add to cart
+                         {% comment %}
+                          <img class="cart_img_mobile_view" style="width: 16px; vertical-align: middle;" src="https://cdn.shopify.com/s/files/1/0776/0419/2550/files/Icon-01.png?v=1717492209">
+                         {% endcomment %}
+                       </add-to-cart>
+                     {% comment %}
+                      <div class="desktop_view desktop_view_product_details">
+                         <a href="[[url]]" class="button button--small" tabindex="-1">
+                            View product
+                            <svg class="icon icon-cart" aria-hidden="true" focusable="false">
+                               <use href="#icon-cart"></use>
+                            </svg>
+                         </a>
+                      </div>
+                     {% endcomment %}
+                      <div class="mobile_view">
+                         <quick-view-button class="button button--small mobile_quick_def" data-product-url="[[url]]">
+                            View product
+                            <img style="width: 16px; vertical-align: middle;" src="https://cdn.shopify.com/s/files/1/0776/0419/2550/files/Icon-01.png?v=1717492209"> 
+                         </quick-view-button>
+                      </div>
+                   </div>
+                  {% endcomment %}
+                  
+                </div>
+                <div class="card__badge"></div>
+             </div>
+        </li><!-- ending of topproduct-item -->
+
+        [[/products]]
+    </ul><!-- ending of autocomplete-top-products -->
+    <div class="autocomplete-top-products-view-more">
+        <button type="button" class="btn btn--small wizzy-autocomplete-top-products-view-more">
+            View More
+        </button>
+    </div>
+</div><!-- ending of top-products -->

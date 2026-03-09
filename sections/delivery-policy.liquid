@@ -1,0 +1,48 @@
+<ul class="ulList font-bold-heading">
+  {% for block in section.blocks %}
+    {% if block.settings.list_item != blank -%}
+      <li
+        class="listItem-{{ forloop.index }}"
+      >
+        {{ block.settings.list_item }}
+      </li>
+    {% endif %}
+  {% endfor %}
+</ul>
+{% render 'pincode-validation' %}
+<style>
+  .ulList li{
+      font-size:14px;
+    }
+  @media screen and (min-width: 769px){
+  .ulList{
+    padding-bottom: 72px;
+    padding-left: 72px;
+    padding-right: 72px;
+  }
+  }
+</style>
+{% schema %}
+{
+  "name": "Delivery Policy",
+  "settings": [],
+  "blocks": [
+    {
+    "type":"text",
+    "name":"List item",
+    "settings":[
+      {
+        "type":"html",
+        "id":"list_item",
+        "label":"Add List items"
+      }
+    ]
+  }
+  ],
+  "presets": [
+    {
+      "name": "Delivery Policy"
+    }
+  ]
+}
+{% endschema %}

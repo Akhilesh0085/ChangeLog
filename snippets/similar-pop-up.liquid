@@ -1,0 +1,111 @@
+<div class="similar_main_pop_up">
+ <div class="sub_similar_main_pop_up">
+   <div class="pop-up-content">
+    <div class="cstm_pop_heading">
+     <h2>SIMILAR PRODUCTS</h2>
+     <a class="close" href="#">&times;</a>
+    </div>
+    <div class="pop-up-product">
+
+    </div>
+   </div>
+ </div>
+</div>
+
+<style>
+ .overflownone{
+    overflow: hidden;
+  }
+ .pop-up-product .cstm_product_slider{
+    margin-left: 0px;
+    margin-right: 0px;
+ }
+ .similar_main_pop_up{
+    display:none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #0003;
+    z-index: 200;
+ } 
+ .sub_similar_main_pop_up{
+    position:relative;
+    height: 100%;
+ }
+ .pop-up-content{
+    background-color: #fff;
+    width: 35%;
+    position: absolute;
+    right: 0%;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    overflow-y: auto;
+ }
+  .cstm_pop_heading {
+    text-align: center;
+    padding: 10px 0;
+    position: relative;
+  }
+  .cstm_pop_heading a.close {
+    text-decoration: none;
+    font-size: 36px;
+    position: absolute;
+    right: 5px;
+    top: 4px;
+    cursor: pointer;
+    color:#000;
+  }
+  .cstm_pop_heading h2{
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .similar_main_pop_up.cstm_active {
+    display: block;
+}
+.similar_main_pop_up ul.product-grid{
+    margin-left: 0;
+    padding-right: 1rem;
+}  
+ .similar_main_pop_up .cstm_product_slider:not(.slick-initialized){
+   flex-wrap:wrap; 
+  }
+ .similar_main_pop_up  .cstm_product_slider:not(.slick-initialized) .grid__item {
+    width: 50%;
+}
+ .similar_main_pop_up  .grid {
+    --grid-horizontal-spacing: 0rem;
+}
+ .similar_main_pop_up ul.product-grid .grid__item {
+    padding-inline-start: 1rem;
+}
+ @media(max-width:749px){
+ .pop-up-content{
+     width:90%;
+   }
+ }
+</style>
+
+<script>
+    $(document).ready(function(){
+     $('body').on('click','.main_similar',function(){
+     var i =  $(this).attr('product-handle');
+      fetch('/products/'+ i +'?view=similar-product', {
+              credentials: 'same-origin',
+              method: 'GET',
+            }).then(function (content) {    
+              content.text().then(function (html) {
+                $('.pop-up-product').html(html);
+                $('.similar_main_pop_up').addClass('cstm_active');
+                $('body').addClass('overflownone');
+              });
+            });   
+    });
+    $('.close').click(function() {
+      $('.similar_main_pop_up').removeClass('cstm_active'); 
+      $('body').removeClass('overflownone');
+    });
+  });
+</script>

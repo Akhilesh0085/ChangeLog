@@ -1,0 +1,114 @@
+ .main_account_container{
+    display:flex;
+    width:100%;
+    gap: 2rem;
+  }
+  .main_account_container .account_tab_heading{
+    width: 100%;
+    display: block;
+    padding: 15px 0;
+    border-bottom: 1px solid #b2b2b2;
+    font-size: 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #000;
+    letter-spacing: 0;
+  }
+  .main_account_container .account_tab_heading.active_tab{
+    color:#bf1616;
+  }
+  .main_account_container .custom_details_def,
+  .main_account_container .grid__item.grid__item--one-quarter{
+    margin-bottom:30px;
+  }
+  .main_account_container .grid__item.grid__item--one-quarter h2{
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 10px;
+    font-size: 20px;
+    margin-bottom: .5rem;
+    letter-spacing: 0;
+    margin-top:15px;
+  }
+  .main_account_container .grid__item.grid__item--one-quarter p{
+    font-size: 14px;
+    margin-bottom: 10px;
+    letter-spacing: 0;
+  }
+  .main_account_container .view_all_add{
+    color:#bf1616;
+    width: 100%;
+    display: block;
+    letter-spacing: 0;
+  }
+  .main_account_container .grid__item--three-quarter h2{
+    padding-bottom: 10px;
+    font-size: 20px;
+    margin-bottom: .5rem;
+    letter-spacing: 0;
+  }
+  .main_account_container .order_heading_cus,
+  .main_account_container td#RowOrder{
+    font-size: 14px;
+    letter-spacing: 0;
+  }
+  .main_account_container .button_track_deff{
+    padding: 12px 24px;
+    background: #ffac31;
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: 0; 
+    border:1px solid #ffac31;
+  }
+  .main_account_container .button_track_deff:hover{
+    background:#ffac31;
+    color:#fff;
+  }
+  @media(min-width:750px){
+  .main_account_container .left_account_tab{
+    width:23%
+  }
+  .main_account_container .right_account_details{
+    width:75% 
+  }
+  .main_account_container td#RowOrder{
+    padding-top: 2.4rem;
+    padding-bottom: 2.4rem;
+  }
+  }
+  @media(max-width:749px){
+  .main_account_container{
+    flex-wrap: wrap;
+  }
+  .main_account_container .left_account_tab{
+    width:100%
+  }
+  .main_account_container .right_account_details{
+    width:100% 
+  }
+  .customer table{
+    border-bottom: none;
+  }
+  .customer tbody tr{
+    box-shadow: 0 0 3px 0 #878787;
+    margin-bottom: 15px;
+    display: block;
+    border: none;
+  } 
+  .main_account_container td#RowOrder,
+  .customer tbody td{
+    border-top: none;
+    border-bottom: 1px solid #b2b2b2;
+    padding: 16.5px 15px;
+  }
+  .customer tbody td:last-of-type{
+    padding-bottom: 16.5px;
+    align-items: center;
+  }
+  /* .customer tbody td[data-label]{
+    font-family: Avenir-Black;
+  } */
+  }
+a{
+  cursor:pointer;
+}

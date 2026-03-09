@@ -1,0 +1,148 @@
+{% comment %} cartpage-coupon-popup {% endcomment %}
+{% if template.name != 'product' %}
+  <script src="{{ 'cart-coupon.js' | asset_url }}" defer="defer"></script>
+{% else %}
+  {% render 'lazy-js', filename: 'cart-coupon.js', loading: 'lazy' %}
+{% endif %}
+
+<div class="discount_outler">
+  <div class="main_discount_container">
+    <img
+      loading="lazy"
+      alt="loader"
+      src="https://cdn.shopify.com/s/files/1/0864/8697/4743/files/giphy.webp?v=1717239584"
+      class="loader_gif"
+      width=""
+      height=""
+    >
+    <div class="discount_box_container">
+      <div class="discount_main_heading">
+        <span class="font-bold">APPLY COUPON</span>
+        <a class="close_btn" href="#">×</a>
+      </div>
+      <div class="couponsForm-base-textInputContainer">
+        <div class="error_message"></div>
+        <input
+          id="coupon_code"
+          name="coupon_code"
+          placeholder="Enter coupon code"
+          autocomplete="off"
+          class="couponsForm-base-textInput"
+          fdprocessedid="5zi37t"
+        >
+        <button
+          id="applycoupon"
+          type="button"
+          class="action apply primary couponsForm-base-applyButton font-medium "
+          style="position:absolute;"
+          fdprocessedid="9eu8ja"
+        >
+          <span>Apply</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  .discount_outler {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 200;
+  }
+  .main_discount_container {
+    position: relative;
+  }
+  #coupon_code:focus-visible {
+    outline: none;
+    box-shadow: none;
+  }
+  .discount_box_container {
+    position: absolute;
+    background: #fff;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 100px);
+    border-radius: 0.3rem;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+  }
+  .discount_main_heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0rem 1.5rem;
+    border-bottom: 1px solid #e9ecef;
+  }
+  .discount_main_heading span {
+    font-size: 20px;
+    margin: 0;
+  }
+  .discount_main_heading a.close_btn {
+    font-size: 32px;
+    text-decoration: none;
+    color: #000;
+  }
+  .couponsForm-base-textInputContainer {
+    padding: 1.5rem;
+  }
+  .couponsForm-base-textInput {
+    border: 1px solid #d5d6d9;
+    padding: 15px 0 15px 15px;
+    height: 42px;
+    width: 85%;
+  }
+  .couponsForm-base-textInputContainer .couponsForm-base-applyButton {
+    padding: 1px 10px;
+    font-size: 14px;
+    color: #fff;
+    height: 42px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: none;
+    background-color: #c11d14;
+  }
+  .error_message {
+    margin: 0 15px 10px 0px;
+    padding: 10px;
+    line-height: 15px;
+    font-size: 14px;
+    background: #ffe6e6;
+    color: #bf1616;
+    font-family: Avenir-Roman;
+  }
+  .error_message:before {
+    color: #fff;
+    content: '\f00c';
+    background-color: #bf1616;
+    font: normal normal normal 12px / 1 FontAwesome;
+    padding: 2px;
+    margin-right: 5px;
+  }
+  .loader_gif {
+    display: none;
+    position: absolute;
+    top: 50%;
+    /* width: 100%; */
+    left: 50%;
+    transform: translate(-50%, 200px);
+  }
+  @media (min-width: 750px) {
+    .discount_box_container {
+      max-width: 550px;
+      width: 550px;
+    }
+  }
+  @media (max-width: 749px) {
+    .discount_box_container {
+      max-width: 100%;
+      width: 100%;
+    }
+    .couponsForm-base-textInput {
+      width: 74%;
+    }
+  }
+</style>

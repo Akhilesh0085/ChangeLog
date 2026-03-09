@@ -1,0 +1,40 @@
+{% if template.name == 'product' %}
+  <script defer>
+    (function () {
+      function loadScript(src, callback) {
+        var s = document.createElement('script');
+        s.src = src;
+        s.defer = true;
+        s.onload = callback || function () {};
+        document.head.appendChild(s);
+      }
+
+      if (window.innerWidth >= 768) {
+        loadScript('{{ "jquery.min.js" | asset_url }}', function () {
+          loadScript('{{ "slick.min.js" | asset_url }}', function () {
+            loadScript('{{ "custom.min.js" | asset_url }}');
+          });
+        });
+      }
+    })();
+  </script>
+
+{% else %}
+  <script src="{{ 'jquery.min.js' | asset_url }}"></script>
+  <script type="text/javascript" src="{{ 'slick.min.js' | asset_url }}" defer></script>
+  <script src="{{ 'custom.min.js' | asset_url }}" defer></script>
+{% endif %}
+
+{% if template.name == 'product' %}
+  {% render 'product-render-js-asset' %}
+{% endif %}
+
+{% if template.name != 'product' %}
+  <script src="{{ 'vendor-v4.js' | asset_url | split: '?' | first }}" defer></script>
+  <script src="{{ 'pubsub.js' | asset_url }}" defer></script>
+  <script src="{{ 'global.js' | asset_url }}" defer></script>
+{% else %}
+  {% render 'lazy-js', filename: 'vendor-v4.js', loading: 'lazy' %}
+  {% render 'lazy-js', filename: 'pubsub.js', loading: 'lazy' %}
+  {% render 'lazy-js', filename: 'global.js', loading: 'lazy' %}
+{% endif %}

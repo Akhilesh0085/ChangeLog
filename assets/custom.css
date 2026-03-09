@@ -1,0 +1,697 @@
+.product-media-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.product-image-slideshow {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.product-image-slideshow img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.1s cubic-bezier(0.4, 0.0, 0.2, 1); /* slow + very smooth */
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Pehli image by default visible rahe */
+.product-image-slideshow img:first-child {
+  opacity: 1;
+  position: relative; /* helps with layout if needed */
+}
+
+.product-dots {
+position: absolute;
+left: 36%;
+top: 90%;
+transform: translate(-24%, -10%);
+display: flex;
+flex-direction: row;
+gap: 8px;
+z-index: 3;
+justify-content: center;
+align-items: center;
+text-align: center;
+flex-wrap: wrap;
+}
+
+.product-dots .dot {
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.product-dots .dot.active {
+  background: #ffffff;
+  transform: scale(1.35);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Optional: hover pe thoda highlight */
+.product-dots .dot:hover {
+  background: #ffffff;
+  transform: scale(1.5);
+}
+
+
+
+
+
+.cstm_coll .title {
+  color: #252525;
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.all_discounted_tags.hide_filter {
+  display: block !important;
+}
+
+.all_discounted_tags {
+  display: none !important;
+}
+
+.desktop_view_product_details a,
+.cstm-cart {
+  font-size: 12px;
+  font-family: Avenir-Roman;
+  font-weight: normal;
+}
+
+.imageSlider:hover .slick-dots {
+  bottom: 7%;
+  left: 0;
+  transform: translate(0, -7%);
+}
+
+.card-wrapper {
+  border: 1px solid transparent;
+}
+
+.cstm-breadcrumb {
+  font-size: 12px;
+  letter-spacing: 0px;
+  font-family: Avenir-Roman;
+}
+
+.cstm-breadcrumb a {
+  text-decoration: underline;
+}
+
+.page-bread {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+#ProductCountDesktop strong {
+  font-size: 16px;
+  color: #000;
+}
+
+.loader {
+  display: none;
+}
+
+.cart-count-bubble .cart-item {
+  padding-top: 3px;
+}
+
+.cstm-count {
+  padding-top: 2px;
+}
+
+.popup-floating {
+  display: none !important;
+}
+
+.sticky_header .cart-count-bubble {
+  background: #000;
+}
+
+span.discount__percentage__grid {
+  color: #ffa822;
+  font-size: 13px;
+  font-family: Avenir-Black;
+}
+
+.rich-text__heading.h2,
+.section-collection-list .collection-list-wrapper .title {
+  font-weight: 700;
+  font-size: 24px;
+}
+
+button.slick-prev.slick-arrow,
+button.slick-next.slick-arrow {
+  border: none;
+  padding: 3px 0px 3px;
+  background-color: #ffffff99;
+}
+
+button.slick-prev.slick-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  left: 0;
+}
+
+button.slick-next.slick-arrow {
+  position: absolute;
+  right: 0;
+  top: 51%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+button.slick-prev.slick-arrow svg,
+button.slick-next.slick-arrow svg {
+  width: 25px;
+}
+.slick-prev:before, .slick-next:before{
+display: none;
+}
+
+/* header code here */
+quick-view .price-item.price-item--regular .price__prefix,
+quick-view .product__info-container .price--on-sale .price-item--regular bdi,
+quick-view .price .price__suffix {
+  font-size: 18px;
+}
+
+quick-view .price-item.price-item--sale .price__prefix,
+quick-view .price__regular dd .price-item.price-item--regular .price__prefix {
+  font-size: 22px;
+}
+
+.sticky_header {
+  position: sticky;
+
+  z-index: 9;
+  background: #fff;
+}
+
+.custom_header a.header__menu-item {
+  letter-spacing: 0px;
+  color: #000 !important;
+  font-size: 12px;
+  font-family: Avenir-Black;
+}
+
+.custom_header .header__inline-menu {
+  width: 100%;
+  margin-inline-start: 0;
+}
+
+.custom_header .mega-menu__item-link .header__menu-item {
+  font-size: 14px;
+  color: #000;
+  font-weight: 900;
+  letter-spacing: 0px;
+}
+
+.custom_header .aditya_birla_logo img {
+  width: 100%;
+  height: 100%;
+}
+
+.custom_header .is-megamenu>.list-menu-dropdown .page-width.DRAPEWEAR,
+.custom_header .is-megamenu>.list-menu-dropdown .page-width.Footwear {
+  justify-content: center;
+}
+
+.cstm-gallery .title.h1,
+.cstm_coll_list .title.h1 {
+  color: #252525;
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.price-item.price-item--regular bdi {
+  font-size: 14px;
+}
+
+#shopify-section-template--22494158422295__recently-viewed-products .card-information__top .card-article-info {
+  display: none;
+}
+
+.main_similar {
+  position: absolute;
+  transform: translateY(calc(-100% - 6.2rem));
+  right: 10px;
+  height: 32px;
+  z-index: 2;
+  border-radius: 30px;
+  border: 1px solid #d4d5d9;
+  background-color: #f1f2f1;
+  display: flex;
+  align-items: center;
+  padding-left: 3px;
+  padding-right: 3px;
+  color: #626262;
+  cursor: pointer;
+  visibility: hidden;
+}
+
+.main_similar span {
+  position: relative;
+  top: 2px;
+  text-transform: uppercase;
+  padding-left: 0;
+  font-size: 0;
+  width: 0;
+}
+
+.main_similar:hover span {
+  font-size: 12px;
+  padding-left: 5px;
+  transition: .2s linear;
+  width: auto;
+}
+
+.main_similar img {
+  width: 17px;
+  height: auto;
+  position: relative;
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+.grid__item:hover .main_similar {
+  visibility: visible;
+}
+
+.template-collection .cstm__size_coll {
+  visibility: visible;
+}
+
+.cstm__size_coll,
+.cstm__size_coll a {
+  color: #000;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.quick-view .buynow-btn {
+  width: 100%;
+}
+
+quick-view .buynow-btn {
+  font-size: 16px;
+  letter-spacing: 0;
+  background-color: #c11d14;
+  border-color: #c11d14;
+}
+
+.quick-view button.product-form__submit {
+  font-size: 16px;
+  letter-spacing: 0;
+  background-color: #c11d14;
+  color: #fff;
+  border-color: #c11d14;
+}
+
+quick-view .buynow-btn:hover {
+  background-color: #c11d14;
+}
+
+.cstm_product .product-form__input input[type=radio]:not(:disabled):not([data-crossout])+label:not(.color__swatch):hover,
+.quick-view .product-form__input input[type=radio]:not(:disabled):not([data-crossout])+label:not(.color__swatch):hover {
+  background-color: #c11d14;
+  box-shadow: none;
+  color: #fff;
+  border-color: #bf1616;
+}
+
+/* quick view */
+.quick-view--open .card-wrapper {
+  visibility: hidden !important;
+}
+
+.quick-view--open .main_similar {
+  visibility: hidden !important;
+}
+
+.quick-view--open .slick-slider .slick-track,
+.quick-view--open .slick-slider .slick-track,
+.quick-view--open .slick-slider .slick-list {
+  transform: unset !important;
+}
+
+.card:hover .media.media--hover-effect>img+img {
+  opacity: 1;
+  transition-property: opacity, transform;
+  transform: scale(1.03);
+}
+
+.cstm_card_title {
+  white-space: wrap;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: capitalize;
+}
+
+/* end quick view */
+.product-form__input label:hover span.data_variant__qunatity {
+  display: block;
+}
+
+span.data_variant__qunatity {
+  position: absolute;
+  color: #bf1616;
+  font-size: 12px;
+  top: -40px;
+  left: 0;
+  width: 99px;
+  background: #fff;
+  border: 1px solid #e9e9eb;
+  padding: 10px 6px;
+  z-index: 99;
+  box-shadow: 0 2px 16px 0 rgba(40, 44, 63, .1);
+  text-transform: uppercase;
+  display: none;
+}
+
+.mobile_quick_def {
+  background: #ffffff94;
+  border: 0;
+  right: 4px;
+}
+
+.template-index .card-wrapper,
+.template-product .cstm_slider .card-wrapper,
+.template-cart .cstm_slider .card-wrapper {
+  margin-bottom: 10px;
+}
+
+.template-index .grid__item,
+.template-product .grid__item {
+  position: relative;
+}
+
+.badges_cstm {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  z-index: 2;
+  background: #fbf7f6;
+  padding: 10px 8px;
+  color: #ffac31;
+  box-shadow: 0 0 15px #0000001a;
+  writing-mode: vertical-rl;
+  transform: scale(-1);
+  text-orientation: mixed;
+  font-size: 13px;
+  line-height: 21px;
+  letter-spacing: 0px;
+  font-weight: 600;
+}
+
+.cstm__card_bottom .button {
+  min-width: unset;
+}
+/* tool tip text on PDP on MRP Icon */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.tooltiptext {
+  border-bottom: 1px dotted black;
+  visibility: hidden;
+  width: 450px;
+  font-size: 9px;
+  background-color: White;
+  color: #bf1616;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}  
+@media screen and (min-width: 750px) {
+
+  .sticky_header {
+    top: 69px;
+  }
+
+  .mobile_view {
+    display: none;
+  }
+
+  .cstm_card_title {
+    height: 38px;
+  }
+
+  .cstm__size_coll,
+  .cstm__size_coll a {
+    font-size: 13px;
+  }
+
+  .collection-grid-section .card-wrapper .cstm__size_coll {
+    opacity: 0;
+  }
+
+  .desktop_view_product_details {
+    width: 100%;
+  }
+
+  .collection-grid-section .card-wrapper:hover .cstm__size_coll {
+    opacity: 1;
+  }
+
+  .custom_header .page-width {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+
+  .cstm_product_slider.slick-slider li.grid__item.slick-slide,
+  .cstm_tab_product_slider.slick-slider li.grid__item.slick-slide,
+  .cstm_product_slider2.slick-slider li.grid__item.slick-slide {
+    padding: 0 1.5rem;
+  }
+
+  /* quick view */
+  .quick-view__left.product__media-wrapper .product__media img {
+    object-fit: contain;
+  }
+
+  /* end quick view */
+}
+
+@media (min-width: 990px) {
+
+  svg.icon-cart.cstm_quick_icon_desk path {
+    fill: #000;
+  }
+
+  .custom_header .list-mega-menu {
+    column-gap: 0px;
+  }
+
+  .custom_header .list-menu-child a.header__menu-item {
+    font-size: 12px;
+    font-weight: 100;
+  }
+
+  .custom_header .aditya_birla_logo {
+    height: 3rem;
+    width: 3rem;
+    position: relative;
+    top: 5px;
+  }
+
+  .custom_header .mega-menu__promo {
+    flex: 0 0 18rem;
+  }
+
+  .mega-menu__promo.footwear .mega-menu__promo-link.media-wrapper,
+  .mega-menu__promo.drapewear .mega-menu__promo-link.media-wrapper {
+    width: 375px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .custom_header .mega-menu__item {
+    max-width: 21rem;
+  }
+}
+
+@media(min-width:1600px) {
+  .custom_header .page-width {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .def-footer .footer__content-top {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+@media (max-width: 989px) {
+  .custom_header .aditya_birla_logo {
+    height: 3rem;
+    width: 3rem;
+  }
+
+  .cstm_product .price-item.price-item--sale .price__prefix,
+  .cstm_product .price-item.price-item--sale .price__suffix {
+    font-size: 15px !important;
+  }
+
+  .cart-count-bubble {
+    top: -2px;
+    right: 0.5rem;
+  }
+
+  .cstm-bubble {
+    top: -3px;
+    right: 0.5rem;
+  }
+
+  .cstm-bubble span {
+    margin-top: 2px;
+  }
+
+  .custom_header .header__right {
+    width: 100%;
+    justify-content: flex-end;
+    margin-inline-end: 0px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+    .sticky_atc_and_notify .sticky-cart__form{
+    width: 100%;
+  }
+  .tooltiptext{
+  width:180px;
+  z-index: 9999;
+}
+  .price dl .price__regular {
+    padding-bottom: 6px;
+  }
+
+  .card-wrapper .cstm__size_coll,
+  .cstm__size_coll a {
+    font-size: 11px;
+  }
+
+  .cstm_card_title {
+    height: 28px;
+  }
+
+  .product-recommendations .card-wrapper {
+    border: 1px solid #e4e4e4;
+  }
+
+  #ProductCount strong {
+    font-size: 17.6px;
+  }
+
+  .card-information__button {
+    bottom: 100% !important;
+  }
+
+  .cstm_coll .title,
+  .rich-text__heading.h2,
+  .cstm-gallery .title.h1,
+  .cstm_coll_list .title.h1,
+  .section-collection-list .collection-list-wrapper .title {
+    font-size: 22px;
+  }
+
+  .cstm_coll .slick-prev.slick-arrow,
+  .cstm_coll .slick-next.slick-arrow {
+    /* display: none !important; */
+  }
+
+  /* .card-information__button .button.button--small{
+    display:none;
+  } */
+  .desktop_view {
+    display: none;
+  }
+
+  .announcement .announcement-bar {
+    height: 45px;
+  }
+
+  .rich-text--colored {
+    padding-inline-start: 0px !important;
+    padding-inline-end: 0px !important;
+  }
+
+  .cstm_coll .page-width {
+    padding: 0;
+  }
+
+  .cstm_coll .cstm_product_slider2.slick-slider li.grid__item.slick-slide {
+    padding: 1.3rem;
+  }
+
+  .cstm_coll .cstm_product_slider2 .slick-slide.slick-center {
+    transition: all .5s ease-in-out !important;
+  }
+
+  .cstm-gallery .slider.slider--tablet {
+    flex-wrap: wrap;
+  }
+
+  .remove_spacing {
+    padding-left: .5rem;
+    padding-right: .5rem;
+  }
+}
+
+@media(max-width:749px) {
+  .sticky_header {
+    top: 60px;
+  }
+
+  .template-index .card-wrapper,
+  .template-product .cstm_slider .card-wrapper,
+  .template-cart .cstm_slider .card-wrapper {
+    margin-bottom: 12px;
+    border: 1px solid #e4e4e4;
+  }
+
+  .template-collection div#main-facet-filters {
+    position: sticky;
+    top: 79.4px;
+    z-index: 8;
+  }
+
+  .badges_cstm {
+    font-size: 11px;
+    padding: 10px 4px;
+  }
+}
+.notify-me-wrapper.for_notify_width{
+  width: 100%;
+}
+
+/* .card-information__button.cstm_sold_out{
+  display: none;
+} */

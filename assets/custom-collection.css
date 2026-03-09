@@ -1,0 +1,189 @@
+.grid__item {
+  position: relative;
+}
+.collection-imgslider .slick-prev.slick-arrow, .collection-imgslider .slick-next.slick-arrow{
+  display:none !important;
+}
+.main_similar {
+  position: absolute;
+  transform: translateY(calc(-100% - 8rem));
+  right: 10px;
+  height: 32px;
+  z-index: 2;
+  border-radius: 30px;
+  border: 1px solid #d4d5d9;
+  background-color: #f1f2f1;
+  display: flex;
+  align-items: center;
+  padding-left: 3px;
+  padding-right: 3px;
+  color: #626262;
+  cursor: pointer;
+  visibility: hidden;
+}
+.main_similar span {
+  position: relative;
+  top: 2px;
+  text-transform: uppercase;
+  padding-left: 0;
+  font-size: 0;
+  width: 0;
+}
+.main_similar img {
+  width: 17px;
+  height: auto;
+  position: relative;
+  margin-left: 4px;
+  margin-right: 4px;
+}
+.grid__item:hover .main_similar {
+  visibility: visible;
+}
+.main_similar:hover span {
+  font-size: 12px;
+  padding-left: 5px;
+  transition: 0.2s linear;
+  width: auto;
+}
+/* .collection_name {
+  border: 1px solid #ededed;
+  padding: 8px;
+} */
+
+/* .collection-grid-section .card-information__button{
+  bottom: 84%;
+} */
+.collection-grid-section .facets__form {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+/* sort by hide */
+li.sort--title-ascending,
+li.sort--title-descending,
+li.sort--manual,
+li.sort--created-ascending {
+  display: none;
+}
+.desktop_view_product_details {
+  width: 100%;
+}
+.cstm_filter_change {
+  max-height: 200px;
+  overflow-y: auto;
+}
+.quick-view .price .price__suffix,
+.quick-view .price .price__prefix {
+  font-size: unset;
+}
+.facets__list--swatch-label .color__swatch:before,
+.facets__list--swatch-label .color__swatch:after {
+  content: "";
+  border-radius: unset !important;
+}
+.collection .card-wrapper {
+    border: 1px solid transparent;
+}
+.template-collection .price-range__track-wrapper, .template-collection .price-range__prefix, price-range.price-range~div{
+    display: none;
+}
+.template-collection .facets__price .field {
+    display: inline-table;
+    width: 100%;
+}
+.template-collection .facets__price .field+.field>* {
+    border-top: 0;
+}
+.template-collection .facets__price .field__currency, .template-collection .facets__price .field__input {
+    border-bottom: 1px solid #d2d5d9;
+}
+.template-collection .facets__price .field__label {
+    width: 50px;
+}
+
+@media ((min-width: 750px) and (max-width:1024px)) {
+  .similar_main_pop_up .pop-up-content {
+    width: 50%;
+  }
+  .main_similar {
+    visibility: visible;
+    transform: translateY(calc(-100% - 0.6rem));
+    right: unset;
+    left: 0px;
+  }
+  .main_similar span {
+    display: none;
+  }
+}
+@media (max-width: 768px) {
+  .collection-grid-section .card-wrapper {
+        border: 1px solid #e4e4e4;
+    }
+}
+@media (max-width: 749px) {
+  .collection-grid-section .mobile-facets__summary {
+        font-size: 14px;
+  }
+  .similar_main_pop_up .pop-up-content {
+    width: 90%;
+  }
+  .main_similar {
+    visibility: visible;
+    transform: translateY(calc(-100% - 2.2rem));
+    right: unset;
+    left: 12px;
+    background: #ffffff94;
+  }
+ 
+  .main_similar span {
+    display: none;
+  }
+  .mobile_sort__by {
+    display: none;
+  }
+  .cstm_mobile__filter_sort {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+  .cstm_mobile__filter_sort .facets__display {
+    width: 26rem;
+  }
+  .cstm_mobile__filter_sort .collection_name {
+    border: none;
+    padding: 0px;
+    width: 50%;
+  }
+  .cstm_mobile__filter_sort .facets__wrapper {
+    display: block;
+    width: 100%;
+  }
+  .cstm_mobile__filter_sort facet-drawer.mobile-facets__wrapper {
+    width: 50%;
+  }
+  .cstm_mobile__filter_sort .product-count {
+    display: none;
+  }
+  .cstm_mobile__filter_sort .button--small {
+    min-width: unset;
+    justify-content:center;
+    background: #fff;
+    color: #1a1a1a;
+    letter-spacing:0px;
+    border-color: #00000029;
+  }
+  .cstm_mobile__filter_sort .mobile-facets__heading.h2 {
+    font-size: 22px;
+  }
+  .cstm_mobile__filter_sort .mobile-facets__close {
+    top: 0.2rem;
+  }
+}
+
+@media (min-width: 750px) {
+  .card-information .cstm_quick_icon {
+    display: none;
+  }
+  .quick-view__left.product__media-wrapper .product__media img {
+    object-fit: contain;
+  }
+}

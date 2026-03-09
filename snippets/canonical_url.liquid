@@ -1,0 +1,14 @@
+{% comment %} snippets/canonical_url.liquid -AK {% endcomment %}
+
+{% if template.name == 'index' %}
+        <link rel="canonical" href="{{ canonical_url }}">
+  
+{% elsif template.name == 'product' %}
+        <link rel="canonical" href="{{ canonical_url }}">
+  
+{% elsif template.name == 'collection' %}
+        <link rel="canonical" href="{{ canonical_url }}">
+  
+{% else %}
+        <link rel="canonical" href="{{ canonical_url }}">
+{% endif %}

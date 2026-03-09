@@ -1,0 +1,133 @@
+  <!-- CUSTOM NAVIGATION  -->
+ 
+{% if section.settings.nav-section == true %}
+ <div  style="{% if section.settings.enable_padding_top == true %}padding-top: 14px; margin-top: 18px; {% endif %} {% if section.settings.enable_padding_bottom == true %}padding-bottom:10px; {% endif %}" class="nav cstm__nav_slder">
+   {%for block in section.blocks%}
+    {% if block.type == 'nav' %}
+     {% if block.settings.image != blank %}
+      <div class="section-title-nav"> 
+       <a class="link" href="{{block.settings.url}}">
+          <div class="nav_image">
+           <img src="{{ block.settings.image | img_url:"master" }}" alt="menu image">
+          </div>
+        <div class="cstm_menu">{{block.settings.text}}</div>
+       </a>
+    </div>
+  {%endif%} 
+ {%endif%} 
+{%endfor%} 
+
+  </div>
+  {% endif %}
+
+  {% schema %}
+  {
+  "name": "Custom-nav ",
+  "class":"custom_nav",
+  "settings": [ 
+  {
+  "type":"checkbox",
+  "id":"nav-section",
+  "label":"Custom nav",
+  "default":true
+  },
+{
+"type":"checkbox",
+"id":"enable_padding_top",
+"label":"Enable Padding Top",
+"default":true
+},
+{
+"type":"checkbox",
+"id":"enable_padding_bottom",
+"label":"Enable Padding Bottom",
+"default":true
+}
+
+  ],
+  "blocks":[
+
+  {
+  "type":"nav",
+  "name":"Nav",
+  "settings":[
+  {
+  "type":"image_picker",
+  "id":"image",
+  "label":"Nav Image"
+  },
+  { 
+  "type":"text",
+  "id":"text",
+  "label":"Nav Title"
+
+  },
+  {
+  "type":"url",
+  "id":"url",
+  "label":"URL"
+  }
+  ]
+  }
+  ],"presets":[
+  {
+  "name":"Custom Nav",
+  "category":"Custom"
+  }
+  ]
+
+  }
+  {% endschema %}
+
+ <style>
+
+  
+@media(min-width:750px){
+ .cstm__nav_slder{
+   display:none;
+ } 
+}
+  @media(max-width:749px){
+    .custom_nav .nav {
+      display: grid;
+      grid-auto-flow: column;
+      overflow-x: auto;
+      overflow-y: hidden;
+      text-align: center;
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+    }
+    .nav::-webkit-scrollbar {
+     display: none;
+    }
+    .custom_nav .nav_image img{
+      width:100%;
+      border-radius: 50%;
+    }
+    .custom_nav .cstm_menu {
+      color: #000;
+      font-size: 10px;
+      font-weight: 500;
+      text-align: center;
+      line-height: 10px;
+   }
+    .custom_nav .cstm_menu:hover{
+      color: #ffa822;
+   }
+  .custom_nav .nav_image {
+    transition: transform 1s;
+    padding-top:10px;
+   }
+  .custom_nav .nav_image:hover {
+    transform: scale(1.08);
+   }
+  .custom_nav .nav .section-title-nav{
+      width:6.5em;
+    }
+  .custom_nav .section-title-nav {
+      padding: 0 6px 0px 6px;
+     
+  }
+  }
+
+  </style>

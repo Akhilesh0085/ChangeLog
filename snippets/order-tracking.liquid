@@ -1,0 +1,83 @@
+{% for item in order.line_items %}
+  {% for i in (1..item.quantity) %}
+<div  class="order__tracking_details">
+  <div class="order-item-status">
+    <div class="order_order_cancel"><span class="order__status_label order_status_btn">PROCESSING</span>
+      <span class="main__order_cancel">
+        <button class="retun__btn" id="{{ order.id }}{% if item.quantity > 1 %}_{{ forloop.index0 }}{% endif %}">Return</button>
+        <button class="cancel__btn" id="{{ order.id }}{% if item.quantity > 1 %}_{{ forloop.index0 }}{% endif %}">Cancel</button>
+        {% unless item.variant.price < item.price %}
+          <button
+            order-id="{{ order.name }}"
+            variant-id="{{ item.id }}"
+            data-handle="{{ item.product.handle }}"
+            data-id="{{ item.product.selected_or_first_available_variant.id }}"
+            class="exchange__btn"
+            id="{{ order.id }}-{{ item.id }}"
+            line-id="{{ item.id }}{% if item.quantity > 1 %}-{{ forloop.index0 }}{% endif %}"
+          >
+            Exchange
+          </button>
+        {% endunless %}
+      </span>
+    </div>
+    <div class="order_status_message order_status_text">Your item is being processed and will be soon delivered at your doorstep.</div>
+  </div> 
+  <div class="row order-detail-item">
+    <div class="col-md-5 col-sm-6 col-12">
+      <div class="row">
+        <div class="col-md-6 col-6">
+          <a href="{{ item.url }}" class="">
+            <img src="{{ item.image |img_url:'master' }}" alt="{{ item.image.alt }}" title="{{ item.image.alt }}" class="item-photo w-100 gm-added gm-loaded gm-observing gm-observing-cb" loading="lazy" width="" height="">
+          </a>
+        </div>
+        <div class="col-md-6 col-6 p-0 order-detail-content">
+          <h2  class="item-name font-medium">{{ item.title }}</h2>
+          <div>
+            <p class="size text-right">
+              <span class="pull-left">SIZE : </span> 
+              <span class="size">{{ item.variant.title }}</span></p>
+          </div>
+          <p class="size text-right">
+            <span class="pull-left">Price</span>
+            <span class="size">{{ item.price |money }}</span></p> 
+          <p class="size text-right">
+            <span class="pull-left">Qty</span> <span   class="size">1</span></p> 
+          <p class="size text-right"><span class="pull-left">Discount</span> <span class="size">{{ item.total_discount |money }}</span></p> 
+          <p class="size text-right"><span class="pull-left">Subtotal</span> <span class="size font-bold">{{ item.price  |money }}</span></p>
+          <p class="size text-right"><span class="pull-left">Tracking Number</span>
+            <span class="size font-bold">
+              {% if item.fulfillment.tracking_number %}
+              {{ item.fulfillment.tracking_number }}
+              {% else %}[]
+              {% endif %}
+            </span>
+          </p>
+          <p class="size text-right"><span class="pull-left">Shipping Provider</span> 
+            <span class="size font-bold">
+              {% if item.fulfillment.tracking_company %}
+              {{ item.fulfillment.tracking_company }}
+              {% else %}[]{% endif %}
+            </span>
+          </p>
+          </div>
+      </div>
+    </div>
+    <div class="col-md-7 col-sm-6 col-12 trckr-main">
+      <div class="trckr-main">
+        <ol class="progtrckr">
+          <li class="order_created progtrckr-done">
+            <span>order created <span  class="">{{ order.created_at | date: "%Y-%m-%d" }}</span></span></li>
+          <li class="order_processing progtrckr-done inactive"><span  >processing</span></li>
+          <li class="order_dispatched progtrckr-done inactive"><span  >dispatched</span></li>
+          <li class="order_delivered progtrckr-done inactive"><span  >delivered</span></li>
+        </ol>
+      </div>
+    </div> 
+    {% if item.fulfillment.tracking_url %}<div class="status-view-more"><a href="{{ item.fulfillment.tracking_url }}" target="_blank">Track Order</a></div>{% endif %}
+  </div>
+</div>
+             {% endfor %}
+    
+  
+{% endfor %}

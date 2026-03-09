@@ -1,0 +1,174 @@
+<!--------------Snippet/collection-faq.liquid---------------->
+
+
+<div class="collection_faq-section page-width">
+  {% if collection.metafields.custom.faq_heading != blank %}
+    <h2 class="collection_faq-heading">{{ collection.metafields.custom.faq_heading }}</h2>
+  {% endif %}
+
+  <div class="collection_faq-items">
+
+    {% if collection.metafields.custom.faq_1 != blank %}
+      <div class="collection_faq-item active">
+        <button class="collection_faq-question">
+          {{ collection.metafields.custom.faq_1 }}
+          <span class="collection_icon">−</span>
+        </button>
+        <div class="collection_faq-answer" style="display:block;">
+          {{ collection.metafields.custom.faq_ans_1 | metafield_tag }}
+        </div>
+      </div>
+    {% endif %}
+
+    {% if collection.metafields.custom.faq_2 != blank %}
+      <div class="collection_faq-item">
+        <button class="collection_faq-question">
+          {{ collection.metafields.custom.faq_2 }}
+          <span class="collection_icon">+</span>
+        </button>
+        <div class="collection_faq-answer">
+          {{ collection.metafields.custom.faq_ans_2 | metafield_tag }}
+        </div>
+      </div>
+    {% endif %}
+
+    {% if collection.metafields.custom.faq_3 != blank %}
+      <div class="collection_faq-item">
+        <button class="collection_faq-question">
+          {{ collection.metafields.custom.faq_3 }}
+          <span class="collection_icon">+</span>
+        </button>
+        <div class="collection_faq-answer">
+          {{ collection.metafields.custom.faq_ans_3 | metafield_tag }}
+        </div>
+      </div>
+    {% endif %}
+
+    {% if collection.metafields.custom.faq_4 != blank %}
+      <div class="collection_faq-item">
+        <button class="collection_faq-question">
+          {{ collection.metafields.custom.faq_4 }}
+          <span class="collection_icon">+</span>
+        </button>
+        <div class="collection_faq-answer">
+          {{ collection.metafields.custom.faq_ans_4 | metafield_tag }}
+        </div>
+      </div>
+    {% endif %}
+
+    {% if collection.metafields.custom.faq_5 != blank %}
+      <div class="collection_faq-item">
+        <button class="collection_faq-question">
+          {{ collection.metafields.custom.faq_5 }}
+          <span class="collection_icon">+</span>
+        </button>
+        <div class="collection_faq-answer">
+          {{ collection.metafields.custom.faq_ans_5 | metafield_tag }}
+        </div>
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+
+<style>
+.collection_faq-section {
+  width: 70%;
+  margin: 20px auto;
+  font-family: Avenir-Roman;
+  font-size: 1.6rem;
+}
+.collection_faq-heading{
+  text-align: center;
+  font-family: Avenir-Roman;
+  font-size: 2rem;
+}
+
+.collection_faq-item {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.collection_faq-question {
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.collection_faq-answer {
+  display: none;
+  padding: 10px 0;
+  font-size: 15px;
+  color: #444;
+}
+
+.collection_faq-item.active .collection_faq-answer {
+  display: block;
+}
+
+.collection_faq-item .collection_icon {
+  font-size: 20px;
+}
+
+.collection_faq-item.active .collection_icon {
+  content: "−";
+}
+
+@media screen and (max-width: 769px) {
+.collection_faq-section {
+  width: 100%;
+}
+.collection_faq-question{
+font-size: 15px;
+}
+.collection_faq-answer{
+font-size: 13px;
+line-height: 1.5;
+}
+}
+
+</style>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const faqs = document.querySelectorAll(".collection_faq-item");
+
+  // Page load -> first FAQ open
+  if (faqs.length > 0) {
+    faqs[0].classList.add("active");
+    faqs[0].querySelector(".collection_faq-answer").style.display = "block";
+    faqs[0].querySelector(".collection_icon").textContent = "−";
+  }
+
+  faqs.forEach((faq) => {
+    const question = faq.querySelector(".collection_faq-question");
+
+    question.addEventListener("click", () => {
+      const isActive = faq.classList.contains("active");
+
+      faqs.forEach(f => {
+        f.classList.remove("active");
+        f.querySelector(".collection_faq-answer").style.display = "none";
+        f.querySelector(".collection_icon").textContent = "+";
+      });
+
+      if (!isActive) {
+        faq.classList.add("active");
+        faq.querySelector(".collection_faq-answer").style.display = "block";
+        faq.querySelector(".collection_icon").textContent = "−";
+      }
+    });
+  });
+});
+</script>
+
+
+

@@ -1,0 +1,78 @@
+<div class="page-width">
+{% if product.metafields.custom.popular_tags != blank %}
+  <div class="popular_srch">
+    <h3>Popular Searches:</h3>
+    {{ product.metafields.custom.popular_tags | metafield_tag }}
+  </div>
+{% endif %}
+{% if section.settings.category_text != blank %}
+    <div class="category_occasion">
+      <h3>Shop By Category:</h3>
+      {{ section.settings.category_text }}
+    </div>
+{% endif %}
+{% if section.settings.occasion_text != blank %}
+    <div class="category_occasion">
+      <h3>Shop By Occasion:</h3>
+      {{ section.settings.occasion_text }}
+    </div>
+{% endif %}
+</div>
+
+
+{% schema %}
+  {
+    "name": "Product SEO Footer",
+    "settings": [
+      {
+        "type":"richtext",
+        "id":"category_text",
+        "label":"Category Text"
+      },
+      {
+        "type":"richtext",
+        "id":"occasion_text",
+        "label":"Occasion Text"
+      }
+    ],
+    "presets":[
+      {
+        "name":"Product SEO Footer"
+      }
+    ]
+  }
+{% endschema %}
+
+<style>
+.popular_srch p,
+.category_occasion p{
+  font-size: 13px;
+  line-height: 20px;
+  letter-spacing: .02rem;
+  text-transform: capitalize;
+  font-family: Avenir-Roman;
+}
+.popular_srch a{
+   color: #000;
+   border-bottom: 1px solid #00000026;
+   text-decoration: none;
+}
+.popular_srch h3,
+.category_occasion h3{
+  margin-top: 25px;
+  margin-bottom:9px;
+  line-height: 15px;
+  font-size: 14px;
+  letter-spacing: 0px;
+  font-weight: 600;
+  font-family: Avenir-Roman;
+}
+.category_occasion a{
+   color: #000;
+   border-bottom: 1px solid #000;
+   text-decoration: none;
+}
+.category_occasion a span{
+   text-decoration: none !important;
+}
+</style>

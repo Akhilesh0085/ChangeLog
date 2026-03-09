@@ -1,0 +1,140 @@
+<!-- -------- /section/site-map.liquid --------- -->
+<div class="site__map">
+  <h2 class="section_title font-bold-heading">{{ section.settings.section_title }}</h2>
+  <div class="site-map__navbar">
+    <nav>
+      <ul class="footer__menu">
+        <h4>
+          <li><a class="a font-bold-heading" href="/">Home</a></li>
+        </h4>
+      </ul>
+      <ul class="menu">
+        {% for link in linklists['main-menu'].links %}
+          <h4>
+            <li class="li">
+              <a class="a font-bold-heading" href="{{ link.url }}">{{ link.title }}</a>
+              {% if link.links.size > 0 %}
+                <ul class="submenu">
+                  {% for sublink in link.links %}
+                    <li class="list font-bold-heading">
+                      <a href="{{ sublink.url }}">{{ sublink.title }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </li>
+          </h4>
+        {% endfor %}
+      </ul>
+
+      <ul class="footer__menu menu">
+        {% for link in linklists['help-support'].links %}
+          <h4>
+            <li>
+              <a class="a font-bold-heading" href="{{ link.url }}">{{ link.title }}</a>
+              {% if link.links.size > 0 %}
+                <ul class="submenu">
+                  {% for sublink in link.links %}
+                    <li class="list font-bold-heading">
+                      <a href="{{ sublink.url }}">{{ sublink.title }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </li>
+          </h4>
+        {% endfor %}
+      </ul>
+    </nav>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Site Map",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Site Map Title"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Site Map",
+      "category": "custom"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .site__map{
+    padding-bottom: 72px;
+  }
+  .section_title {
+    text-align: center;
+    margin: 0;
+    padding: 15px;
+  }
+  .section_title:after {
+    height: 2px;
+    width: 60px;
+    content: "";
+    display: block;
+    margin: 5px auto 0px;
+    border-bottom: 2px solid #bf1616;
+  }
+  .site-map__navbar nav .menu h4, ul.footer__menu h4 {
+    width: calc(50% - 1rem);
+    background: #f1f1f1;
+    padding: 5px 10px;
+    margin: 0;
+  }
+  .site-map__navbar nav .menu, ul.footer__menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    align-items: flex-start;
+    padding: 0px 40px 0px 40px;
+  }
+  .site-map__navbar nav .menu li a, ul.footer__menu h4 li a {
+    text-decoration: none;
+    text-transform: capitalize;
+    color: #000;
+    font-size:14px;
+  }
+  .site-map__navbar nav .menu .li, ul.footer__menu h4 li {
+    list-style: none;
+  }
+  .site-map__navbar nav .menu .list {
+    list-style: inside;
+  }
+  .site-map__navbar nav .menu .submenu {
+    padding: 15px 15px 0px 15px;
+    line-height: 1.5;
+    background: #fff;
+    margin: 5px -10px -5px;
+  }
+  .site-map__navbar nav .menu .a:before, .footer__menu .a:before {
+    content: "";
+    height: 7px;
+    width: 7px;
+    display: inline-block;
+    vertical-align: middle;
+    background-color: #fff;
+    border: 2px solid #fbb03b;
+    border-radius: 8px;
+    margin-top: -2px;
+    margin-right: 5px;
+  }
+
+  @media(max-width: 767px) {
+    .site-map__navbar nav .menu, ul.footer__menu  {
+      flex-direction: column;
+      padding: 15px;
+    }
+    .site-map__navbar nav .menu h4,  ul.footer__menu h4{
+      width: 100%;
+    }
+  }
+</style>

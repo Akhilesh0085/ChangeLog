@@ -1,0 +1,91 @@
+<!------- /section/product-custom-tabs.liquid --------------->
+<div class="def_accordion">
+
+<accordion-tab class="cstm__tab product__accordion accordion font-regular" {{ block.shopify_attributes }}>
+                  <details
+                    {% if block.settings.keep_open %}
+                      open
+                    {% endif %}
+                  >
+                    <summary>
+                      <span class="summary__title">
+                      <i  class="fa fa-file-text-o firstIconDetails"></i>
+                        <h2 class="accordion__title">
+                          Product Details
+                        </h2>
+                      </span>
+                      {% render 'icon', icon: 'caret' %}
+                    </summary>
+                    <div class="accordion__content custom__liquid-{{ section.id }}">
+                      {% render 'product-additional-details',product:product %}
+                    </div>
+                  </details>
+                </accordion-tab>
+
+  {% if  product.description != blank %}
+<accordion-tab class="cstm__tab product__accordion accordion font-regular" {{ block.shopify_attributes }}>
+                  <details
+                    {% if block.settings.keep_open %}
+                      open
+                    {% endif %}
+                  >
+                    <summary>
+                      <span class="summary__title">
+                      <i  class="fa fa-info-circle firstIconDetails"></i>
+                        <h2 class="accordion__title">
+                          Know Your Aurelia-Wear
+                        </h2>
+                      </span>
+                      {% render 'icon', icon: 'caret' %}
+                    </summary>
+                    <div class="accordion__content custom__liquid-{{ section.id }} rte">
+                     {{ product.description }}
+                    </div>
+                  </details>
+                </accordion-tab>
+  {% endif %}
+  {% if  product.metafields.custom.styling_suggestions.value != blank %}
+<accordion-tab class="cstm__tab product__accordion accordion font-regular" {{ block.shopify_attributes }}>
+                  <details
+                    {% if block.settings.keep_open %}
+                      open
+                    {% endif %}
+                  >
+                    <summary>
+                      <span class="summary__title">
+                      <i class="fa fa-lightbulb-o firstIconDetails"></i>
+                        <h2 class="accordion__title">
+                          Styling Suggestion
+                        </h2>
+                      </span>
+                      {% render 'icon', icon: 'caret' %}
+                    </summary>
+                    <div class="accordion__content custom__liquid-{{ section.id }} rte">
+                     {{ product.metafields.custom.styling_suggestions.value }}
+                    </div>
+                  </details>
+                </accordion-tab>
+  {% endif %}
+    {% if product.metafields.custom.sku.value != blank %}
+<accordion-tab class="cstm__tab product__accordion accordion font-regular" {{ block.shopify_attributes }}>
+                  <details
+                    {% if block.settings.keep_open %}
+                      open
+                    {% endif %}
+                  >
+                    <summary>
+                      <span class="summary__title">
+                         <i class="fa fa-user firstIconDetails"></i>                        
+                         <h2 class="accordion__title">
+                         Manufacturing Details
+                        </h2>
+                      </span>
+                      {% render 'icon', icon: 'caret' %}
+                    </summary>
+                    <div class="accordion__content custom__liquid-{{ section.id }} rte">
+                    {% render 'manufacturing-details',product:product %}
+                    </div>
+                  </details>
+                </accordion-tab>
+  {% endif %}
+ </div>

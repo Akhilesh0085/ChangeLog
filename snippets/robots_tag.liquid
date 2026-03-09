@@ -1,0 +1,16 @@
+{% comment %} Code for Robots Tag -AK {% endcomment %}
+
+{% if template.name == 'index' %}
+        <meta name="robots" content="index, follow">
+  
+{% elsif template.name == 'product' %}
+        <meta name="robots" content="index, follow">
+  
+{% elsif template.name == 'collection' %}
+        <meta name="robots" content="index, follow">
+  
+{% elsif template.name == 'article' %}
+        <meta name="robots" content="index, follow">
+{% else %}
+        <meta name="robots" content="noindex, nofollow">
+{% endif %}

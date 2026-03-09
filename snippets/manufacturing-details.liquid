@@ -1,0 +1,24 @@
+<div id="hidden" class="Manufacturing-Details__container">
+   <ul 
+      class="Manufacturing-Details__row meta__description"
+    >
+   {% if product.metafields.custom.sku.value != blank %}
+     <li class="label font-regular">SKU</li>
+      <li class="font-data font-regular">{{ product.metafields.custom.sku.value }}</li>
+   {% endif %}
+   </ul>
+  {% assign Manufacturing__meta = product.metafields.custom.manufacturing_meta.value %}
+  {% for Manufacturing__item in Manufacturing__meta %}
+    <ul 
+      class="Manufacturing-Details__row meta__description"
+    >
+      {% assign aks = Manufacturing__item | split: ' ->' %}
+      {% if aks[0] != blank %}
+        <li class="label font-regular">{{ aks[0] }}</li>
+      {% endif %}
+      {% if aks[1] != blank %}
+        <li class="font-data font-regular">{{ aks[1] }}</li>
+      {% endif %}
+    </ul>
+  {% endfor %}
+</div>

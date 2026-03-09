@@ -1,0 +1,906 @@
+{% comment %}
+  Renders a product card
+
+  Accepts:
+  - card_product: {Object} Product Liquid object (optional)
+  - card_collection: {Object} Collection Liquid object (optional)
+  - media_size: {String} Size of the product image card. Values are "square" and "portrait". Default is "square" (optional)
+  - show_secondary_image: {Boolean} Show the secondary image on hover. Default: false (optional)
+  - show_quick_buy: {Boolean} Show the quick add to cart button. Default: false (optional)
+  - show_vendor: {Boolean} Show the product vendor. Default: false
+  - show_rating: {Boolean} Show the product rating. Default: false
+  - enable_quick_view: {Boolean} Enable the quick view feature. Default: true
+  - enable_color_swatches: {Boolean} Enable the product color swatches. Default: false
+  - enable_countdown: {Boolean} Enable the product countdown. Default: true
+  - enable_image_fill: {Boolean} Enable the image fill. Default: true
+  - lazy_load: {Boolean} Image should be lazy loaded. Default: true (optional)
+  - section_id: {String} The ID of the section that contains this card.
+  - button_custom_class: {String} custom class for the button
+
+  Usage:
+  {% render 'card-product', show_vendor: section.settings.show_vendor %}
+{% endcomment %}
+
+{%- liquid
+  assign show_countdown = false
+  if enable_countdown and card_product.metafields.theme.countdown.value != blank
+    assign now_time = 'now' | date: '%s' | times: 1
+    assign countdown_time = card_product.metafields.theme.countdown.value | date: '%s' | times: 1
+    if countdown_time > now_time
+      assign show_countdown = true
+    endif
+  endif
+
+  assign show_quick_buy_2nd = true
+  assign options_count = card_product.options.size
+
+  if settings.color_swatches_enabled == false
+    assign enable_color_swatches = false
+  endif
+
+  if button_custom_class
+    assign button_class = button_custom_class
+  else
+    assign button_class = 'button button--small'
+  endif
+
+  if settings.disable_collection_portion
+    assign card_url = card_product.url
+    assign card_url_with_default = card_product.url | default: '#'
+  else
+    assign card_url = card_product.url | within: card_collection
+    assign card_url_with_default = card_product.url | within: card_collection | default: '#'
+  endif
+-%}
+
+{%- if enable_color_swatches -%}
+  {%- capture color_swatches -%}
+    {%- liquid
+      assign swatch_trigger = 'products.product.color_swatch_trigger' | t | downcase
+      assign swatch_file_extension = 'png'
+      assign color_count = 0
+      assign has_color_option = false
+    -%}
+
+    {%- for option in card_product.options_with_values -%}
+      {%- liquid
+        assign option_name = option.name | downcase
+        assign is_color = false
+        if option_name contains swatch_trigger
+          assign is_color = true
+        elsif swatch_trigger == 'color' and option_name contains 'colour'
+          assign is_color = true
+        endif
+      -%}
+      {%- if is_color -%}
+        {%- liquid
+          assign option_index = forloop.index0
+          assign values = ''
+          assign max_count = settings.color_swatches_max_items
+          assign has_color_option = true
+        -%}
+        <div class="card__colors card__colors--{{ settings.color_swatches_size }} card__colors--{{ card_product.id }}">
+          {%- for variant in card_product.variants -%}
+            {%- assign value = variant.options[option_index] %}
+            {%- assign color_variant_image = '' -%}
+            {%- unless values contains value -%}
+              {%- liquid
+                assign values = values | join: ',' | append: ',' | append: value | split: ','
+                if settings.color_swatches_source == 'variant'
+                  assign color_variant_image = variant.image | image_url: width: 100
+                else
+                  assign color_file_name = card_product.id | append: '_' | append: value | handle | append: '.' | append: swatch_file_extension
+                  assign color_file_name_alt = value | handle | append: '.' | append: swatch_file_extension
+                  assign color_image = color_file_name | file_img_url: '50x50' | prepend: 'https:' | split: '?' | first
+                  assign color_image_alt = color_file_name_alt | file_img_url: '50x50' | prepend: 'https:' | split: '?' | first
+                endif
+                assign color_swatch_fallback = value | split: ' ' | last | handle
+                assign color_count = color_count | plus: 1
+              -%}
+              {%- if color_count <= max_count -%}
+                {%- liquid
+                  assign enable_quick_buy_2nd = false
+                  if show_quick_buy_2nd and has_color_option and options_count <= 2
+                    assign enable_quick_buy_2nd = true
+                  endif
+                -%}
+                <color-swatch
+                  class="color-swatch"
+                  style="--swatch-background-color: {{ color_swatch_fallback }};
+                    {%- if color_variant_image != '' -%}
+                      --swatch-background-image: url({{ color_variant_image }});
+                    {%- else -%}
+                      {%- if images[color_file_name] != blank -%}--swatch-background-image: url({{ color_image }});{%- elsif images[color_file_name_alt] != blank -%}--swatch-background-image: url({{ color_image_alt }});{%- endif -%}
+                    {%- endif -%}"
+                  title="{{ value | escape }}"
+                  {%- if variant.image %}
+                    data-srcset="{%- if variant.image.width >= 165 -%}{{ variant.image | image_url: width: 165 }} 165w{%- endif -%}
+                      {%- if variant.image.width >= 360 -%},{{ variant.image | image_url: width: 360 }} 360w{%- endif -%}
+                      {%- if variant.image.width >= 533 -%},{{ variant.image | image_url: width: 533 }} 533w{%- endif -%}
+                      {%- if variant.image.width >= 720 -%},{{ variant.image | image_url: width: 720 }} 720w{%- endif -%}
+                      {%- if variant.image.width >= 940 -%},{{ variant.image | image_url: width: 940 }} 940w{%- endif -%}
+                      {%- if variant.image.width >= 1066 -%},{{ variant.image | image_url: width: 1066 }} 1066w{%- endif -%},
+                      {{- variant.image | image_url }} {{ variant.image.width }}w"
+                    data-src="{{ variant.image | image_url: width: 533 }}"
+                  {% elsif card_product.featured_media %}
+                    data-srcset="{%- if card_product.featured_media.width >= 165 -%}{{ card_product.featured_media | image_url: width: 165 }} 165w{%- endif -%}
+                      {%- if card_product.featured_media.width >= 360 -%},{{ card_product.featured_media | image_url: width: 360 }} 360w{%- endif -%}
+                      {%- if card_product.featured_media.width >= 533 -%},{{ card_product.featured_media | image_url: width: 533 }} 533w{%- endif -%}
+                      {%- if card_product.featured_media.width >= 720 -%},{{ card_product.featured_media | image_url: width: 720 }} 720w{%- endif -%}
+                      {%- if card_product.featured_media.width >= 940 -%},{{ card_product.featured_media | image_url: width: 940 }} 940w{%- endif -%}
+                      {%- if card_product.featured_media.width >= 1066 -%},{{ card_product.featured_media | image_url: width: 1066 }} 1066w{%- endif -%},
+                      {{- card_product.featured_media | image_url }} {{ card_product.featured_media.width }}w"
+                    data-src="{{ card_product.featured_media | image_url: width: 533 }}"
+                  {% endif -%}
+
+                  {%- if card_product.available and enable_quick_buy_2nd %}
+                    data-variant-id="{{ variant.id }}"
+                    data-product-handle="{{ card_product.handle | escape }}"
+                    data-collection-handle="{{ collection.handle | escape }}"
+                  {% endif -%}
+                >
+                  <a href="{{ variant.url }}" tabindex="-1">
+                    <span class="visually-hidden">{{ value }}</span>
+                  </a>
+                </color-swatch>
+              {%- endif -%}
+            {%- endunless -%}
+          {%- endfor -%}
+          {%- if color_count > max_count -%}
+            <a class="link link--text" href="{{ card_url }}" tabindex="-1">
+              <small>+{{ color_count | minus: max_count }}</small>
+            </a>
+          {%- endif -%}
+        </div>
+        {%- if color_count < 2 -%}
+          <style>
+            .card__colors--{{ card_product.id }} {
+              display: none !important;
+            }
+          </style>
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endcapture -%}
+{%- endif -%}
+
+<link href="{{ 'component-rating.css' | asset_url }}" rel="preload" as="style">
+{{ 'component-rating.css' | asset_url | stylesheet_tag }}
+
+<div class="card-wrapper">
+  <a href="{{ card_url_with_default }}" class="full-unstyled-link-1">
+    <span class="visually-hidden">{{ card_product.title | escape }}</span>
+  </a>
+
+  <use-animate
+    data-animate="zoom-fade-small"
+    class="card wishlist_product_card card--product{% if card_product.featured_media == nil %} card--text{% endif %} {% if template.name == 'collection' %}hoverCard{% endif %}"
+    tabindex="-1"
+  >
+
+
+      <div class="cstm_wishlist_icon product_{{card_product.id}}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 135 125" fill="none" class="before_wish"
+            variant-id="{{ card_product.selected_or_first_available_variant.id }}"
+          {% if customer %}
+            customer-email="{{ customer.email }}"
+            customer-phone="{{ customer.phone }}"
+            customer-id="{{ customer.id }}"
+          {% endif %}
+            productid = "{{ card_product.id }}"
+            wisthlist-date ="{{ 'now' | date: '%d-%m-%Y' }}"
+            product-handle={{ card_product.handle }}
+            >
+          <path d="M69.8125 12.7402C77.0637 6.37196 86.5082 3.07373 96.1475 3.54395C105.787 4.01422 114.865 8.21598 121.462 15.2598C128.059 22.3037 131.657 31.638 131.495 41.2871C131.333 50.9361 127.423 60.1437 120.593 66.9619L120.591 66.9639L86.4766 101.077L67.4902 120.051L22.4326 75.001L14.4043 66.959L14.4004 66.9561L13.7695 66.3096C7.33268 59.5606 3.66038 50.6272 3.50488 41.2803C3.34442 31.6319 6.94394 22.2994 13.541 15.2568C20.1381 8.21434 29.2159 4.01365 38.8545 3.54395C48.4936 3.07424 57.9431 6.37285 65.1934 12.7402L67.5029 14.7686L69.8125 12.7402Z" stroke="#BF1616" stroke-width="7"/>
+        </svg>
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 135 125" fill="none" class="after_wish" style="display: none;">
+        <path d="M67.5032 10.1103C75.4374 3.14222 85.7711 -0.466215 96.3182 0.0483521C106.865 0.562919 116.799 5.16013 124.017 12.8675C131.235 20.5748 135.172 30.7877 134.994 41.3456C134.817 51.9035 130.539 61.9783 123.066 69.4387L88.9514 103.552L67.4902 125L19.9582 77.4759L11.9274 69.4322C4.45663 61.9707 0.181264 51.8958 0.00563226 41.3387C-0.17 30.7815 3.76787 20.5701 10.9863 12.8642C18.2048 5.15825 28.1377 0.562254 38.684 0.0483117C49.2304 -0.465631 59.5697 3.14278 67.5032 10.1103Z" fill="#BF1616"/>
+        </svg>
+    </div>
+
+
+    {%- if card_product.featured_media -%}
+      {%- liquid
+        assign featured_media_aspect_ratio = card_product.featured_media.aspect_ratio
+
+        if card_product.featured_media.aspect_ratio == null
+          assign featured_media_aspect_ratio = 1
+        endif
+
+        assign card_product_media = card_product.featured_media
+      -%}
+
+      {%- capture sizes -%}(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 10rem) / 4), (min-width: 750px) calc((100vw - 10rem) / 3), calc(100vw - 3rem){%- endcapture -%}
+      {%- liquid
+        assign image_loading = 'eager'
+        if lazy_load
+          assign image_loading = 'lazy'
+        endif
+
+        assign widths = '165, 360, 535, 750, 940, 1100'
+
+        assign image = card_product.featured_media
+        assign alt = image.alt | escape | split: '#' | first
+      -%}
+
+      {% if card_product_media.media_type == 'video' or card_product_media.media_type == 'external_video' %}
+        <div class="card__media media-wrapper" tabindex="-1">
+          <noscript>
+            <div class="card deferred-media__poster">
+              <span class="deferred-media__poster-button motion-reduce">
+                {%- render 'icon', icon: 'play-solid' -%}
+              </span>
+              <div
+                class="card-media-video media media--{{ media_size }}"
+                style="--image-ratio-percent: {% if image != blank %}{{ 1 | divided_by: image.aspect_ratio | times: 100 }}%{% else %}100%{% endif %};"
+              >
+                {%- if image.preview_image != blank -%}
+                  {{
+                    image.preview_image
+                    | image_url: width: 1100
+                    | image_tag:
+                      loading: image_loading,
+                      class: 'motion-reduce',
+                      sizes: sizes,
+                      widths: widths,
+                      alt: alt,
+                      is: 'lazy-image'
+                  }}
+                {%- else -%}
+                  {{ 'hero-apparel-3' | placeholder_svg_tag: 'placeholder-svg placeholder collage-card__image' }}
+                {%- endif -%}
+              </div>
+            </div>
+          </noscript>
+
+          {%- liquid
+            assign ratio_diff = card_product_media.aspect_ratio | minus: image.aspect_ratio | abs
+            if ratio_diff < 0.01 and ratio_diff > 0
+              assign fix_ratio = true
+            endif
+          %}
+          <deferred-media
+            class="card-media-video deferred-media no-js-hidden media-wrapper media-wrapper--large{% if fix_ratio %} media-fit-cover{% endif %}"
+            data-media-id="{{ card_product_media.id }}"
+          >
+            <button
+              id="Deferred-Poster-{{ card_product_media.id }}"
+              class="card deferred-media__poster"
+              type="button"
+            >
+              <span class="deferred-media__poster-button motion-reduce">
+                {%- render 'icon', icon: 'play-solid' -%}
+              </span>
+              <use-animate data-animate="zoom-fade-small" class="card-media-video-wrapper media-wrapper">
+                {%- if image != blank -%}
+                  <div
+                    class="image-animate media media--{{ media_size }}"
+                    style="--image-ratio-percent: {{ 1 | divided_by: image.aspect_ratio | times: 100 }}%;"
+                  >
+                    {%- assign alt = 'sections.video.load_video'
+                      | t: description: block.settings.description
+                      | escape
+                    -%}
+                    {{
+                      image.preview_image
+                      | image_url: width: 1100
+                      | image_tag:
+                        loading: image_loading,
+                        class: 'motion-reduce',
+                        sizes: sizes,
+                        widths: widths,
+                        alt: alt,
+                        is: 'lazy-image'
+                    }}
+                  </div>
+                {%- else -%}
+                  <div
+                    class="image-animate media media--{{ media_size }}"
+                    style="--image-ratio-percent: 100%;"
+                  >
+                    {{ 'hero-apparel-3' | placeholder_svg_tag: 'placeholder-svg placeholder collage-card__image' }}
+                  </div>
+                {%- endif -%}
+              </use-animate>
+            </button>
+            <template>
+              {%- if card_product_media.media_type == 'external_video' -%}
+                <video-section
+                  data-init-mode="template"
+                  data-parent="deferred-media"
+                  data-loop="1"
+                  data-type="{{ card_product_media.host }}"
+                  data-video-id="{{ card_product_media.external_id }}"
+                ></video-section>
+              {%- else -%}
+                {{
+                  card_product_media
+                  | media_tag: image_size: '1100x', autoplay: true, loop: true, controls: true, muted: true
+                }}
+              {%- endif -%}
+            </template>
+          </deferred-media>
+        </div>
+      {% endif %}
+
+      <a href="{{ card_url }}" class="card__media media-wrapper" tabindex="-1">
+        <div
+          {% if card_product_media.media_type == 'video' or card_product_media.media_type == 'external_video' %}
+            style="display: none"
+          {% endif %}
+          class="card--image-animate coll_product_card image-animate media media--{{ media_size }} {% unless enable_image_fill %} media--image-contain{% endunless %}"
+          {%- if media_size == 'adapt' %}
+            style="--image-ratio-percent: {{ 1 | divided_by: featured_media_aspect_ratio | times: 100 }}%;"
+          {% endif -%}
+        >
+          {% comment %} {% if template.name == 'collection' and section.settings.enable_img_slider == true %}
+            <div class="imageSlider">
+              {% for image in card_product.media limit:6 %}
+                <img
+                  class="motion-reduce"
+                  src="{{ image | img_url: '400x' }}"
+                  alt="{{ card_product.title | escape }}"
+                  title="{{ card_product.title | escape }}"
+                  width="665"
+                  height="1000"
+                  style="width:100%; height: auto;"
+                loading='lazy'
+                >
+              {% endfor %}
+            </div>
+          {% else %}
+            {% if lazy_load == true %}
+              <img
+                class="motion-reduce lazyload-image"
+                data-src="{{ image.preview_image | img_url: '400x' }}"
+                src="{{ image.preview_image | img_url: '20x' }}"
+                alt="{{ card_product.title | escape }}"
+                title="{{ card_product.title | escape }}"
+                width="665"
+                height="1000"
+                style="width:100%; height: auto;"
+                loading="lazy"
+              >
+            {% else %}
+              <img
+                class="motion-reduce"
+                src="{{ image.preview_image | img_url: '400x' }}"
+                alt="{{ card_product.title | escape }}"
+                title="{{ card_product.title | escape }}"
+                width="665"
+                height="1000"
+                style="width:100%; height: auto;"
+                loading="lazy"
+              >
+            {% endif %}
+
+            {% if card_product.media[1] != null and show_secondary_image %}
+              {% assign image_2nd = card_product.media[1] %}
+              {% assign alt_2nd = image_2nd.alt | escape | split: '#' | first %}
+              <img
+                class="motion-reduce"
+                src="{{ image_2nd.preview_image | img_url: '400x' }}"
+                alt="{{ card_product.title | escape }}"
+                title="{{ card_product.title | escape }}"
+                width="665"
+                height="1000"
+                style="width:100%; height: auto;"
+                loading="lazy"
+              >
+            {% endif %}
+          {% endif %} {% endcomment %}
+
+
+           <div class="product-media-wrapper">
+            <div class="product-image-slideshow">
+              {% for media in card_product.media %}
+                {% if media.media_type == 'image' %}
+                  <img
+                    src="{{ media.preview_image | image_url: width: 600 }}"
+                    alt="{{ card_product.title | escape }}"
+                    loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                    class="{% if forloop.first %}active{% endif %}"
+                    style="width:100%; height:auto;"
+                    width=""
+                    height=""
+                  >
+                {% endif %}
+              {% endfor %}
+            </div>
+
+            <div class="product-dots vertical">
+              {% for media in card_product.media %}
+                {% if media.media_type == 'image' %}
+                  <span class="dot {% if forloop.first %}active{% endif %}"></span>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+
+
+        </div>
+      </a>
+    {%- else -%}
+      <div class="card__inner">
+        <a href="{{ card_url }}" class="media media--{{ media_size }}" tabindex="-1">
+          <div class="card__content">
+            <h3 class="card-information__text h3">{{ card_product.title | escape }}</h3>
+          </div>
+        </a>
+      </div>
+    {%- endif -%}
+  </use-animate>
+
+  <div class="card-information">
+    <div class="card-information__wrapper">
+      {%- if enable_color_swatches or show_vendor -%}
+        <div class="card-information__top">
+          {%- if show_vendor -%}
+            <span class="visually-hidden">{{ 'accessibility.vendor' | t }}</span>
+            <div class="card-article-info caption-with-letter-spacing">{{ card_product.vendor }}</div>
+          {%- endif -%}
+
+          {%- liquid
+            if enable_color_swatches and settings.color_swatches_position == 'top'
+              echo color_swatches
+            endif
+          -%}
+        </div>
+      {%- endif -%}
+
+      {%- if card_product.featured_media -%}
+        <a href="{{ card_url }}" class="card-information__text h4" tabindex="-1">
+          <div class="cstm_card_title">{{ card_product.title }}</div>
+        </a>
+      {%- endif -%}
+
+      {% comment %} TODO: metafield {% endcomment %}
+      <span class="caption-large light">{{ block.settings.text | escape }}</span>
+
+      {% render 'price', product: card_product %}
+
+      
+    {% if card_product.available %}
+  <div class="mobile__cart__icon">ADD TO CART</div>
+{% else %}
+   <div class="mobile__cart__icon">
+    {% assign sold_out_ids = '' %}
+      {% for variant in card_product.variants %}
+        {% unless variant.available %}
+          {% if sold_out_ids != '' %}
+            {% assign sold_out_ids = sold_out_ids | append: ',' | append: variant.id %}
+          {% else %}
+            {% assign sold_out_ids = variant.id %}
+          {% endif %}
+        {% endunless %}
+      {% endfor %}
+    <div class="notify-me-wrapper kkkk" ds="{{ customer.email }}">
+          {% # Kwikpass changes - [Starts] %}
+          {% comment %} <button class="sold_out_product_notify notify-me-btn mobile_notify_me_card"
+            id="notifyMeBtn"
+            variant-id="[{{ sold_out_ids }}]"
+            productid="{{ card_product.id }}"
+            notify-date="{{ 'now' | date: '%d-%m-%Y' }}"
+            {% if customer %}
+              customer-email="{{ customer.email }}"
+              customer-phone="{{ customer.phone }}"
+            {% endif %}
+          >
+            NOTIFY ME
+          </button> {% endcomment %}
+           <button class="sold_out_product_notify notify-me-btn mobile_notify_me_card"
+            id="notifyMeBtn"
+            variant-id="[{{ sold_out_ids }}]"
+            productid="{{ card_product.id }}"
+            notify-date="{{ 'now' | date: '%d-%m-%Y' }}"
+             customer-id="{{ customer.id }}"
+            {% if customer %}
+              customer-email="{{ customer.email }}"
+              customer-phone="{{ customer.phone }}"
+              customer-id="{{ customer.id }}"
+            {% endif %}
+            onclick="handleKpAndShopifyLogin(window.location.pathname);"
+          >
+            NOTIFY ME
+          </button>
+          {% # Kwikpass changes - [Ends] %}
+        </div>
+  </div>
+{% endif %}
+
+   <div class="cstm__card_bottom">
+      <div class="cstm__size_coll">
+       {% unless card_product.has_only_default_variant %} 
+        {% assign counter = 0 %}
+          {% for variant in card_product.variants %}
+            {% if variant.available %}
+            {% comment %}  {% if counter < 1  %} Size:- {% endif %}{% endcomment %}
+              <a href="{{ card_product.url }}?variant={{ variant.id }}" data-attr="{{ variant.id }}">  
+                {{ variant.title }}          
+              </a>
+              {% assign counter = counter | plus:1 %}
+            {% endif %}
+          {% endfor %}
+        {% endunless %}
+      </div>   
+      {% if card_product.available %}
+    <button type="button"  class="product-form__submit button button--secondary button--full-width cstm__card_button" data-id="" 
+      {% if card_product.selected_or_first_available_variant.compare_at_price > card_product.selected_or_first_available_variant.price %}
+        data-amount="{{ card_product.selected_or_first_available_variant.compare_at_price |minus:card_product.selected_or_first_available_variant.price |divided_by:100 }}"
+        data-percent="{{ card_product.selected_or_first_available_variant.compare_at_price | minus:card_product.selected_or_first_available_variant.price | times: 100 | divided_by: card_product.selected_or_first_available_variant.compare_at_price }}%"
+      {% endif %}
+      >Add to cart</button>
+{% else %}
+   
+    {% assign sold_out_ids = '' %}
+      {% for variant in card_product.variants %}
+        {% unless variant.available %}
+          {% if sold_out_ids != '' %}
+            {% assign sold_out_ids = sold_out_ids | append: ',' | append: variant.id %}
+          {% else %}
+            {% assign sold_out_ids = variant.id %}
+          {% endif %}
+        {% endunless %}
+      {% endfor %}
+    <div class="notify-me-wrapper for_notify_width" ds="{{ customer.email }}">
+      {% # Kwikpass changes - [Starts] %}
+          {% comment %} <button class="sold_out_product_notify notify-me-btn product-form__submit button button--secondary button--full-width"
+            id="notifyMeBtn"
+            variant-id="[{{ sold_out_ids }}]"
+            productid="{{ card_product.id }}"
+            notify-date="{{ 'now' | date: '%d-%m-%Y' }}"
+            {% if customer %}
+              customer-email="{{ customer.email }}"
+              customer-phone="{{ customer.phone }}"
+            {% endif %}
+          >
+            NOTIFY ME
+          </button> {% endcomment %}
+          <button class="sold_out_product_notify notify-me-btn product-form__submit button button--secondary button--full-width"
+            id="notifyMeBtn"
+            variant-id="[{{ sold_out_ids }}]"
+            productid="{{ card_product.id }}"
+            notify-date="{{ 'now' | date: '%d-%m-%Y' }}"
+             customer-id="{{ customer.id }}"
+            {% if customer %}
+              customer-email="{{ customer.email }}"
+              customer-phone="{{ customer.phone }}"
+              customer-id="{{ customer.id }}"
+            {% endif %}
+            onclick="handleKpAndShopifyLogin(window.location.pathname);"
+          >
+            NOTIFY ME
+          </button>
+          {% # Kwikpass changes - [Ends] %}
+        </div>
+  {% endif %}
+   </div>
+
+      {%- if show_rating and card_product.metafields.reviews.rating.value != blank -%}
+        {% liquid
+          assign rating_decimal = 0
+          assign decimal = card_product.metafields.reviews.rating.value.rating | modulo: 1
+          if decimal >= 0.3 and decimal <= 0.7
+            assign rating_decimal = 0.5
+          elsif decimal > 0.7
+            assign rating_decimal = 1
+          endif
+        %}
+        <div
+          class="rating"
+          role="img"
+          aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: card_product.metafields.reviews.rating.value, rating_max: card_product.metafields.reviews.rating.value.scale_max }}"
+        >
+          <span
+            aria-hidden="true"
+            class="rating-star"
+            style="--rating: {{ card_product.metafields.reviews.rating.value.rating | floor }}; --rating-max: {{ card_product.metafields.reviews.rating.value.scale_max }}; --rating-decimal: {{ rating_decimal }};"
+          ></span>
+        </div>
+        <p class="rating-text caption">
+          <span aria-hidden="true">
+            {{- card_product.metafields.reviews.rating.value }} /
+            {{ card_product.metafields.reviews.rating.value.scale_max -}}
+          </span>
+        </p>
+        <p class="rating-count caption">
+          <span aria-hidden="true">({{ card_product.metafields.reviews.rating_count }})</span>
+          <span class="visually-hidden">
+            {{- card_product.metafields.reviews.rating_count }}
+            {{ 'accessibility.total_reviews' | t -}}
+          </span>
+        </p>
+      {%- endif -%}
+
+      {%- liquid
+        if enable_color_swatches and settings.color_swatches_position == 'bottom'
+          echo color_swatches
+        endif
+      -%}
+    </div>
+    {% if template contains 'collection' and card_product.metafields.custom.similar_product.value != blank %}
+      <div class="main_similar" product-handle="{{ card_product.handle }}">
+        <span>Similar Products</span>
+        <img src="https://cdn.shopify.com/s/files/1/0776/0419/2550/files/similar.25570fb.png?v=1688710838">
+      </div>
+    {% endif %}
+    <div class="card-information__button  {% unless card_product.available %} cstm_sold_out {% endunless %}">
+      {%- if card_product.available -%}
+        {%- if show_countdown -%}
+          <countdown-timer
+            class="countdown countdown--compact"
+            data-date="{{ card_product.metafields.theme.countdown.value | escape }}"
+            data-compact="true"
+          ></countdown-timer>
+        {%- endif -%}
+
+        {%- if show_quick_buy -%}
+          {%- if card_product.variants.size == 1 -%}
+            <add-to-cart
+              class="{{ button_class }} cstm-cart"
+              data-variant-id="{{ card_product.selected_or_first_available_variant.id }}"
+              data-Discount-Amount="{% if card_product.selected_or_first_available_variant.compare_at_price > card_product.selected_or_first_available_variant.price %}{{ card_product.selected_or_first_available_variant.compare_at_price |minus:card_product.selected_or_first_available_variant.price |divided_by:100 }}{% endif %}" data-Discount-Percentage="{% if card_product.selected_or_first_available_variant.compare_at_price > card_product.selected_or_first_available_variant.price %}{{ card_product.selected_or_first_available_variant.compare_at_price | minus:card_product.selected_or_first_available_variant.price | times: 100 | divided_by: card_product.selected_or_first_available_variant.compare_at_price }}% {% endif %}">
+
+              {%- liquid
+                if card_product.template_suffix != 'pre-order'
+                  echo 'products.product.add_to_cart' | t
+                else
+                  echo 'products.product.pre_order' | t
+                endif
+              -%}
+              <!-- <svg  aria-hidden="true" focusable="false">
+                <use href="#icon-cart"></use>
+              </svg> -->
+               <img class="icon icon-cart" src="https://cdn.shopify.com/s/files/1/0864/8697/4743/files/Icon-01.webp?v=1717483040" style="width:18px;">
+            </add-to-cart>
+          {%- else -%}
+            <!-- Add this for redirect to pdp page -->
+            <div class="desktop_view desktop_view_product_details">
+              <a href="{{ card_url }}" class="{{ button_class }}" tabindex="-1">
+                {% if template contains 'collection' %}
+                  View Detail
+                {% else %}
+                  {{ 'products.product.view' | t }}
+                {% endif %}
+                <svg class="icon icon-cart" aria-hidden="true" focusable="false">
+                  <use href="#icon-cart"></use>
+                </svg>
+                {% comment %}
+                  <svg class="icon-cart cstm_quick_icon" xmlns="http://www.w3.org/2000/svg" width="24" height="16" viewBox="0 0 27 16" fill="none">
+                     <path d="M13.5 0C5.954 0 0 7.714 0 7.714C0 7.714 5.954 15.429 13.5 15.429C19.27 15.429 27 7.714 27 7.714C27 7.714 19.27 0 13.5 0ZM13.5 12.52C10.85 12.52 8.693 10.364 8.693 7.714C8.693 5.064 10.85 2.907 13.5 2.907C16.15 2.907 18.307 5.064 18.307 7.714C18.307 10.364 16.15 12.52 13.5 12.52ZM13.5 4.908C13.1271 4.90096 12.7566 4.96832 12.41 5.10615C12.0635 5.24398 11.7479 5.44951 11.4817 5.71072C11.2155 5.97193 11.0041 6.28359 10.8597 6.62747C10.7154 6.97135 10.641 7.34055 10.641 7.7135C10.641 8.08645 10.7154 8.45565 10.8597 8.79953C11.0041 9.14341 11.2155 9.45507 11.4817 9.71628C11.7479 9.97749 12.0635 10.183 12.41 10.3208C12.7566 10.4587 13.1271 10.526 13.5 10.519C14.2349 10.5051 14.935 10.2034 15.4498 9.67882C15.9646 9.1542 16.253 8.44852 16.253 7.7135C16.253 6.97848 15.9646 6.2728 15.4498 5.74817C14.935 5.22355 14.2349 4.92188 13.5 4.908Z" fill="white"/>
+                  </svg>
+                {% endcomment %}
+              </a>
+            </div>
+            {%- if settings.quick_view_enabled and enable_quick_view -%}
+              <div class="mobile_view">
+                <quick-view-button class="{{ button_class }} mobile_quick_def" data-product-url="{{ card_url }}">
+                  {{ 'products.product.choose_options' | t }}
+                  {% comment %}
+                    <svg class="icon icon-cart" aria-hidden="true" focusable="false">
+                      <use href="#icon-cart"></use>
+                    </svg>
+                  
+                  <svg
+                    class="icon-cart cstm_quick_icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="16"
+                    viewBox="0 0 27 16"
+                    fill="none"
+                  >
+                    <path d="M13.5 0C5.954 0 0 7.714 0 7.714C0 7.714 5.954 15.429 13.5 15.429C19.27 15.429 27 7.714 27 7.714C27 7.714 19.27 0 13.5 0ZM13.5 12.52C10.85 12.52 8.693 10.364 8.693 7.714C8.693 5.064 10.85 2.907 13.5 2.907C16.15 2.907 18.307 5.064 18.307 7.714C18.307 10.364 16.15 12.52 13.5 12.52ZM13.5 4.908C13.1271 4.90096 12.7566 4.96832 12.41 5.10615C12.0635 5.24398 11.7479 5.44951 11.4817 5.71072C11.2155 5.97193 11.0041 6.28359 10.8597 6.62747C10.7154 6.97135 10.641 7.34055 10.641 7.7135C10.641 8.08645 10.7154 8.45565 10.8597 8.79953C11.0041 9.14341 11.2155 9.45507 11.4817 9.71628C11.7479 9.97749 12.0635 10.183 12.41 10.3208C12.7566 10.4587 13.1271 10.526 13.5 10.519C14.2349 10.5051 14.935 10.2034 15.4498 9.67882C15.9646 9.1542 16.253 8.44852 16.253 7.7135C16.253 6.97848 15.9646 6.2728 15.4498 5.74817C14.935 5.22355 14.2349 4.92188 13.5 4.908Z" fill="white"/>
+                  </svg>
+              {% endcomment %}
+                  <img class="cstm_quick_icon" src="https://cdn.shopify.com/s/files/1/0864/8697/4743/files/Icon-01.webp?v=1717483040" style="width:20px;">
+                </quick-view-button>
+              </div>
+            {%- else -%}
+              <a href="{{ card_url }}" class="{{ button_class }}" tabindex="-1">
+                {{ 'products.product.view' | t }}
+                <svg class="icon icon-cart" aria-hidden="true" focusable="false">
+                  <use href="#icon-cart"></use>
+                </svg>
+              </a>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- else -%}
+        <button class="button button--small button--soldout" type="button" disabled="disabled">
+          {{ 'products.product.sold_out' | t }}
+        </button>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="card__badge">
+    {%- if card_product.metafields.theme.label.value != blank -%}
+      {%- capture badge_styles -%}
+        {%- if card_product.metafields.theme.label_color.value != blank -%}
+          --color-badge-background: {{ card_product.metafields.theme.label_color.value }}; --color-badge-border: var(--color-badge-background); --color-badge-foreground: #ffffff;
+        {%- endif -%}
+      {%- endcapture -%}
+      {%- for label in card_product.metafields.theme.label.value -%}
+        <span
+          class="badge"
+          {% if badge_styles != blank %}
+            style="{{ badge_styles }}"
+          {% endif %}
+        >
+          {{ label | escape }}
+        </span>
+      {%- endfor -%}
+    {%- endif -%}
+
+    {%- if card_product.available == false -%}
+      <span class="badge badge--soldout" aria-hidden="true">
+        {{ 'products.product.sold_out' | t }}
+      </span>
+    {%- elsif card_product.compare_at_price > card_product.price -%}
+      {%- assign on_sale_text = 'products.product.on_sale' | t -%}
+      {%- if on_sale_text != blank and settings.sale_badge_basis != 'disable' -%}
+        <span class="badge badge--onsale" aria-hidden="true">
+          {%- case settings.sale_badge_basis %}
+            {%- when 'text' -%}
+              {{ 'products.product.on_sale' | t }}
+            {%- when 'percentage' -%}
+              &#8211;
+              {{-
+                card_product.compare_at_price
+                | minus: card_product.price
+                | times: 100.0
+                | divided_by: card_product.compare_at_price
+                | ceil
+              -}}
+              %
+            {%- when 'value' -%}
+              &#8211;
+              {%- if settings.currency_code_enabled -%}
+                {{- card_product.compare_at_price | minus: card_product.price | money_with_currency -}}
+              {%- else -%}
+                {{- card_product.compare_at_price | minus: card_product.price | money -}}
+              {%- endif %}
+            {%- else %}
+              {%- if card_product.variants.size == 1 -%}
+                &#8211;
+                {{-
+                  card_product.compare_at_price
+                  | minus: card_product.price
+                  | times: 100.0
+                  | divided_by: card_product.compare_at_price
+                  | ceil
+                -}}
+                %
+              {%- else -%}
+                {{ 'products.product.on_sale' | t }}
+              {%- endif -%}
+          {%- endcase %}
+        </span>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+
+   
+   {% if card_product.tags contains 'online exclusive' %}
+       <div class="badges_cstm">Online Exclusive</div>
+   {% elsif card_product.tags contains 'newbadges' %} 
+       <div class="badges_cstm">New Arrival</div>
+       {% elsif card_product.tags contains 'Trending' %} 
+        <div class="badges_cstm">Trending</div>
+   {% endif %}
+  
+  {%- if settings.quick_view_enabled and enable_quick_view -%}
+    <quick-view-drawer>
+      <details>
+        <summary class="quick-view__summary" tabindex="-1">
+          <span class="visually-hidden">{{ 'products.product.quick_view' | t }}</span>
+          <img src="https://cdn.shopify.com/s/files/1/0864/8697/4743/files/Icon-01.webp?v=1717483040" style="width:26px;">
+          <!-- <svg
+            class="icon-cart cstm_quick_icon_desk"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="16"
+            viewBox="0 0 27 16"
+            fill="none"
+          >
+            <path d="M13.5 0C5.954 0 0 7.714 0 7.714C0 7.714 5.954 15.429 13.5 15.429C19.27 15.429 27 7.714 27 7.714C27 7.714 19.27 0 13.5 0ZM13.5 12.52C10.85 12.52 8.693 10.364 8.693 7.714C8.693 5.064 10.85 2.907 13.5 2.907C16.15 2.907 18.307 5.064 18.307 7.714C18.307 10.364 16.15 12.52 13.5 12.52ZM13.5 4.908C13.1271 4.90096 12.7566 4.96832 12.41 5.10615C12.0635 5.24398 11.7479 5.44951 11.4817 5.71072C11.2155 5.97193 11.0041 6.28359 10.8597 6.62747C10.7154 6.97135 10.641 7.34055 10.641 7.7135C10.641 8.08645 10.7154 8.45565 10.8597 8.79953C11.0041 9.14341 11.2155 9.45507 11.4817 9.71628C11.7479 9.97749 12.0635 10.183 12.41 10.3208C12.7566 10.4587 13.1271 10.526 13.5 10.519C14.2349 10.5051 14.935 10.2034 15.4498 9.67882C15.9646 9.1542 16.253 8.44852 16.253 7.7135C16.253 6.97848 15.9646 6.2728 15.4498 5.74817C14.935 5.22355 14.2349 4.92188 13.5 4.908Z" fill="white"/>
+          </svg> -->
+          <!-- {% render 'icon', icon: 'search-alt' %} -->
+        </summary>
+        <!-- quick view -->
+        <quick-view class="quick-view" data-product-url="{{ card_url }}">
+          <div
+            role="dialog"
+            aria-label="{{ 'products.product.choose_product_options' | t: product_name: card_product.title | escape }}"
+            aria-modal="true"
+            class="quick-view__content"
+            tabindex="-1"
+          ></div>
+        </quick-view>
+      </details>
+    </quick-view-drawer>
+  {%- endif -%}
+</div>
+
+
+<script>
+document.querySelectorAll('.product-media-wrapper').forEach(wrapper => {
+  const slideshow = wrapper.querySelector('.product-image-slideshow');
+  const images   = slideshow?.querySelectorAll('img') || [];
+  const dots     = wrapper.querySelectorAll('.product-dots .dot');
+
+  // Agar 1 ya usse kam images → kuch mat karo
+  if (images.length <= 1) {
+    if (images.length === 1) images[0].style.opacity = '1';
+    return;
+  }
+
+  let currentIndex = 0;
+  let touchStartX  = 0;
+  let autoInterval = null;
+
+  function showSlide(idx) {
+    currentIndex = idx % images.length; // safety
+
+    images.forEach((img, i) => {
+      img.style.opacity = (i === currentIndex) ? '1' : '0';
+    });
+
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === currentIndex);
+    });
+  }
+
+  function next() {
+    showSlide(currentIndex + 1);
+  }
+
+  function prev() {
+    showSlide(currentIndex - 1);
+  }
+
+  // ── Desktop hover autoplay ────────────────────────────────
+  wrapper.addEventListener('mouseenter', () => {
+    if (autoInterval) clearInterval(autoInterval);
+    autoInterval = setInterval(next, 2200); // slow & comfortable
+  });
+
+  wrapper.addEventListener('mouseleave', () => {
+    if (autoInterval) {
+      clearInterval(autoInterval);
+      autoInterval = null;
+    }
+    showSlide(0); // reset to first
+  });
+
+  // ── Mobile swipe ──────────────────────────────────────────
+  wrapper.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+  }, { passive: true });
+
+  wrapper.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) next();     // left swipe → next
+      else          prev();     // right swipe → prev
+    }
+  }, { passive: true });
+
+  // ── Dots click ────────────────────────────────────────────
+  dots.forEach((dot, idx) => {
+    dot.addEventListener('click', () => {
+      showSlide(idx);
+      // Manual click pe autoplay pause (better UX)
+      if (autoInterval) {
+        clearInterval(autoInterval);
+        autoInterval = null;
+      }
+    });
+  });
+
+  // Initial state set kar do
+  showSlide(0);
+});
+</script>

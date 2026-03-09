@@ -1,0 +1,62 @@
+{% if product.metafields.custom.product_varient.value != blank %}
+   <p class="product__text select_color_cstm font-bold-heading"> 
+       SELECT COLOR
+   </p>
+  <span style="color: gray; font-family: Avenir-Medium;font-size: 14px;">{{ product.metafields.custom.colour.value }}</span>
+  <div class="cstm_varient">
+  {% for productv in product.metafields.custom.product_varient.value %}  
+    {% if productv.available %}
+    <div class="cstm_inner">  
+      <a class="cstm_varient_img {% if product.url == productv.url %} active__product {% endif %}" href="{{ productv.url }}" >
+        <img class="check_cstm" src="https://cdn.shopify.com/s/files/1/0776/0419/2550/files/19x19.png?v=1688972717" alt="svg" width="" height="">
+        <img loading="lazy" class="prod_img" src="{{ productv.featured_image | img_url:'500x' }}" width="60" height="">
+      </a>
+    </div>
+      {% endif %}
+  {% endfor %}
+  </div>
+{% endif %}
+
+<style>
+.cstm_varient{
+    display:flex;
+    grid-column-gap: 0.1rem;
+    overflow-x: auto;
+}
+ .cstm_varient::-webkit-scrollbar {
+    height: 2px!important;
+}
+ .cstm_varient::-webkit-scrollbar-thumb {
+    background: #ffb503;
+    border-radius: 10px;
+}
+.cstm_inner {
+    position: relative;
+}
+a.cstm_varient_img {
+  text-decoration: none;
+}
+.cstm_varient_img img.prod_img{
+  padding:2px;
+  border: 2px solid transparent;
+} 
+.cstm_varient_img img.prod_img:hover{
+  border: 2px solid #BF1616;
+}
+.cstm_varient_img img.check_cstm {
+    display:none;
+    position: absolute;
+    right: 6px;
+    width: 12px;
+    top: 7px;
+}
+a.cstm_varient_img.active__product img.prod_img{
+  border: 2px solid #BF1616;
+}
+a.cstm_varient_img.active__product img.check_cstm {
+    display: block;
+}
+.select_color_cstm{
+  font-size:14px;
+}
+</style>

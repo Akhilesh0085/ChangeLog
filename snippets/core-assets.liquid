@@ -1,0 +1,4 @@
+{{ 'base.css' | asset_url | stylesheet_tag: preload: true }}
+{% if text_direction == 'rtl' %}
+  {{ 'rtl.css' | asset_url | stylesheet_tag: preload: true }}
+{% endif %}

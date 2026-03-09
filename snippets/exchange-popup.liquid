@@ -1,0 +1,154 @@
+<div class="main_exchange_popup">
+  <div class="main_exchange_inner">
+    <span class="close__popup">X</span>
+    <div class="return_popup_content">
+      <div class="heading_return cstm_heading_main_exchange">Request Exchange (Exchange of same product available only)</div>
+      {%- for line in order.line_items -%}
+        <div
+          id="{{ order.id }}-{{ line.id }}"
+          data-price="{{ line.price | divided_by: 100.0 | divided_by: line.quantity }}"
+          class="exchange_line"
+        >
+          <div class="retrun_header head">
+            <div class="exchange_column">Image</div>
+            <div class="exchange_column">Name</div>
+            <div class="exchange_column">QTY</div>
+            <div class="exchange_column">Total</div>
+          </div>
+          <div class="retrun_header">
+            <div class="exchange_column">
+              <img
+                src="{{ line.image | img_url:"master" }}"
+                width=""
+                height=""
+                alt="{{ line.title }}"
+                title="{{ line.title }}"
+              >
+            </div>
+            <div class="exchange_column" style="padding-right: 10px;">{{ line.title }}</div>
+            <div class="exchange_column">1</div>
+            <div class="exchange_column">{{ line.variant.price | money }}</div>
+          </div>
+          {% comment %}
+          <div class="images_upload">
+            <div class="upload_heading">Add Prouct Images</div>
+            <div class="upload_file_input">
+              <input
+                type="file"
+                name="properties[Photo (1 images)]"
+                id="refund_reference_image_{{ order.id }}_{{ line.id }}"
+                class="refund_image_uploader"
+                accept=".jpeg,.png,jpg,.gif,.tif"
+                order-name="{{ order.name }}"
+              >
+              <label for="refund_reference_image_{{ order.id }}_{{ line.id }}" id="file_upload_new"
+                ><span></span>
+                {% render 'icon', icon: 'upload' %}
+              </label>
+              <label id="file_upload_new_img">
+                <img src="" class="uploaded_image" width="" height="" loading="eager" title="" alt="">
+                <div class="close_file refund_image_closer">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" class="refund_image_remover" title="Remove" height="15" width="15">
+                    <path fill="#fff" d="M764.288 214.592 512 466.88 259.712 214.592a31.936 31.936 0 0 0-45.12 45.12L466.752 512 214.528 764.224a31.936 31.936 0 1 0 45.12 45.184L512 557.184l252.288 252.288a31.936 31.936 0 0 0 45.12-45.12L557.12 512.064l252.288-252.352a31.936 31.936 0 1 0-45.12-45.184z"></path>
+                  </svg>
+                </div>
+              </label>
+            </div>
+            <span class="imageError"><sup>**</sup> Please upload an image !!</span>
+          </div>{% endcomment %}
+          <div class="exchange_resion">
+            <select>
+              <option selected="selected" disabled>--Select Return Reason--</option>
+              <option value="Size Issue">Size Issue</option>
+              <option value="Damaged/Defective Item Received">Damaged/Defective Item Received</option>
+              <option value="Quality Issue with Product">Quality Issue with Product</option>
+              <option value="Wrong Product Received">Wrong Product Received</option>
+            </select>
+            <span class="reasonError"><sup>**</sup> Please select reason !!</span>
+          </div>
+          <!-- <div class="resion__butoon"><button type="button">Submit</button></div> -->
+          <div class="heading_return selected_product_container">
+            Select Exchange Size (Only same product exchange available)
+            <div class="product_selected">Selected Product: <span class="selected_exchanged_product"></span></div>
+          </div>
+
+          <div class="selected_product">
+            <ul
+              id="product-grid"
+              data-id="template--23561994469683__product-grid"
+              class="product-grid"
+              role="list"
+              style="margin: 0;"
+            >
+              <li class="grid__item returns_item" style="padding: 0">
+                <div class="return_item_contanier">
+                  <div class="return_item_image">
+                    <img
+                      src="{{ line.product.featured_image | img_url:'master' }}"
+                      style="width:100%;"
+                      alt="{{ line.product.title }}"
+                      title="{{ line.final_line_priceproduct.title }}"
+                      loading="eager"
+                      width=""
+                      height=""
+                    >
+                  </div>
+                  <div class="return_item_description">
+                    <div class="selected_product_title">{{ line.product.title }}</div>
+                    {% comment %}<div class="selected_product_price">
+                      {% if product.compare_at_price > product.price %}
+                        <s style="color: #c5c5c5;"> {{ product.compare_at_price | money }}</s>
+                        {{ product.price | money }}
+                        (
+                        {{-
+                          product.selected_or_first_available_variant.compare_at_price
+                          | minus: product.selected_or_first_available_variant.price
+                          | times: 100
+                          | divided_by: product.selected_or_first_available_variant.compare_at_price
+                        -}}
+                        %)
+                
+                      {% else %}
+                        {{ product.price | money }}
+                      {% endif %}
+                    </div>
+                    {% endcomment %}
+                    <div class="cstm__size_coll">
+                      {% unless line.product.has_only_default_variant %}
+                        {% assign counter = 0 %}
+                        {% for variant in line.product.variants %}
+                          {% if variant.available %}
+                            {% unless variant.price < line.price %}
+                              <button
+                                type="button"
+                                class="variant_line"
+                                variant-id="{{ variant.id }}"
+                                data-title="{{ line.product.title }}-{{ line.variant.title }}"
+                              >
+                                {{ variant.title }}
+                              </button>
+                              {% assign counter = counter | plus: 1 %}
+                            {% endunless %}
+                          {% endif %}
+                        {% endfor %}
+                      {% endunless %}
+                    </div>
+                    <div class="initaite_checkout">
+                      <button class="button button--secondary initiate_exchange_button" original-order-id="{{ order.name }}" variant-id="{{ line.id }}">
+                        Initiate Exchange
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div style="margin:0 20px">
+            <span class="productError"><sup>**</sup> Please select product !!</span>
+          </div>
+        </div>
+      {%- endfor -%}
+      <div class="return_note"><sup>**</sup> Items must be in their original condition and include all tags/labels.</div>
+    </div>
+  </div>
+</div>

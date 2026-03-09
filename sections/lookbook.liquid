@@ -1,0 +1,524 @@
+
+ {%- style -%}
+  /* #shopify-section-{{ section.id }} .main__look:not(slick-initialized) {
+    display: flex;
+    overflow: hidden;
+} */
+  /* #shopify-section-{{ section.id }} .main__look:not(.slick-initialized)  use-animate.media-wrapper {
+   display:none;
+} */
+   #shopify-section-{{ section.id }} .main__look:not(.slick-initialized)  use-animate.media-wrapper:nth-child(1) {
+   display:block;
+}
+ #shopify-section-{{ section.id }} .h5.look_title_prod {
+    white-space: wrap;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 30px;
+    font-size: 11px;
+}
+#shopify-section-{{ section.id }} .look__hotspot-product .price bdi {
+    font-size: 13px;
+}
+#shopify-section-{{ section.id }} span.discount__percentage__grid {
+    font-size: 10px;
+}
+   @media(max-width:768px){
+     #shopify-section-{{ section.id }} .desktop_image{
+       display:none;
+     }
+     .template-index #shopify-section-{{ section.id }} .media--adapt{
+       padding-bottom: 100%;
+     }
+     .template-collection #shopify-section-{{ section.id }} .media .image-fit{
+       height: auto;
+     }
+   }
+   @media(min-width:769px){
+    #shopify-section-{{ section.id }}  .mobile_image{
+       display:none;
+     }
+   }
+   {%- endstyle -%}
+<link href="{{ 'section-lookbook.css' | asset_url }}" rel="preload" as="style">
+{{ 'section-lookbook.css' | asset_url | stylesheet_tag }}
+
+<div class="section--padding{% if section.settings.show_divider %} section--divider{% endif %}">
+  <lookbook-component class="lookbook page-width{% if section.settings.full_width %} page-width--full-width{% endif %}">
+    <div class="title-wrapper{% if section.settings.heading == blank %} title-wrapper--no-heading{% endif %}{% if section.settings.full_width %} page-width{% endif %} {{ section.settings.heading_alignment }}">
+      <{{ section.settings.heading_tag }} class="title {{ section.settings.heading_size }}">{{ section.settings.heading | escape }}</{{ section.settings.heading_tag }}>
+    </div>
+         <div class="main__look">
+      {%- for block in section.blocks -%}
+        {% if forloop.first %}
+          {%- style -%}
+  #shopify-section-{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --color-overlay-opacity: {{ section.settings.colors_overlay_opacity | divided_by: 100.0 }};
+    --color-overlay: {{ section.settings.colors_overlay.red }}, {{ section.settings.colors_overlay.green }}, {{ section.settings.colors_overlay.blue }};
+    {%- if block.settings.image != blank %}
+      --image-ratio-percent: {{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100 }}%;
+    {% endif -%}
+  }
+{%- endstyle -%}
+          {% endif %}
+       
+    <use-animate data-animate="zoom-fade" class="media-wrapper">
+      <div class="image-animate media--adapt{% if block.settings.image != blank %} media{% else %} lookbook--placeholder{% endif %}">
+      {% if block.settings.image_url != blank %}  <a href="{{ block.settings.image_url }}"> {% endif %}
+        {%- if block.settings.image != blank -%}
+          {%- capture sizes -%}{% if section.settings.full_width %}100vw{% else %}(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 }}px, (min-width: 750px) calc(100vw - 10rem), 100vw{% endif %}{%- endcapture -%}
+          {% assign desktop_image = block.settings.image | default:block.settings.image_mobile %}
+          {% assign mobile_image = block.settings.image_mobile | default:block.settings.image %}
+         
+          {{ desktop_image | image_url: width: 3840 | image_tag:
+            loading: 'eager',
+            class: 'image-fit desktop_image',
+            sizes: sizes,
+            widths: '375, 750, 1100, 1500, 1780, 2000, 3000, 3840',
+            is: 'lazy-image'
+          }}
+           {{ mobile_image | image_url: width: 3840 | image_tag:
+            loading: 'eager',
+            class: 'image-fit mobile_image',
+            sizes: sizes,
+            widths: '375, 750, 1100, 1500, 1780, 2000, 3000, 3840',
+            is: 'lazy-image'
+          }}
+          
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder' }}
+        {%- endif -%}
+      {% if block.settings.image_url != blank %}   </a> {% endif %}
+      </div>
+      {%- if settings.quick_view_enabled and block.settings.enable_quick_view -%}
+            <link rel="stylesheet" href="{{ 'section-main-product.css' | asset_url }}" media="print" onload="this.media='all'">
+            <link rel="stylesheet" href="{{ 'component-deferred-media.css' | asset_url }}" media="print" onload="this.media='all'">
+            <link rel="stylesheet" href="{{ 'component-slider.css' | asset_url }}" media="print" onload="this.media='all'">
+            <link rel="stylesheet" href="{{ 'component-rating.css' | asset_url }}" media="print" onload="this.media='all'">
+      {%- endif -%}
+      {% for i in (1..3) %}
+         {%- assign product_option = 'product_' | append: i -%}
+        {%- assign card_product = all_products[block.settings[product_option]] -%}
+        {%- if card_product != blank -%}
+          {%- if settings.quick_view_enabled and block.settings.enable_quick_view -%}
+            {% assign horizontal_option =  'horizontal_'| append: i %}
+            {% assign horizontal_space = block.settings[horizontal_option] %}
+            {% assign vertical_option =  'vertical_'| append: i %}
+            {% assign vertical_space = block.settings[vertical_option] %}
+             {% assign horizontal_mobile_option =  'horizontal_mobile_'| append: i %}
+            {% assign horizontal_mobile_space = block.settings[horizontal_mobile_option] %}
+            {% assign vertical_mobile_option =  'vertical_mobile_'| append: i %}
+            {% assign vertical_mobile_space = block.settings[vertical_mobile_option] %}
+            <noscript {{ forloop.index }}>
+              <a href="{{ card_product.url }}" class="look__hotspot" style="--hotspot-color: {{ block.settings.color.red }}, {{ block.settings.color.green }}, {{ block.settings.color.blue }}; --hotspot-x: {{ horizontal_space }}%; --hotspot-y: {{ vertical_space }}%; --hotspot-mobile-x: {{ horizontal_mobile_space }}%; --hotspot-mobile-y: {{ vertical_mobile_space }}%;" {{ block.shopify_attributes }}>
+                <div class="look__hotspot-product{% if horizontal_space < 15 %} look__hotspot-product--left{% elsif horizontal_space > 85 %} look__hotspot-product--right{% endif %}{% if vertical_space > 70 %} look__hotspot-product--bottom{% endif %}">
+                  <div class="h5 12">{{ card_product.title | escape }}</div>
+                  {% render 'price', product: card_product %}
+                </div>
+              </a>
+            </noscript>
+            <quick-view-drawer>
+              <details>
+                <summary class="quick-view__summary" tabindex="-1">
+                  <span class="visually-hidden">{{ 'products.product.quick_view' | t }}</span>
+                  <div class="look__hotspot" style="--hotspot-color: {{ block.settings.color.red }}, {{ block.settings.color.green }}, {{ block.settings.color.blue }}; --hotspot-x: {{ horizontal_space }}%; --hotspot-y: {{ vertical_space }}%; --hotspot-mobile-x: {{ horizontal_mobile_space }}%; --hotspot-mobile-y: {{ vertical_mobile_space }}%;" {{ block.shopify_attributes }}>
+                    <div class="look__hotspot-product{% if horizontal_space < 15 %} look__hotspot-product--left{% elsif horizontal_space > 85 %} look__hotspot-product--right{% endif %}{% if vertical_space > 70 %} look__hotspot-product--bottom{% endif %}">
+                      <div class="h5 look_title_prod">{{ card_product.title | escape }}</div>
+                      {% render 'price', product: card_product %}
+                    </div>
+                  </div>
+                </summary>
+                <quick-view class="quick-view" data-product-url="{{ card_product.url | within: collection }}">
+                  <div role="dialog" aria-label="{{ 'products.product.choose_product_options' | t: product_name: card_product.title | escape }}" aria-modal="true" class="quick-view__content" tabindex="-1"></div>
+                </quick-view>
+              </details>
+            </quick-view-drawer>
+          {%- else -%}
+            <a href="{{ card_product.url }}" class="look__hotspot" style="--hotspot-color: {{ block.settings.color.red }}, {{ block.settings.color.green }}, {{ block.settings.color.blue }}; --hotspot-x: {{ horizontal_space }}%; --hotspot-y: {{ vertical_space }}%;  --hotspot-mobile-x: {{ horizontal_mobile_space }}%; --hotspot-mobile-y: {{ vertical_mobile_space }}%;" {{ block.shopify_attributes }}>
+              <div class="look__hotspot-product{% if horizontal_space < 15 %} look__hotspot-product--left{% elsif horizontal_space > 85 %} look__hotspot-product--right{% endif %}{% if vertical_space > 70 %} look__hotspot-product--bottom{% endif %}">
+                <div class="h5 34">{{ card_product.title | escape }}</div>
+                {% render 'price', product: card_product %}
+              </div>
+            </a>
+          {%- endif -%}
+        {%- else -%}
+          <div class="look__hotspot" style="--hotspot-color: {{ block.settings.color.red }}, {{ block.settings.color.green }}, {{ block.settings.color.blue }}; --hotspot-x: {{ horizontal_space }}%; --hotspot-y: {{ vertical_space }}%;  --hotspot-mobile-x: {{ horizontal_mobile_space }}%; --hotspot-mobile-y: {{ vertical_mobile_space }}%;" {{ block.shopify_attributes }}></div>
+        {%- endif -%}
+      {%- endfor -%}
+    </use-animate>
+       
+        {% endfor %} </div>
+  </lookbook-component>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.lookbook.name",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "default": true,
+      "label": "t:sections.all.full_width.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "default": false,
+      "label": "t:sections.all.show_divider.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.heading.label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Lookbook",
+      "label": "t:sections.all.heading.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h0",
+          "label": "t:sections.all.heading_size.options__3.label"
+        }
+      ],
+      "default": "h1",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "t:sections.all.heading_alignment.label",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.all.heading_alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.all.heading_alignment.options__2.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.all.heading_alignment.options__3.label"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "options": [
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_tag.options__1.label"
+        },
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_tag.options__2.label"
+        },
+        {
+          "value": "h3",
+          "label": "t:sections.all.heading_tag.options__3.label"
+        },
+        {
+          "value": "h4",
+          "label": "t:sections.all.heading_tag.options__4.label"
+        },
+        {
+          "value": "h5",
+          "label": "t:sections.all.heading_tag.options__5.label"
+        },
+        {
+          "value": "h6",
+          "label": "t:sections.all.heading_tag.options__6.label"
+        },
+        {
+          "value": "div",
+          "label": "t:sections.all.heading_tag.options__7.label"
+        },
+        {
+          "value": "span",
+          "label": "t:sections.all.heading_tag.options__8.label"
+        },
+        {
+          "value": "p",
+          "label": "t:sections.all.heading_tag.options__9.label"
+        }
+      ],
+      "default": "h2",
+      "label": "t:sections.all.heading_tag.label",
+      "info": "t:sections.all.heading_tag.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.colors.header.content"
+    },
+    {
+      "type": "color",
+      "id": "colors_overlay",
+      "label": "t:sections.all.colors.colors_overlay.label",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "colors_overlay_opacity",
+      "label": "t:sections.all.colors.overlay_opacity.label",
+      "default": 0,
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.colors.overlay_opacity.unit"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_top.unit",
+      "label": "t:sections.all.padding.padding_top.label",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_bottom.unit",
+      "label": "t:sections.all.padding.padding_bottom.label",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "look",
+      "name": "t:sections.lookbook.blocks.look.name",
+      "settings": [
+         {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:sections.all.image.label"
+       },
+        {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Mobile Image"
+       },
+       {
+         "type":"url",
+         "id":"image_url",
+         "label": "Image URL"
+       },
+        {
+          "type": "product",
+          "id": "product_1",
+          "label": "t:sections.lookbook.blocks.look.settings.product.label"
+        },
+        {
+          "type": "range",
+          "id":"horizontal_1",
+          "label": "Horizontal Space",
+          "min":1,
+          "max": 100,
+          "default":10,
+          "step": 1
+        },
+        {
+          "type": "range",
+          "id":"vertical_1",
+          "label": "Vertical Space",
+          "min":1,
+          "max": 100,
+          "default":10,
+          "step": 1
+        },
+        {
+          "type": "range",
+          "id":"horizontal_mobile_1",
+          "label": "Horizontal Mobile Space",
+          "min":1,
+          "max": 100,
+          "default":10,
+          "step": 1
+        },
+        {
+          "type": "range",
+          "id":"vertical_mobile_1",
+          "label": "Vertical Mobile Space",
+          "min":1,
+          "max": 100,
+          "default":10,
+          "step": 1
+        },
+         {
+          "type": "product",
+          "id": "product_2",
+          "label": "t:sections.lookbook.blocks.look.settings.product.label"
+        },
+        {
+          "type": "range",
+          "id":"horizontal_2",
+          "label": "Horizontal Space",
+          "min":1,
+          "max": 100,
+          "default":10,
+          "step": 1
+        },
+        {
+          "type": "range",
+          "id":"vertical_2",
+          "label": "Vertical Space",
+          "min":1,
+          "max": 100,
+          "default":10,
+          "step": 1
+        },
+         {
+          "type": "range",
+          "id":"horizontal_mobile_2",
+          "label": "Horizontal Mobile Space",
+          "min":1,
+          "max": 100,
+          "default":10,
+          "step": 1
+        },
+        {
+          "type": "range",
+          "id":"vertical_mobile_2",
+          "label": "Vertical Mobile Space",
+          "min":1,
+          "max": 100,
+          "default":10,
+          "step": 1
+        },
+         {
+          "type": "product",
+          "id": "product_3",
+          "label": "t:sections.lookbook.blocks.look.settings.product.label"
+        },
+        {
+          "type": "range",
+          "id":"horizontal_3",
+          "label": "Horizontal Space",
+          "min":1,
+          "max": 100,
+          "default":10,
+          "step": 1
+        },
+        {
+          "type": "range",
+          "id":"vertical_3",
+          "label": "Vertical Space",
+          "min":1,
+          "max": 100,
+          "default":10,
+          "step": 1
+        },
+        {
+          "type": "range",
+          "id":"horizontal_mobile_3",
+          "label": "Horizontal Mobile Space",
+          "min":1,
+          "max": 100,
+          "default":10,
+          "step": 1
+        },
+        {
+          "type": "range",
+          "id":"vertical_mobile_3",
+          "label": "Vertical Mobile Space",
+          "min":1,
+          "max": 100,
+          "default":10,
+          "step": 1
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_quick_view",
+          "default": true,
+          "label": "t:sections.all.product_card.enable_quick_view.label"
+        },
+        {
+          "type": "header",
+          "content": "t:sections.lookbook.blocks.look.settings.header.content"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "t:sections.lookbook.blocks.look.settings.color.label",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "horizontal",
+          "default": 30,
+          "min": 5,
+          "max": 95,
+          "label": "t:sections.lookbook.blocks.look.settings.horizontal.label",
+          "unit": "t:sections.lookbook.blocks.look.settings.horizontal.unit"
+        },
+        {
+          "type": "range",
+          "id": "vertical",
+          "default": 40,
+          "min": 5,
+          "max": 95,
+          "label": "t:sections.lookbook.blocks.look.settings.vertical.label",
+          "unit": "t:sections.lookbook.blocks.look.settings.vertical.unit"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.lookbook.presets.name",
+      "blocks": [
+        {
+          "type": "look"
+        }
+      ]
+    }
+  ],
+  "templates": ["404", "article", "blog", "cart", "collection", "list-collections", "index", "page", "product", "search"]
+}
+{% endschema %}
+<script>
+  $(document).ready(function(){
+   $('#shopify-section-{{ section.id }} .main__look').slick({
+    dots: false,
+    arrow: true,
+    prevArrow: '<button type="button" class="slick-prev slick-arrow" style=""><svg viewBox="0 0 100 100"><path d="M 20,50 L 60,90 L 60,85 L 25,50  L 60,15 L 60,10 Z" class="arrow"></path></svg></button>', 
+    nextArrow: '<button type="button" class="slick-next slick-arrow" style=""><svg viewBox="0 0 100 100"><path d="M 20,50 L 60,90 L 60,85 L 25,50  L 60,15 L 60,10 Z" class="arrow" transform="translate(100, 100) rotate(180) "></path></svg></button>',
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    slide:'.media-wrapper'
+   })
+  
+  })
+</script>

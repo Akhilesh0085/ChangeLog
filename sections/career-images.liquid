@@ -1,0 +1,115 @@
+<!-- ----- /section/career-images.liquid --------- -->
+<div class="parent-carees">
+  <div class="shopziddi-container">
+    <div class="cstmGridBtm">
+      {% for block in section.blocks %}
+        {% if block.settings['shop-ziddi-image'] != blank -%}
+          <img
+            class="careeimg-{{ forloop.index }}"
+            src="{{ block.settings.shop-ziddi-image | image_url }}"
+            width=""
+            height=""
+          >
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<style>
+  .parent-carees{
+    position:relative;
+    width:100%;
+  }
+
+  .cstmGridBtm {
+      display: flex;
+      position: relative;
+       padding: 0 5vw 5vw;
+      gap:16px;
+      z-index:1;
+  }
+  .cstmGridBtm:before {
+      background: url(https://media.wforwoman.com/frontend-images/carrer/border6.png?format=webp&w=1400&dpr=1.3) left bottom;
+      left: 1vw;
+  }
+    .cstmGridBtm:after {
+      background: url(https://media.wforwoman.com/frontend-images/carrer/border6.png?format=webp&w=1400&dpr=1.3) right bottom;
+      transform:rotateY(180deg);
+      right: 1vw;
+    }
+    .cstmGridBtm:before,.cstmGridBtm:after {
+      width: 24%;
+      height: 80%;
+      bottom: 15px;
+      content: "";
+      position: absolute;
+      z-index:-1;
+      background-size: cover;
+  }
+
+   .cstmGridBtm img {
+      width:calc(25% - 12px);
+  }
+
+  /* ================================ MEDIA QUERY============================================================== */
+     @media(max-width: 1024px){
+      .cstmGridBtm:before, .cstmGridBtm:after {
+        bottom: 7px;
+      }
+      .cstmGridBtm:before {
+         left: .4vw;
+      }
+      .cstmGridBtm:after {
+         right: .4vw;
+      }
+  }
+  @media(max-width: 768px){
+      .cstmGridBtm:before, .cstmGridBtm:after {
+        bottom: 7px;
+      }
+      .cstmGridBtm:before {
+         left: .2vw;
+      }
+      .cstmGridBtm:after {
+         right: .2vw;
+      }
+  }
+  @media(max-width: 480px){
+      .cstmGridBtm:before, .cstmGridBtm:after {
+        bottom: 4px;
+      }
+      .cstmGridBtm:before {
+         left: .1vw;
+      }
+      .cstmGridBtm:after {
+         right: .1vw;
+      }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Career Four Image",
+  "settings": [
+
+  ],
+    "blocks":[
+  {
+    "type":"image",
+    "name":"image name",
+    "settings":[
+      {
+        "type":"image_picker",
+        "id":"shop-ziddi-image",
+        "label":" chose your image"
+      }
+    ]
+  }
+],
+"presets": [
+  {
+    "name": "Career Four Image"
+  }
+]
+}
+{% endschema %}

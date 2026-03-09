@@ -1,0 +1,358 @@
+<script type="module">
+  // ==================================================
+  // GLOBAL FLAG
+  // ==================================================
+  window.FMS_LOGGER_PRESENT = true;
+
+  // ==================================================
+  // IMPORT LOGGER
+  // ==================================================
+  import {
+    trackPageVisit,
+    trackComponentClick,
+    trackAddToCart,
+    trackCheckoutClick
+  } from 'https://staging.truesize.ai/Common/external/v4/userlogger.js';
+
+  // ==================================================
+  // BASE CONFIG
+  // ==================================================
+  const baseConfig = {
+    domain: "{{ shop.domain }}",
+    currency: "{{ shop.currency }}",
+    customer_email: "{{ customer.email | default: '' }}"
+  };
+
+  // ==================================================
+  // GLOBAL PRODUCT STORE
+  // ==================================================
+  window._userLoggerProduct = null;
+
+  {% if product %}
+    {% assign aisizing_enable = product.metafields.custom.aisizing_enable.value | default: true %}
+
+    window._userLoggerProduct = {
+      product_name: "{{ product.title | escape }}",
+      product_id: "{{ product.id }}",
+      product_type: "{{ product.type }}",
+      aisizing_enable: "{{ aisizing_enable }}"
+    };
+
+    const fullProductConfig = {
+      ...baseConfig,
+      ...window._userLoggerProduct,
+      available_sizes: [
+        {% for variant in product.variants %}
+          "{{ variant.option1 }}"{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      ]
+    };
+
+    // ==================================================
+    // PAGE VISIT
+    // ==================================================
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        trackPageVisit(fullProductConfig);
+      });
+    } else {
+      trackPageVisit(fullProductConfig);
+    }
+
+    // ==================================================
+    // WATCH FMS BUTTON
+    // ==================================================
+    watchForShadowButton();
+  {% endif %}
+
+  // ==================================================
+  // INIT GLOBAL LISTENERS
+  // ==================================================
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initGlobalListeners);
+  } else {
+    initGlobalListeners();
+  }
+
+  function initGlobalListeners() {
+
+    // ==================================================
+    // HELPER: GET CURRENT FORM DATA
+    // ==================================================
+    function getCurrentFormData() {
+      const form = document.querySelector('form[action*="/cart/add"]');
+      if (!form) return {};
+
+      const formData = new FormData(form);
+      
+      // Get selected size
+      let capturedSize = 'Unknown';
+      const sizeRadio = document.querySelector(
+        'input[type="radio"][name="Size"]:checked'
+      );
+      if (sizeRadio) {
+        capturedSize = sizeRadio.value;
+      } else {
+        const sizeSelect = document.querySelector(
+          'select[name="options[Size]"]'
+        );
+        if (sizeSelect) {
+          capturedSize = sizeSelect.value;
+        }
+      }
+
+      // Get variant ID and price
+      const variantId = formData.get('id') || '';
+      let variantPrice = '';
+      
+      {% if product %}
+        const variants = {
+          {% for variant in product.variants %}
+            "{{ variant.id }}": "{{ variant.price | money_without_currency }}"{% unless forloop.last %},{% endunless %}
+          {% endfor %}
+        };
+        variantPrice = variants[variantId] || '';
+      {% endif %}
+
+      // Get FMS data
+      const fmsData = {};
+      const host = document.querySelector('find-my-size');
+      if (host) {
+        fmsData.recommended_size = host.lastRecommendedSize || null;
+        fmsData.selected_fit_preference = host.selectedFitPreference || null;
+        if (typeof host.getAllFitSizes === 'function') {
+          fmsData.recommended_fit_sizes = host.getAllFitSizes();
+        }
+        if (host.shadowRoot && !fmsData.recommended_size) {
+          const label = host.shadowRoot.getElementById('size-label');
+          if (label) {
+            fmsData.recommended_size = label.innerText;
+          }
+        }
+      }
+
+      return {
+        variant_id: variantId,
+        selected_size: capturedSize,
+        product_price: variantPrice,
+        quantity: formData.get('quantity') || 1,
+        ...fmsData
+      };
+    }
+
+    // ==================================================
+    // CHECKOUT CLICK
+    // ==================================================
+  {% comment %} document.body.addEventListener(
+  'click',
+  function (e) {
+
+    const checkoutBtn = e.target.closest(
+      'a[href*="/checkout"], ' +
+      'button[name="checkout"], ' +
+      '.cart__checkout-button, ' +
+      '.gokwik-checkout .button, ' +
+      '.sr-headless-checkout'
+    );
+
+    if (!checkoutBtn) return;
+
+    // 🔒 DO NOT block the event
+    // 🔒 DO NOT modify event
+    // 🔒 DO NOT stop propagation
+
+    const currentConfig = {
+      ...baseConfig,
+      ...(window._userLoggerProduct || {})
+    };
+
+    // Log asynchronously AFTER click is handled
+    setTimeout(() => {
+      try {
+        trackCheckoutClick(e, currentConfig);
+      } catch (err) {
+        console.error('[FMS] Checkout log error', err);
+      }
+    }, 0);
+  },
+  true // ✅ capture phase (important)
+); {% endcomment %}
+
+document.body.addEventListener(
+  'click',
+  function (e) {
+
+    const checkoutBtn = e.target.closest(
+      'a[href*="/checkout"], ' +
+      'button[name="checkout"], ' +
+      '.cart__checkout-button, ' +
+      '.gokwik-checkout .button, ' +
+      '.sr-headless-checkout'
+    );
+
+    if (!checkoutBtn) return;
+
+    // ---------------------------------------------
+    // DETECT CHECKOUT TYPE
+    // ---------------------------------------------
+    let checkoutType = 'cart_checkout';
+
+    if (checkoutBtn.classList.contains('sr-headless-checkout')) {
+      const onclickAttr = checkoutBtn.getAttribute('onclick') || '';
+
+      if (onclickAttr.includes('buyProduct')) {
+        checkoutType = 'buy_now';
+      } else if (onclickAttr.includes('buyCart')) {
+        checkoutType = 'cart_checkout';
+      }
+    }
+
+    // ---------------------------------------------
+    // BUILD CONFIG
+    // ---------------------------------------------
+    const currentConfig = {
+      ...baseConfig,
+      ...(window._userLoggerProduct || {}),
+      checkout_type: checkoutType
+    };
+
+    // ---------------------------------------------
+    // CAPTURE FORM DATA FOR BUY NOW
+    // ---------------------------------------------
+    if (checkoutType === 'buy_now') {
+      const formData = getCurrentFormData();
+      Object.assign(currentConfig, {
+        selected_variant_id: formData.variant_id,
+        selected_size: formData.selected_size,
+        product_price: formData.product_price,
+        quantity: formData.quantity,
+        recommended_size: formData.recommended_size,
+        selected_fit_preference: formData.selected_fit_preference,
+        recommended_fit_sizes: formData.recommended_fit_sizes
+      });
+    }
+
+    // Passive logging (do not block Shiprocket)
+    setTimeout(() => {
+      trackCheckoutClick(e, currentConfig);
+    }, 0);
+    
+  },
+  true
+);
+
+
+    // ==================================================
+    // ADD TO CART
+    // ==================================================
+    const atcBtn =
+      document.getElementById('AddToCart') ||
+      document.querySelector('[name="add"]');
+
+    if (!atcBtn) return;
+
+    atcBtn.addEventListener('click', function () {
+      const form = atcBtn.closest('form');
+      if (!form) return;
+
+      const formData = new FormData(form);
+
+      // ==================================================
+      // GET SELECTED SIZE (SHOPIFY SAFE)
+      // ==================================================
+      let capturedSize = 'Unknown';
+
+      // 1. Radio buttons (Dawn & modern themes)
+      const sizeRadio = document.querySelector(
+        'input[type="radio"][name="Size"]:checked'
+      );
+
+      if (sizeRadio) {
+        capturedSize = sizeRadio.value;
+      }
+
+      // 2. Select fallback (older themes)
+      if (capturedSize === 'Unknown') {
+        const sizeSelect = document.querySelector(
+          'select[name="options[Size]"]'
+        );
+        if (sizeSelect) {
+          capturedSize = sizeSelect.value;
+        }
+      }
+
+      // ==================================================
+      // BUILD ATC PAYLOAD
+      // ==================================================
+      const atcData = {
+        variant_id: formData.get('id'),
+        quantity: formData.get('quantity') || 1,
+        selected_size: capturedSize
+      };
+
+      // ==================================================
+      // EXTRACT FMS SHADOW DATA
+      // ==================================================
+      const host = document.querySelector('find-my-size');
+
+      if (host) {
+        atcData.recommended_size = host.lastRecommendedSize || null;
+        atcData.selected_fit_preference = host.selectedFitPreference || null;
+
+        if (typeof host.getAllFitSizes === 'function') {
+          atcData.recommended_fit_sizes = host.getAllFitSizes();
+        }
+
+        if (host.shadowRoot && !atcData.recommended_size) {
+          const label = host.shadowRoot.getElementById('size-label');
+          if (label) {
+            atcData.recommended_size = label.innerText;
+          }
+        }
+      }
+
+      // ==================================================
+      // SEND LOG
+      // ==================================================
+      const currentConfig = {
+        ...baseConfig,
+        ...(window._userLoggerProduct || {})
+      };
+
+      console.log('[FMS] ATC LOG:', atcData); // debug-safe
+
+      trackAddToCart(currentConfig, atcData);
+    });
+  }
+
+  // ==================================================
+  // WATCH FIND-MY-SIZE BUTTON
+  // ==================================================
+  function watchForShadowButton() {
+    const observer = new MutationObserver(() => {
+      const host = document.querySelector('find-my-size');
+      if (!host || !host.shadowRoot) return;
+
+      const fmsBtn = host.shadowRoot.querySelector(
+        '#find-my-size-default'
+      );
+
+      if (!fmsBtn) return;
+
+      fmsBtn.addEventListener('click', () => {
+        const currentConfig = {
+          ...baseConfig,
+          ...(window._userLoggerProduct || {})
+        };
+        trackComponentClick(currentConfig);
+      });
+
+      observer.disconnect();
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  }
+</script>

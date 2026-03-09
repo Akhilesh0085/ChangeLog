@@ -1,0 +1,76 @@
+<!-- ------  /section/scrollup  --------- -->
+<div onclick="topFunction()" id="scroll-to-top">
+  <svg class="scrollbtn" onclick="topFunction()" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+    <path d="m12 6.586-8.707 8.707 1.414 1.414L12 9.414l7.293 7.293 1.414-1.414L12 6.586z" />
+  </svg>
+</div>
+<style>
+  svg.scrollbtn {
+    position: fixed;
+    right: 32px;
+    z-index: 15;
+    fill: aliceblue;
+    cursor: pointer;
+    transform: scale(1.5);
+  }
+  #scroll-to-top {
+    position: fixed;
+    display: none;
+    right: 18px;
+    background-color: #fbb03b;
+    cursor: pointer;
+    padding: 26px;
+    border-radius: 50%;
+    z-index: 4 !important;
+  }
+  @media (min-width: 750px) {
+    svg.scrollbtn {
+      bottom: 55px;
+    }
+    #scroll-to-top {
+      bottom: 40px;
+    }
+    .template-product svg.scrollbtn {
+      bottom: 102px;
+    }
+    .template-product #scroll-to-top {
+      bottom: 88px;
+    }
+  }
+  @media (max-width: 749px) {
+    svg.scrollbtn {
+      bottom: 104px;
+    }
+    #scroll-to-top {
+      bottom: 90px;
+    }
+    .template-product svg.scrollbtn {
+      bottom: 102px;
+    }
+    .template-product #scroll-to-top {
+      bottom: 88px;
+    }
+  }
+</style>
+
+<script>
+  function topFunction() {
+    const scrollStep = -window.scrollY / (1000 / 14); // Adjust the duration here (1000 ms in this case)
+    const scrollInterval = setInterval(() => {
+      if (window.scrollY !== 0) {
+        window.scrollBy(0, scrollStep);
+      } else {
+        clearInterval(scrollInterval);
+      }
+    }, 16);
+  }
+  window.addEventListener('scroll', function () {
+    const scrollToTopButton = document.getElementById('scroll-to-top');
+    if (window.scrollY > 200) {
+      // Adjust the scroll distance threshold here
+      scrollToTopButton.style.display = 'block';
+    } else {
+      scrollToTopButton.style.display = 'none';
+    }
+  });
+</script>

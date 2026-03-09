@@ -1,0 +1,133 @@
+.main__cart_card {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  z-index: 1000;
+  width: 100%;
+  left: 0;
+  /* background-color: #3333338c; */
+  height: 100%;
+}
+
+.inner_cart_card {
+  width: 100%;
+  background-color: #fff;
+  padding: 10px 10px;
+  /* border-radius: 15px 15px 0 0; */
+  position: absolute;
+  bottom: 0;
+  box-shadow: 0 0 3px #ccc;
+}
+
+.close__cart_card {
+  position: absolute;
+  right: 20px;
+  top: 6px;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.card_content_remaining .cstm__card_bottom {
+  display: block;
+}
+
+/* __________________________Product card new design______________________ */
+
+.cstm__size_coll a {
+  padding: 2px 6px;
+  text-align: center;
+  border: 1px solid #eeeeee;
+  border-radius: 2px;
+  background: #fff;
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+.cstm__size_coll a.active_size {
+  border-color: #bf1616;
+}
+
+.size_error {
+  color: #bf1616;
+}
+
+.cstm__card_bottom {
+  display: none;
+}
+
+use-animate.card.card--product button.product-form__submit.button.button--secondary.button--full-width.cstm__card_button {
+  display: none;
+}
+
+.cstm__size_coll,
+.cstm__size_coll a {
+  color: #000;
+  text-decoration: none;
+}
+
+@media(min-width:750px) {
+  .mobile__cart__icon {
+    display: none;
+  }
+
+  li.grid__item:hover .cstm__card_bottom {
+    display: block;
+  }
+
+  li.grid__item:hover .card-information {
+    position: absolute;
+    bottom: -70px;
+    z-index: 2;
+    background: #fff;
+    width: 100%;
+  }
+
+  .cstm__size_coll {
+    padding: 10px 0;
+  }
+
+  .cstm__size_coll,
+  .cstm__size_coll a {
+    font-size: 14px;
+  }
+
+  .cstm__card_button {
+    border: 1px solid #FFAC31;
+    color: #FFAC31;
+  }
+
+  .cstm__card_button:after {
+    background-color: #FFAC31;
+  }
+
+  .cstm__card_button:hover {
+    color: #fff;
+  }
+}
+
+@media(max-width:749px) {
+  .mobile__cart__icon {
+    border-top: 1px solid #e4e4e4;
+    text-align: center;
+    letter-spacing: 0;
+    font-size: 12px;
+    padding: 5px 0;
+    margin: 0 -10px;
+    /* display: none; */
+  }
+
+  .select__size_txt {
+    font-size: 12px;
+  }
+
+  .cstm__size_coll {
+    padding: 10px 0 0;
+  }
+
+  .cstm__size_coll,
+  .cstm__size_coll a {
+    font-size: 11px;
+  }
+}

@@ -1,0 +1,55 @@
+<!-- ----- /section/career-logo.liquid --------- -->
+<div class="main_career">
+  <div class="carees-img">
+    <hr class="stright-line1">
+    <img class="careesimg" src="{{ section.settings.banner-carees-img | image_url }}" width="" height="">
+  </div>
+</div>
+<style>
+   .main_career {
+      margin: 50px 0;
+   }
+   .carees-img {
+      position: relative;
+   }
+    img.careesimg {
+        max-width: 380px;
+        padding: 20px;
+        background-color: #fff;
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        top: 50%;
+   }
+
+    hr.stright-line1{
+       border-bottom: 3px solid black;
+      margin: 0;
+    }
+
+    @media(max-width:749px){
+    img.careesimg {
+      max-width: 250px;
+    }
+    .main_career {
+      margin: 30px 0;
+    }
+  }
+</style>
+{% schema %}
+  {
+    "name": "Career-logo-image",
+    "settings": [
+      {
+        "type":"image_picker",
+        "id":"banner-carees-img",
+        "label":"choose your images"
+}
+    ],
+    "presets": [
+  {
+    "name": "Career-logo-image"
+  }
+]
+  }
+{% endschema %}

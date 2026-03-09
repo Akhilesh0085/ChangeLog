@@ -1,0 +1,459 @@
+.custom_header sup.suptext {
+  color: #bf1616;
+  padding-left: 5px;
+  line-height: 0;
+}
+
+.custom_header .mobile_menu_link {
+  color: #252525;
+  text-decoration: none;
+}
+
+.list-menu__item .label.Flat,
+.list-menu__item .label.First {
+  font-weight: 300;
+  font-size: 12px;
+  font-family: muli;
+}
+
+.custom_header .header__icon:hover,
+.custom_header .cstm-icon:hover {
+  color: #fbb03b !important;
+}
+
+.custom_header .header__icon:hover a.track_order_icon svg path {
+  fill: #fbb03b;
+}
+
+.custom_header .header__icon:hover a.track_order_icon svg {
+  transform: scale(1.07);
+}
+
+.cstm-icon {
+  text-transform: uppercase;
+  font-size: 10px;
+  color: #000;
+  display: flex;
+  font-family: Avenir-Roman;
+  justify-content: center;
+}
+
+.custom_header .header__icon {
+  text-decoration: none;
+  text-align: center;
+}
+
+.custom_header .header {
+  display: flex;
+}
+
+@keyframes blinker {
+  0% {
+    opacity: 1.0;
+  }
+
+  50% {
+    opacity: 0.0;
+  }
+
+  100% {
+    opacity: 1.0;
+  }
+}
+
+.custom_header .Diwali.Sale .label {
+  color: #fbb03b;
+}
+
+.custom_header .SALE .label {
+  color: #fbb03b;
+  animation: blinker 1s linear infinite;
+  font-size: 13.5px;
+}
+
+.custom_header .list-menu-dropdown:before {
+  content: "";
+  height: 100%;
+}
+
+.custom_header .header__inline-menu {
+  margin-inline-start: 5px;
+}
+
+.custom_header .list-menu--inline {
+  column-gap: 0rem;
+}
+
+.custom_header a.header__menu-item {
+  padding-right: 0px;
+}
+
+.custom_header span.label-sale {
+  /* color: #ffa822; */
+  /* holi heading  */
+  font-weight: 900;
+  background-image: linear-gradient(60deg, #E21143, #FFB03A);
+  background-clip: text;
+  color: transparent;
+}
+
+.custom_header .is-megamenu>.list-menu-dropdown .page-width {
+  overflow: auto;
+}
+
+details span.menu-drawer__menu-item.list-menu__item svg {
+  display: none;
+}
+
+details span.menu-drawer__menu-item.list-menu__item {
+  position: relative;
+}
+
+details summary span.menu-drawer__menu-item.list-menu__item:after {
+  content: '+';
+  font-size: 16px;
+}
+
+details[open]>summary .menu-drawer__menu-item.list-menu__item:after {
+  content: '';
+  position: absolute;
+  right: 15px;
+  top: 27px;
+  width: 10px;
+  height: 2px;
+  background: #000;
+}
+
+.menu-drawer__submenu details[open]>summary .menu-drawer__menu-item.list-menu__item:after {
+  background: #5d5d5d99;
+}
+
+.custom_header span.menu-drawer__menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.custom_header .menu-drawer__menu-item {
+  justify-content: unset;
+}
+
+.custom_header .aditya_birla_logo img {
+  width: 100%;
+  height: auto;
+}
+
+.menu-drawer-container .header__icon--summary:after {
+  display: none;
+}
+
+@media(min-width: 990px) {
+  .custom_header a.header__menu-item {
+    letter-spacing: 0px;
+  }
+
+  .custom_header .header__inline-menu .header__menu-item.SALE {
+    padding: 9px 0rem 9px 1.2rem;
+  }
+
+  .custom_header .mega-menu__item-link .header__menu-item {
+    font-size: 14px;
+    color: #000;
+    font-weight: 900;
+    letter-spacing: 0px;
+    font-family: muli-bold !important;
+  }
+
+  .custom_header .list-menu-child a.header__menu-item {
+    font-size: 12px;
+    font-weight: 100;
+    font-family: muli;
+  }
+
+  .custom_header a.header__menu-item:hover,
+  .custom_header .list-menu-child a.header__menu-item:hover {
+    color: #000;
+  }
+
+  .custom_header .list-mega-menu .mega-menu__item {
+    padding-left: 10px;
+  }
+
+  .custom_header .list-mega-menu .mega-menu__item:nth-child(odd) {
+    background-color: #fafafa;
+  }
+
+  .custom_header .list-mega-menu {
+    column-gap: 0px;
+  }
+
+  .custom_header .header:not(.header--middle-left):not(.header--center-split) .header__inline-menu {
+    margin-top: 0rem;
+    width: 100%;
+  }
+
+  .custom_header .mega-menu__promo {
+    flex: 0 0 18rem;
+  }
+
+  .custom_header .mega-menu__promo.drapewear.show-from-bottom {
+    flex: 0 0 36rem;
+  }
+
+  .custom_header .aditya_birla_logo {
+    height: 4rem;
+    width: 4rem;
+  }
+}
+
+@media(max-width:989px) {
+  .custom_header .header__icon--menu {
+    width: 3.2rem;
+    padding-top: 4px;
+  }
+
+  .cstm-icon.header_icon_name {
+    margin-top: 10px;
+  }
+
+  .custom_header .header {
+    overflow: hidden;
+  }
+
+  .cstm-icon {
+    margin-top: -8px;
+    font-size: 9px;
+    letter-spacing: 0;
+  }
+
+  .header-top-banner {
+    padding: 15px;
+    padding-bottom: 0px;
+  }
+
+  .mobile_header {
+    width: 100%;
+  }
+
+  .custom_header .header__icon .icon-account,
+  .custom_header .header__icon .icon-cart {
+    height: 2rem;
+    width: 2rem;
+    vertical-align: unset;
+  }
+
+  .custom_header .header__icon .icon-search {
+    height: 2rem;
+    width: 3.2rem;
+    vertical-align: unset;
+  }
+
+  .menu-drawer__navigation-container drawer-close-button.header__icon.header__icon--menu.medium-hide.large-up-hide {
+    position: relative;
+    transform: unset;
+    left: 0;
+    top: 0;
+  }
+
+  .main__cstm_menu {
+    width: 100%;
+    text-transform: uppercase;
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 20px;
+    font-family: Avenir-Roman;
+  }
+
+  drawer-close-button.header__icon--menu .icon-close {
+    height: 1rem;
+    width: 1rem;
+    color: #ffffff;
+    stroke-width: 6px;
+  }
+
+  .menu-mobile--open drawer-close-button.header__icon--menu:after {
+    display: none
+  }
+
+  .menu-drawer__navigation {
+    margin-top: 0;
+  }
+
+  .header__mobile__closed {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 20px;
+    background: #fbb03b;
+  }
+
+  .custom_header .header__right {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .js .menu-drawer__submenu {
+    position: relative !important;
+    transform: unset !important;
+    box-shadow: none;
+  }
+
+  .menu-drawer__topbar {
+    display: none;
+  }
+
+  .custom_header .mobile_menu_main {
+    display: flex;
+  }
+
+  .mobile_menu_main drawer-close-button.header__icon--menu {
+    right: 1rem;
+  }
+
+  ul.menu-drawer__menu.list-menu.sub__menu_links {
+    border-bottom: 1px solid #d1d5d9;
+    padding-inline-start: 1rem;
+  }
+
+  .menu-drawer__inner-submenu .menu-drawer__menu-item {
+    font-family: Avenir-Roman;
+  }
+
+  .custom_header .menu-drawer__menu-item {
+    font-size: 14px;
+    padding: 1rem 15px;
+    font-weight: 900;
+    letter-spacing: 0px;
+  }
+
+  .menu-drawer__inner-submenu .menu-drawer__menu-item {
+    border-bottom: none;
+    color: rgba(93, 93, 93, .6);
+    font-size: 12px;
+    text-transform: uppercase !important;
+    /* font-family: Avenir-Roman; */
+  }
+
+  .menu-drawer__inner-submenu .menu-drawer__menu-item.list-menu__item .mobile_menu_link {
+    color: rgba(93, 93, 93, .6);
+  }
+
+  @keyframes blinker {
+    0% {
+      opacity: 1.0;
+    }
+
+    50% {
+      opacity: 0.0;
+    }
+
+    100% {
+      opacity: 1.0;
+    }
+  }
+
+  .menu-drawer__menu-item.mobile_menu-sale a {
+    color: #fbb03b;
+    -webkit-animation: blinker 1s linear infinite;
+    animation: blinker 1s linear infinite;
+  }
+
+  .mobile_menu-track-order,
+  .mobile_menu-diwali-sale {
+    color: #fbb03b;
+  }
+
+  .main__links details.menu-opening[open] span.menu-drawer__menu-item.list-menu__item {
+    border-bottom: 0;
+    color: #252525;
+  }
+
+  .custom_header .header__right {
+    margin-inline-end: 0px;
+  }
+
+  .custom_header .header__right .header__icon {
+    /* width: 4.4rem; */
+    height: 3rem;
+  }
+
+  .custom_header .aditya_birla_logo {
+    height: 3rem;
+    width: 3rem;
+  }
+}
+
+/* .header__icon .desk_search_cstm{
+   display: flex;
+    justify-content: center;
+  margin-top:5px;
+  } */
+.header__icon.trank_icon_moob {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* padding-bottom: 10px; */
+}
+
+/* tab header fixed */
+@media screen and (min-width: 750px) {
+  .custom_header .list-menu.show-from-bottom .header__menu-item {
+    font-size: 14px;
+    letter-spacing: 0px;
+    font-family: muli-bold !important;
+  }
+
+  .custom_header a.header__icon.header__icon--account {
+    width: 3rem;
+  }
+
+  .cstm-icon.header_icon_name {
+    margin-top: 13px;
+  }
+
+  .menu-mobile--open .shopify-section-header:not(.shopify-section-header-sticky),
+  .menu-mobile--opening .shopify-section-header:not(.shopify-section-header-sticky),
+  .menu-mobile--closing .shopify-section-header:not(.shopify-section-header-sticky) {
+    position: sticky;
+  }
+
+  .menu-mobile--open .shopify-section-announcement-bar,
+  .menu-mobile--opening .shopify-section-announcement-bar,
+  .menu-mobile--closing .shopify-section-announcement-bar {
+    position: sticky;
+  }
+
+  .custom_header .page-width {
+    padding-left: 2rem;
+    padding-right: 3rem;
+  }
+
+  .custom_header a.track_order_icon {
+    line-height: 0;
+  }
+
+  .custom_header a.track_order_icon svg path {
+    fill: #000000;
+    opacity: .7;
+  }
+}
+
+@media ((min-width:750px) and (max-width: 989px)) {
+
+  .menu-mobile--open #MainContent,
+  .menu-mobile--open .shopify-section-footer,
+  .menu-mobile--opening #MainContent,
+  .menu-mobile--opening .shopify-section-footer {
+    transform: none;
+  }
+}
+
+@media(max-width:749px) {
+  .header__icon .desk_search_cstm {
+    margin-top: 0px;
+  }
+
+  .custom_header .header__icon.trank_icon_moob {
+    display: none;
+  }
+}

@@ -1,0 +1,98 @@
+{% assign path = filename | asset_url %}
+
+{% case loading %}
+  {% when 'async' %}
+    {% case device %}
+      {% when 'desktop' %}
+        <script>
+          if (window.innerWidth >= 768) {
+            var s = document.createElement('script');
+            s.src = '{{ path }}';
+            s.async = true;
+            document.head.appendChild(s);
+          }
+        </script>
+      {% when 'mobile' %}
+        <script>
+          if (window.innerWidth < 768) {
+            var s = document.createElement('script');
+            s.src = '{{ path }}';
+            s.async = true;
+            document.head.appendChild(s);
+          }
+        </script>
+      {% else %}
+        <script src="{{ path }}" async></script>
+    {% endcase %}
+
+  {% when 'defer' %}
+    {% case device %}
+      {% when 'desktop' %}
+        <script>
+          if (window.innerWidth >= 768) {
+            var s = document.createElement('script');
+            s.src = '{{ path }}';
+            s.defer = true;
+            document.head.appendChild(s);
+          }
+        </script>
+      {% when 'mobile' %}
+        <script>
+          if (window.innerWidth < 768) {
+            var s = document.createElement('script');
+            s.src = '{{ path }}';
+            s.defer = true;
+            document.head.appendChild(s);
+          }
+        </script>
+      {% else %}
+        <script src="{{ path }}" defer></script>
+    {% endcase %}
+
+  {% when 'lazy' %}
+    {% case device %}
+      {% when 'desktop' %}
+        <script>
+          if (window.innerWidth >= 768) {
+            window._lazyJS = window._lazyJS || [];
+            window._lazyJS.push('{{ path }}');
+          }
+        </script>
+      {% when 'mobile' %}
+        <script>
+          if (window.innerWidth < 768) {
+            window._lazyJS = window._lazyJS || [];
+            window._lazyJS.push('{{ path }}');
+          }
+        </script>
+      {% else %}
+        <script>
+          window._lazyJS = window._lazyJS || [];
+          window._lazyJS.push('{{ path }}');
+        </script>
+    {% endcase %}
+
+  {% else %}
+    {% case device %}
+      {% when 'desktop' %}
+        <script>
+          if (window.innerWidth >= 768) {
+            var s = document.createElement('script');
+            s.src = '{{ path }}';
+            s.defer = true;
+            document.head.appendChild(s);
+          }
+        </script>
+      {% when 'mobile' %}
+        <script>
+          if (window.innerWidth < 768) {
+            var s = document.createElement('script');
+            s.src = '{{ path }}';
+            s.defer = true;
+            document.head.appendChild(s);
+          }
+        </script>
+      {% else %}
+        <script src="{{ path }}" defer></script>
+    {% endcase %}
+{% endcase %}

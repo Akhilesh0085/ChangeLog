@@ -1,0 +1,139 @@
+{%- style -%}
+        #shopify-section-{{ section.id }} {
+          --section-padding-top: {{ section.settings.padding_top }}px;
+          --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+        }
+         @media screen and (min-width: 750px) {
+          .section-{{ section.id }}-padding {
+            padding-top: {{ section.settings.padding_top }}px;
+            padding-bottom: {{ section.settings.padding_bottom }}px;
+          }
+        }
+        {% if page.handle contains 'career' %}
+          h1.page-heading{
+            display:none;
+          }
+         .section--padding{
+           padding: 0px;
+         }
+        {% endif %}
+        {% if page.handle contains 'delivery-policy' or page.handle contains 'return-and-refund-policy' %}
+       .content-pages {
+            margin-top: 10px;
+        }
+        h1.page-heading{
+            text-align: left;
+            font-size:29px;
+            font-weight: 500;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+       .rte ul, .rte ol {
+           margin: 0;
+           padding: 0;
+           line-height: 22px;
+        }
+        h1.page-heading:after{
+          display:none;
+        }
+        ul.delivery-para {
+            font-size: 14px;
+            line-height: 24px;
+        }
+      .table-delivery td {
+            border: 1px solid #dee2e6;
+            padding: 1.2rem;
+        }
+        table {
+            border-collapse: collapse;
+        }
+        table.table-delivery{
+         height: 454px;
+        }
+
+       .table-delivery p{
+          font-size: 13px;
+          margin: 0px;
+          line-height: 16px;
+        }
+                    /* =================================refund policy====== */
+
+    .content-pages-return_policy p{
+     margin:0;
+    }
+    .content-pages-return_policy h3{
+      margin:10px 0;
+    }
+   .content-pages-return_policy p{
+    line-height: 20px;
+     }
+     .content-pages-return_policy h2{
+      text-transform: math-auto;
+       font-size:32px;
+  }
+   h3 strong {
+      text-transform: math-auto;
+     font-size:17px;
+  }
+    .return_footer.rte ul {
+      padding-inline-start: 1.6rem;
+  }
+       {% endif %}
+{%- endstyle -%}
+
+{{ 'section-main-page.css' | asset_url | stylesheet_tag }}
+{{ 'custom-page.css' | asset_url | stylesheet_tag }}
+
+<link rel="stylesheet" href="{{ 'component-rte.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>{{ 'component-rte.css' | asset_url | stylesheet_tag }}</noscript>
+ <div class="page-width page-bread">
+ {% render 'breadcrumbs' %}
+ </div>
+<div class="page-width{% if section.settings.narrow %} page-width--inner{% endif %} section--padding">
+  <h1 class="page-title page-heading font-bold-heading">
+    {{ page.title | escape }}
+  </h1>
+  <div class="rte">
+    {{ page.content }}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-page.name",
+  "tag": "section",
+  "class": "section footer-pages",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "narrow",
+      "default": false,
+      "label": "t:sections.all.narrow.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_top.unit",
+      "label": "t:sections.all.padding.padding_top.label",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "t:sections.all.padding.padding_bottom.unit",
+      "label": "t:sections.all.padding.padding_bottom.label",
+      "default": 60
+    }
+  ]
+}
+{% endschema %}

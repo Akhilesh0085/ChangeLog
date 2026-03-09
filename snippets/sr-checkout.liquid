@@ -1,0 +1,159 @@
+{% comment %} <!-- Declare variable (not render-blocking) --> {% endcomment %}
+<script defer>
+  checkoutBuyer = 'https://fastrr-boost-ui.pickrr.com/';
+</script>
+
+<input type="hidden" value="shopforaurelia.com" id="sellerDomain">
+
+{% comment %} <!-- Optimized non-blocking stylesheet load --> {% endcomment %}
+<link
+  rel="stylesheet"
+  href="https://fastrr-boost-ui.pickrr.com/assets/styles/shopify.css"
+  media="print"
+  onload="this.media='all'"
+>
+<noscript><link rel="stylesheet" href="https://fastrr-boost-ui.pickrr.com/assets/styles/shopify.css"></noscript>
+
+{% comment %} <!-- Defer script loading --> {% endcomment %}
+<script src="https://fastrr-boost-ui.pickrr.com/assets/js/channels/shopify.js" defer></script>
+
+<input type="hidden" value="rz" id="template">
+<!--
+  <input type="hidden" value="percent" id="discountType"/>
+  <input type="hidden" value="5" id="discValue"/>
+-->
+
+<!--
+  <script>
+
+  let fastrrBtn = '<div id="headless-button" class="shiprocket-headless" data-type="mini-cart"></div>'
+  let shopifybutton = '<button style="background:var(--theme-color);color:white;text-transform:var(--uppercase)" type="submit" id="CartDrawer-Checkout" class="cart__checkout-button button" name="checkout" form="CartDrawer-Form">Checkout</button>'
+
+  let buttonAdded = false
+  let parsedBtnCode = new DOMParser().parseFromString(fastrrBtn, 'text/html').querySelectorAll('.shiprocket-headless')[0];
+  const headlessNode = document.querySelector('html');
+
+  // Options for the observer (which mutations to observe)
+  const configuration = { attributes: true, childList: true, subtree: true };
+
+  // Callback function to execute when mutations are observed
+  const headlessCallback = (mutationList, observer) => {
+    for (const mutation of mutationList) {
+    let sidecart = document.querySelector('.drawer.animate.active')
+
+
+      if(sidecart) {
+        if(!document.getElementById('headless-button')) {
+
+              if(Intl.DateTimeFormat().resolvedOptions().timeZone === "Asia/Calcutta") {
+
+          document.getElementById('fastrrButton').innerHTML = fastrrBtn
+              }
+          if(Intl.DateTimeFormat().resolvedOptions().timeZone === "Asia/Kolkata") {
+
+          document.getElementById('fastrrButton').innerHTML = fastrrBtn
+              }
+
+
+    }
+      if(!document.getElementById('CartDrawer-Checkout')) {
+
+
+              if(Intl.DateTimeFormat().resolvedOptions().timeZone != "Asia/Calcutta") {
+                if(Intl.DateTimeFormat().resolvedOptions().timeZone != "Asia/Kolkata") {
+
+          document.getElementById('nativeCheckoutButton').innerHTML = shopifybutton
+              }
+              }
+
+        }
+
+
+      }
+
+    }
+  };
+
+  // Create an observer instance linked to the callback function
+  const observer1 = new MutationObserver(headlessCallback);
+
+  // Start observing the target node for configured mutations
+  observer1.observe(headlessNode, configuration);
+
+  </script>
+-->
+
+<style>
+  /* @media screen and (min-width: 767px) {
+.product-form__buttons{
+  flex-wrap:nowrap !important;
+}
+  } */
+  /*.product-form__submit.button.button--small.font-bold-heading {
+    display: none;
+  }*/
+  /* .product-form__submit.button.button--secondary.button--full-width{
+    margin-bottom:-15px;
+  } */
+  .sr-headless-checkout {
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 0px;
+    height: 47px;
+    letter-spacing: 1px;
+    background-color: #bf1616 !important ;
+    margin-bottom: 0px;
+  }
+  /* .button.button--secondary{
+  margin-top:5px;
+} */
+  .shiprocket-headless[data-type='product'] .sr-headless-checkout {
+    margin-bottom: 0px;
+    height: 50px;
+  }
+  .shiprocket-headless,
+  .mini-cart__footer .shiprocket-headless,
+  .summery___totals .shiprocket-headless {
+    width: 100%;
+  }
+  .button-container {
+    flex-direction: column;
+  }
+  .button.button--secondary {
+    width: 100% !important;
+  }
+  /* .sr-discount-label{
+  font-size:0px !important;
+}
+
+ .sr-discount-label:before{
+    content:"EXTRA 5% OFF on PERFUMES";
+    font-size: 9px;
+    color: #000;
+    text-transform: none;
+    top: -8px;
+    left: 6px;
+    background-color: #53ff73;
+    border-radius: 3px;
+    padding: 0 10px;
+} */
+
+  /* .product-form__buttons.sticky_atc_buynow .sr-headless-checkout
+{
+    width: 100%;
+    height: 47px;
+    margin-top: 2px;
+}
+.product-form__buttons.sticky_atc_buynow .product-form__submit.button button--small.font-bold-heading{  
+    width: 100%;
+    height: 47px;
+    margin-top: 9px;
+} */
+
+  @media (min-width: 1024px) {
+    .shiprocket-headless {
+      width: 30%;
+    }
+  }
+</style>

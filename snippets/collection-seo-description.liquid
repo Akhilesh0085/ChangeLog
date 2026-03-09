@@ -1,0 +1,70 @@
+<!------ /snippet/collection-seo-description.liquid -------->
+{% if collection.description.size > 50 %}
+  <div class="product-description-short">
+  {{ collection.description |strip_html | truncate: 67  }}<br> <a class="readmore" href="#">Show More</a>
+  </div>
+  <div class="product-description-full" style="display:none;">
+  {{ collection.description }}
+  <br><a class="readless" href="#"> Show Less</a>
+  </div>
+  {% else %}
+    {{ collection.description }}
+{% endif %} 
+
+<style>
+.product-description-short h1,
+.product-description-full h1{
+  font-size: 20px;
+} 
+.product-description-short h2,
+.product-description-full h2{
+  font-size: 16px;
+}
+.product-description-short p,
+.product-description-short li,
+.product-description-full p,
+.product-description-full li,
+.product-description-short {
+  line-height: 23px;
+  font-size:13px;
+}
+.product-description-short a,
+.product-description-full a{
+  color: #000;
+}
+.product-description-short .readmore,
+.product-description-full .readless{
+  font-size: 14px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+</style>
+
+<script>
+  $(document).ready(function(){
+    $('body').on('click','.readmore',function(e){
+      e.preventDefault();
+     $('.product-description-short').hide(); 
+     $('.product-description-full').show(); 
+    })
+    $('body').on('click','.readless',function(e){
+      e.preventDefault();
+       $('.product-description-full').hide(); 
+      $('.product-description-short').show(); 
+    })
+  })
+// $('.readmore').click(function (event) {
+//   event.preventDefault();
+//   var descriptionFull = document.querySelector('.product-description-full');
+//   descriptionFull.style.display = 'block';
+//   var descriptionShort = document.querySelector('.product-description-short');
+//   descriptionShort.style.display = 'none';
+// });
+// $('.readless').click(function (event) {
+//   event.preventDefault();
+//   var descriptionFull = document.querySelector('.product-description-full');
+//   descriptionFull.style.display = 'none';
+//   var descriptionShort = document.querySelector('.product-description-short');
+//   descriptionShort.style.display = 'block';
+// });  
+</script>

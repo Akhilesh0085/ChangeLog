@@ -1,0 +1,88 @@
+<!----- /section/all-brand.liquid ----------->
+
+ <div class="main_brnd_section">
+   {% for block in section.blocks %}
+    {% if block.settings.title != blank %}
+       <a class="inner_brnd" style="color:{{ block.settings.color }}; width:{{ block.settings.width }}%; background:{{ block.settings.background }};" href="{{ block.settings.url }}">
+         {{ block.settings.title }}
+       </a>
+    {% endif %}
+   {% endfor %}
+ </div>
+
+
+{% schema %}
+  {
+    "name": "All Brand",
+    "class": "all_brand",
+    "settings": [  
+    ],
+    "blocks":[
+      {
+        "type":"brand",
+        "name":"Brand",
+        "settings":[
+          {
+            "type":"text",
+            "id":"title",
+            "label":"Brand Name"
+          },
+          {
+            "type":"url",
+            "id":"url",
+            "label":"URL"
+          },
+          {
+            "type": "color",
+            "id": "color",
+            "label": "Colour"
+          },
+          {
+            "type": "color",
+            "id": "background",
+            "label": "Background"
+          },
+          {
+            "type": "range",
+            "id": "width",
+            "min": 10,
+            "max": 50,
+            "step": 1,
+            "unit": "%",
+            "label": "Width",
+            "default": 10
+          }
+        ]
+      }
+    ],
+    "presets":[
+      {
+        "name":"All Brand"
+      }
+    ]
+  }
+{% endschema %}
+
+<style>
+  .all_brand{
+    position: sticky;
+    z-index: 9;
+    top: 0;
+  }
+  #shopify-section-{{ section.id }} .main_brnd_section {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  #shopify-section-{{ section.id }} .inner_brnd{
+    text-align: center;
+  }
+  #shopify-section-{{ section.id }} a.inner_brnd{
+    text-decoration: none;
+  }
+  @media(max-width:749px){
+  #shopify-section-{{ section.id }} a.inner_brnd{
+    font-size: 12px;
+  }
+  }
+</style>

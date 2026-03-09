@@ -1,0 +1,131 @@
+{% comment %}
+  Renders a set of links for paginated results. Must be used within paginate tags.
+
+  Usage:
+  {% paginate results by 2 %}
+    {% render 'pagination', paginate: paginate, anchor: '#yourID' %}
+  {% endpaginate %}
+
+  Accepts:
+  - paginate: {Object}
+  - anchor: {String} (optional) This can be added so that on page reload it takes you to wherever you've placed your anchor tag.
+  - pagination: {String} (optional) How additional pages of products are navigated
+{% endcomment %}
+
+<link rel="stylesheet" href="{{ 'component-pagination.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>{{ 'component-pagination.css' | asset_url | stylesheet_tag }}</noscript>
+
+{% comment %} {%- if paginate.parts.size > 0 -%}
+  <div class="pagination-wrapper">
+    {%- if pagination == 'infinite' or pagination == 'click' -%}
+      {%- if paginate.next -%}
+        <div class="center">
+          <infinite-scroll class="infinite-scroll button button--tertiary" data-url="{{ paginate.next.url }}" data-trigger="{{ pagination }}">
+            {{ 'general.pagination.show_more' | t }}
+          </infinite-scroll>
+        </div>
+      {%- endif -%}
+    {%- else -%}
+      <nav class="pagination" role="navigation" aria-label="{{ 'general.pagination.label' | t }}">
+        <ul class="pagination__list list-unstyled" role="list">
+        {%- if paginate.previous -%}
+          <li>
+            <a href="{{ paginate.previous.url }}{{ anchor }}" class="pagination__item pagination__item--next motion-reduce" aria-label="{{ 'general.pagination.previous' | t }}">
+              {{ 'general.pagination.previous' | t }}
+            </a>
+          </li>
+        {%- endif -%}
+
+        {%- for part in paginate.parts -%}
+          <li>
+            {%- if part.is_link -%}
+              <a href="{{ part.url }}{{ anchor }}" class="pagination__item" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">{{ part.title }}</a>
+            {%- else -%}
+              {%- if part.title == paginate.current_page -%}
+                <span class="pagination__item pagination__item--current" aria-current="page" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">{{ part.title }}</span>
+              {%- else -%}
+                <span class="pagination__item">{{ part.title }}</span>
+              {%- endif -%}
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+
+        {%- if paginate.next -%}
+          <li>
+            <a href="{{ paginate.next.url }}{{ anchor }}" class="pagination__item pagination__item--prev motion-reduce" aria-label="{{ 'general.pagination.next' | t }}" >
+              {{ 'general.pagination.next' | t }}
+            </a>
+          </li>
+        {%- endif -%}
+        </ul>
+      </nav>
+    {%- endif -%}
+  </div>
+{%- endif -%} {% endcomment %}
+
+
+{% if paginate.next %}
+  <div class="show-more-wrapper">
+    <button
+      id="ShowMoreBtn"
+      class="show_more_btn"
+      data-next-url="{{ paginate.next.url }}">
+      Show More
+    </button>
+  </div>
+{% endif %}
+ 
+<style>
+.pagination-wrapper {
+  display: none !important;
+}
+.show_more_btn{
+  border: 1px solid #000;
+  padding: 10px 15px;
+  background-color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+}
+</style>
+ 
+<script>
+document.addEventListener("click", async (e) => {
+  const btn = e.target.closest("#ShowMoreBtn");
+  if (!btn) return;
+ 
+  const url = btn.dataset.nextUrl;
+  if (!url) return;
+ 
+  btn.textContent = "Loading...";
+ 
+  try {
+    const res = await fetch(url);
+    const html = await res.text();
+ 
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+ 
+    const newItems = doc.querySelectorAll("#product-grid > li");
+    const grid = document.querySelector("#product-grid");
+ 
+    newItems.forEach(item => grid.appendChild(item));
+ 
+    const newBtn = doc.querySelector("#ShowMoreBtn");
+    if (newBtn) {
+      btn.dataset.nextUrl = newBtn.dataset.nextUrl;
+      btn.textContent = "Show More";
+    } else {
+      btn.remove();
+    }
+ 
+  } catch (err) {
+    console.error("Load more failed", err);
+    btn.textContent = "Show More";
+  }
+});
+ 
+</script>

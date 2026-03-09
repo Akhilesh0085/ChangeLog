@@ -1,0 +1,820 @@
+
+<style>
+  #store_loc_heading{
+   font-size:20px;
+    font-weight: 700;
+    font-family: Avenir-Roman;
+    text-transform: uppercase;
+  }
+/ map /
+ #content{
+    width: 300px;
+ / border: 1px solid; /
+    / height: 150px; /
+  
+ }
+ .main-teml-loc{
+    width: 70%;
+    float: left;
+     }
+ .image-store-loc{
+     width: 28%;
+     / border: 1px solid green; /
+     float: right;
+    
+ }
+ .gm-style-iw-chr{
+  justify-content: flex-end;
+ }
+ .image-store-loc img{
+    border-radius: 5px;
+ }
+ .store-name-loc{
+     font-size: 1rem;
+     margin: 0;
+     color: #3c3b3ad1;
+ }
+ .address-store-loc p{
+   font-size: 13px;
+   margin: 0;
+   color: #0a0a0ae0;
+   text-align: center;
+ }
+ .website-link-loc{
+    margin-top: 6px !important;
+ }
+ .description-loc{
+     margin-top: 4px !important;
+ }
+
+/ map  /
+        .ens_stl_wrapper{
+            max-width: 1200px;
+            margin: auto;
+         
+            padding: 10px;
+        }
+        ul{
+            margin: 0;
+            padding: 0;  
+        }
+        .ens_stl_bdr{
+            border: 1px solid #ccc;
+        }
+        ul li{
+            list-style: none;
+        } 
+        .ens_stl_main{
+            height: 500px !important;
+        }
+        .ens_stl_sidebar.right{
+            margin-left: 10px;
+            order: 2;
+           
+        }
+        .ens_stl_map.left{
+            margin-left: 0;
+        }
+        .ens_flx{
+        display: flex;
+        width: 100%;
+        }
+        .ens_w-30{         
+          
+          background: #fff;
+          border: 1px solid #ced4da;
+          padding: 0;
+          border-radius: .25rem;
+        }
+        .ens_flx_dir_column{
+            flex-direction: column;
+        }
+        .ens_flx_1{
+            flex: 1 1 auto;
+        }
+        .ens_mr-10{
+            margin-right: 10px;
+        }
+        .ens_mb-5{
+            margin-bottom: 5px;
+        }
+        .ens_stl_search{
+            width: 100%;
+            max-width: 450px;
+        /     padding: 0 10px; /
+            margin-left: 1px;
+            border: none;
+        }
+        .pointer{
+        cursor: pointer;
+        }
+        .ens_stl_search input{
+          font-size:16px;
+          font-family: Avenir-Roman;
+          display: inline-block;
+          width: 100%;
+          height: 100%;
+          padding: 0 10px;
+          line-height: 32px;
+          color: #0e0e0e;
+          background: #fff;
+          border: none;
+          outline: none;
+  
+        }
+        .ens_stl_search input:focus-visible{
+
+    box-shadow:none;
+
+  }
+        .ens_stl_search_btn{
+            justify-content: center;
+            width: 100%;
+            max-width: 200px;
+        }
+        .ens_stl_search_btn button{
+          position: relative;
+         border: none;
+          border-radius: 3px;
+          z-index: 1;
+          font-size: 18px;
+          / border-color: #fff; /
+          / background-color: #000; /
+          / color: #fff; /
+          line-height: 32px;
+          width: 100%;
+          outline: 0;
+          
+          text-transform: capitalize;
+          / padding: 0 26px; /
+          padding: 8px 0px;
+        }
+        
+        .ens_stl_search_btn img:hover::before,.lable:hover::before{
+            width: 100%;
+           
+        }
+        .ml_10{
+            margin-left: 10px;
+        }
+        .ml_20{
+            margin-left: 20px;
+        }
+        .mb_10{
+           margin-top:10px;
+            margin-bottom: 10px;
+        }
+        .ens_h_100{
+            height: 100%;
+        }
+        .ens_stl_sidebar_content {
+           
+            cursor: pointer;
+        }
+        .ens_stl_sidebar_content:hover{
+            background-color: rgb(214, 214, 214);
+        }
+        .ens_min_h_30{
+            min-height: 35px;
+        }
+        .ens_align_center{
+            align-items: center;
+            background: red;
+             width: 44%;
+        }
+        .lable{
+            font-family: Arial;
+            position: relative;
+            z-index: 1;
+            background-color: #000;
+            color: #fff;
+            font-size: 18px;
+            padding: 10px;
+        }
+        
+    .search-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+  
+      .search-label {
+        font-size: 18px;
+        margin-right: 10px;
+      }
+  
+      #search {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+  
+      .search-btn {
+        background-color: red;
+        border: none;
+        padding: 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+  
+      .search-btn img {
+        width: 20px;
+        height: 20px;
+      }
+  
+      .view-store-list-btn { 
+        color: white;
+        border: none;
+        padding: 15px;
+        width: 100%;
+        text-align: center;
+        cursor: pointer;
+        font-size: 16px;
+        / margin-bottom: 20px; /
+      }
+  
+      .store-list {
+        width: 100%;
+        overflow-y: auto;
+        max-height: 400px;
+      }
+  
+      .store-card { 
+        border: 1px solid #ddd; 
+        overflow: hidden; 
+        margin-bottom: 20px;
+        width: 100%;
+        
+      }
+  
+      .store-header { 
+        align-items: center;
+        padding: 16px; 
+      }
+  
+      .store-logo {
+        object-fit: contain;
+        width: 70px;
+        height: 70px;
+        /* margin-right: 12px; */
+        border-radius: 4px;
+      }
+  
+      .store-title {
+        font-size: 16px;
+        text-decoration: underline;
+        text-transform: capitalize;
+        
+      }
+  
+      .store-details {
+        padding: 16px;
+      }
+  
+      .store-details p {
+        font-size: 14px;
+        color: #555;
+        
+      }
+  
+      .whatsapp-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #e0e0e0;
+        width: fit-content;
+    font-size: 14px;
+        padding: 4px 15px;
+        
+        border-radius: 4px;
+        text-decoration: none;
+        color: #333;
+        font-weight: bold;
+        margin-bottom: 16px;
+      }
+  
+      .whatsapp-icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 8px;
+      }
+  
+      .store-timings {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+  
+      .status-dot {
+        width: 12px;
+        height: 12px;
+        background-color: #4CAF50;
+        border-radius: 50%;
+        margin-right: 8px;
+      }
+  
+      .timings span {
+        display: block;
+        font-size: 14px;
+        color: #333;
+      }
+  
+      .get-direction-btn { 
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+   
+        .ens_stl_store-name{
+            font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+            font-size: 16px;
+            margin-top: 0;
+            text-transform: capitalize;
+        }
+        @media (max-width:640px){
+            .ens_stl_search_btn{
+                max-width: 100px;
+            }
+            .lable{
+                display: none;
+            }
+        }
+        .ens_stl_sidebar li:first-child{
+            border-top: 0.5px solid #ccc;
+            
+        }
+        .ens_stl_sidebar li{
+            border-bottom: 0.5px dotted #ccc;
+            margin-top: 0 !important;
+        }
+        .ens_stl_sidebar li:last-child{
+            border-bottom: 0.5px solid #ccc;
+        }
+        .ens_stl_sidebar_address{
+            font-size: 16px;
+            text-transform: capitalize;
+            color: #444;
+        }
+        .ens_stl_sidebar_store_pic{
+            width: 40px;
+            height: 40px;
+            border-radius: 3px;
+        }
+        .ens_stl_sidebar{
+            overflow-y:auto;
+        }
+        @media(min-width:768px){
+            .ens_lg_flx{
+                display: flex;
+            }
+            .ens_stl_sidebar{
+                width: 100%;
+                max-width: 40%;
+            }
+            .ens_stl_map{
+                width: 100%;
+                max-width: 60%;
+            }
+            .ml_lg_20{
+                margin-left: 20px;
+            }
+        }
+        .ens_stl_main{
+            height: calc(100% - 61px);
+        }
+        @media (max-width:767px){
+            .mt_sm_10{
+                margin-top: 10px;
+            }
+            .ens_stl_main{
+                height: calc(100% - 61px) !important;
+            }
+            .ens_stl_map, .ens_stl_sidebar {
+              height: 270px;
+            }
+            .ens_stl_wrapper {
+              padding-bottom: 40px !important;
+              padding: 0 1.5rem;
+          }
+          .ens_w-30 {
+            width: 100%;
+        }
+          
+        }
+     
+        @media (min-width: 768px) {
+          .ens_w-30 {
+              width: 30%;
+          }
+      }
+
+        @media(min-width:768px){
+          .ens_stl_wrapper {
+            padding-bottom: 40px !important;
+              padding: 0 3.5rem;
+          }
+          }
+
+
+        / shimer /
+        .shine {
+          background: #f6f7f8;
+          background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+          background-repeat: no-repeat;
+          background-size: 800px 104px; 
+          display: inline-block;
+          position: relative; 
+          
+          -webkit-animation-duration: 1s;
+          -webkit-animation-fill-mode: forwards; 
+          -webkit-animation-iteration-count: infinite;
+          -webkit-animation-name: placeholderShimmer;
+          -webkit-animation-timing-function: linear;
+          }
+        
+        box {
+          height: 64px;
+          width: 100px;
+        }
+        
+        .shimer_div {
+          display: inline-flex;
+          flex-direction: column; 
+          margin-left: 25px;
+         
+          vertical-align: top; 
+        }
+        
+        lines {
+          height: 10px;
+          margin-top: 8px;
+          width: 200px; 
+        }
+        
+        photo {
+          display: block!important;
+          width: 325px; 
+          height: 100px; 
+          margin-top: 15px;
+        }
+        
+        @-webkit-keyframes placeholderShimmer {
+          0% {
+            background-position: -468px 0;
+          }
+          
+          100% {
+            background-position: 468px 0; 
+          }
+        }
+        
+    .search-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+  
+      .search-label {
+        font-size: 18px;
+        margin-right: 10px;
+      }
+  
+      #search {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+  
+      .search-btn {
+        background-color: red;
+        border: none;
+        padding: 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+  
+      .search-btn img {
+        width: 20px;
+        height: 20px;
+      }
+  
+      .view-store-list-btn {
+       border-radius: 3px;
+    font-weight: 700;
+    font-family: Avenir-Roman;
+        color: white;
+        border: none;
+        padding: 10px;
+        width: 100%;
+        text-align: center;
+        cursor: pointer;
+        font-size: 17px;
+        / margin-bottom: 20px; /
+      }
+  .width_size{
+    width: 100%;
+  }
+      .store-list {
+        width: 100%;
+        overflow-y: auto;
+        max-height: 400px;
+      }
+      .store_title_p{
+        padding: 10px 0;
+        font-size: 12px;
+        line-height: 18px;
+        text-transform: capitalize;
+        margin: 0;
+        }
+  
+      .store-card {
+        padding: 4px; 
+        
+        width: 100%; 
+        display: grid;
+        grid-template-columns: 1fr 6fr;
+      }
+  
+      .store-header { 
+        align-items: center;
+        padding: 16px; 
+      }
+  
+      .store-logo {
+        width: 70px;
+        height: 70px;
+        /* margin-right: 12px; */
+        border-radius: 4px;
+      }
+  
+      .store-title {
+        font-size: 16px;
+        text-decoration: underline;
+        text-transform: capitalize;
+        margin-bottom:0px;
+        
+      }
+  
+      .store-details {
+        padding: 1px;
+        
+      }
+  
+      .store-details p {
+        font-size: 14px;
+        color: #555;
+        
+      }
+  
+      .whatsapp-link {
+        display: flex;
+        align-items: center;
+        width: fit-content;
+    font-size: 14px;
+        background-color: #e0e0e0;
+        padding: 4px 8px;
+        
+        border-radius: 4px;
+        text-decoration: none;
+        color: #333;
+        font-weight: bold;
+        margin-bottom: 16px;
+      }
+  
+      .whatsapp-icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 8px;
+      }
+  
+      .store-timings {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+  
+      .status-dot {
+        width: 12px;
+        height: 12px;
+        background-color: #4CAF50;
+        border-radius: 50%;
+        margin-right: 8px;
+      }
+  
+      .timings span {
+        display: block;
+        font-size: 14px;
+        color: #333;
+        line-height:16px
+      }
+  
+      .get-direction-btn {
+        background-color: #D32F2F;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: bold;
+      }
+  
+       
+ 
+        
+        .location-card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            width: 350px;
+            text-align: center;
+        }
+        
+        .location-header {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .location-logo {
+            width: 50px;
+            height: 50px;
+            margin-right: 12px;
+            border-radius: 4px;
+        }
+        
+        .location-title {
+            font-size: 16px;
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .location-details {
+            padding: 16px;
+        }
+        
+        .location-details p {
+            font-size: 14px;
+            color: #555;
+            margin: 0 0 16px;
+        }
+        
+        .whatsapp-link {
+            display: flex;
+            align-items: center;
+            width: fit-content;
+            font-size: 14px;
+            background-color: #e8e8e8;
+            padding: 4px 8px;
+            
+            border-radius: 4px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+        
+        .whatsapp-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+        }
+        
+        .location-timings {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            background-color: #4CAF50;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .timings span {
+            display: block;
+            font-size: 14px;
+            color: #333;
+            line-height:16px
+        }
+        
+        .get-direction-btn {
+            background-color: #D32F2F;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-decoration: none;
+        }
+       
+        
+        / shimer end /
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="ens_stl_wrapper">
+<h1 style="text-align: center;" id="store_loc_heading" >  </h1>
+ 
+<label class="find_store">Find a store</label>
+<div class="ens_stl_header ens_flx mb_10 ens_w-30">
+
+    <div class="ens_flx">
+      
+    <div class="ens_stl_search ens_stl_bdr ens_min_h_30">
+        <input type="text" id="find-store"name="" placeholder="Name of Town or City" id="">
+    </div>
+    </div>
+    <div class="pointer ens_stl_search_btn  ml_10 ens_min_h_30 ens_align_center ens_flx" id="search_btn_loc">
+
+    </div>
+</div>
+ 
+
+<div class="ens_stl_main ens_lg_flx" id='ens_lg_flx'>
+    <!-- add class right i ul to switch layout to left  -->
+    <ul class="ens_stl_sidebar  ens_flx ens_flx_dir_column"  id="appendStoreLi" >
+    <div>
+    <li class="ens_stl_sidebar_content ens_flx view-store shimer_loader_remove" >
+    <box class="shine"></box>
+    <div class="shimer_div" >
+    <lines class="shine" style="margin: 0;" ></lines>
+    <lines class="shine"></lines>
+    <lines class="shine"></lines>
+    <lines class="shine"></lines>
+    </div>
+  </li>
+  <li class="ens_stl_sidebar_content ens_flx view-store shimer_loader_remove" >
+    <box class="shine"></box>
+    <div class="shimer_div" >
+    <lines class="shine" style="margin: 0;" ></lines>
+    <lines class="shine"></lines>
+    <lines class="shine"></lines>
+    <lines class="shine"></lines>
+    </div>
+  </li>
+  <li class="ens_stl_sidebar_content ens_flx view-store shimer_loader_remove" >
+    <box class="shine"></box>
+    <div class="shimer_div" >
+    <lines class="shine" style="margin: 0;" ></lines>
+    <lines class="shine"></lines>
+    <lines class="shine"></lines>
+    <lines class="shine"></lines>
+    </div>
+  </li>
+  <li class="ens_stl_sidebar_content ens_flx view-store shimer_loader_remove" >
+    <box class="shine"></box>
+    <div class="shimer_div" >
+    <lines class="shine" style="margin: 0;" ></lines>
+    <lines class="shine"></lines>
+    <lines class="shine"></lines>
+    <lines class="shine"></lines>
+    </div>
+  </li>
+  <li class="ens_stl_sidebar_content ens_flx view-store shimer_loader_remove" >
+    <box class="shine"></box>
+    <div class="shimer_div" >
+    <lines class="shine" style="margin: 0;" ></lines>
+    <lines class="shine"></lines>
+    <lines class="shine"></lines>
+    <lines class="shine"></lines>
+    </div>
+  </li>
+  <li class="ens_stl_sidebar_content ens_flx view-store shimer_loader_remove" >
+    <box class="shine"></box>
+    <div class="shimer_div" >
+    <lines class="shine" style="margin: 0;" ></lines>
+    <lines class="shine"></lines>
+    <lines class="shine"></lines>
+    <lines class="shine"></lines>
+    </div>
+  </li>
+    </ul>
+     <!-- add class right in ens_stl_map to switch layout to left  -->
+    <div class="ens_stl_map ens_stl_bdr ml_lg_20 mt_sm_10" id="map" ></div>
+</div> 
+<input type="hidden" value="" name="" id="getbtnClicked">
+<input type="hidden" value="" name="" id="let-latitude">
+<input type="hidden" value="" name="" id="lon-longitude">

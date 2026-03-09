@@ -1,0 +1,47 @@
+<div class="return_confirmation">
+  <div class="return_confirmation_inner">
+    <div class="return__confirmation__header">
+      <div class="return_confirmation__title">Return Confirmation</div>
+      <div class="return__confirmation_close">X</div>
+    </div>
+    <div class="return__confirmation_content">
+      Thank You! Your return request has been raised for. You'll receive an SMS on your registered mobile no. return is initiated.
+    </div>
+  </div>
+</div>
+
+<style>
+  .return_confirmation {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #00000005;
+    z-index: 9999;
+}
+  .return_confirmation_inner {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -10%);
+    background: #fff;
+    border-radius: 10px;
+}
+  .return__confirmation__header {
+    font-size: 20px;
+    font-weight: 900;
+    padding: 20px;
+    background: #0000000f;
+    display: flex;
+    justify-content: space-between;
+}
+  .return__confirmation_content {
+    padding: 20px;
+    font-size: 17px;
+}
+  .return__confirmation_close {
+    cursor: pointer;
+}
+</style>

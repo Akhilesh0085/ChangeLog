@@ -1,0 +1,119 @@
+/******************** contact-us page ****************************/
+.new-contact .flex-div-input-field {
+  display: flex;
+  gap: 35px;
+}
+.new-contact .flex-div-option {
+  display: flex;
+  gap: 35px;
+}
+.new-contact .title-wrapper {
+  border-bottom: 1px solid #f1f1f1;
+  align-content: start;
+  margin-bottom: 1rem;
+}
+.new-contact .contact__list {
+  padding-inline-start: 1rem;
+}
+.new-contact .contact__list .new-contact .list-unstyled {
+  text-shadow: 0 1px #ebe5e5;
+}
+.bussinecstm{
+ margin-bottom: 0px !important;
+}
+/* .new-contact li:first-child {
+  border-bottom: 1px solid #d5cfcf;
+} */
+.new-contact ul li:nth-child(2) .bussinecstm, .new-contact ul li:nth-child(3) .bussinecstm{
+font-size:16px;
+font-weight:bold;
+}
+.new-contact strong{
+  font-size:14px;
+}
+.new-contact .grid__item--two-third {
+  max-width: 100%;
+  width: calc(50% - var(--grid-horizontal-spacing) / 2);
+}
+.new-contact .grid__item--one-third {
+  max-width: 100%;
+  width: calc(50% - var(--grid-horizontal-spacing) / 2);
+}
+.new-contact .col-12 h6 {
+  margin: 0;
+  color: #212529;
+  font-size: 14px;
+}
+.new-contact .field__input:focus {
+  border: 1px solid #f5e200;
+  box-shadow: none;
+}
+.new-contact .select__select optgroup {
+  font-size: 15px;
+}
+.new-contact .contact__button {
+  display: flex;
+  justify-content: flex-end;
+}
+.new-contact .form-status-list {
+  margin: 0rem 0 1rem;
+}
+.new-contact .form__message {
+  color: #646666;
+}
+.new-contact .button {
+  min-width: 10rem;
+}
+.new-contact a:hover {
+  color: #007bff !important;
+}
+.new-contact .errorshow {
+  color: red;
+  font-size: 12px;
+  margin: 0;
+}
+.text-area {
+  width: 50%;
+}
+.page-width.section--padding {
+  padding-top: 20px;
+  padding-bottom: 0;
+}
+.page-title.page-heading.font-bold-heading {
+  margin: 0;
+  text-transform: uppercase;
+}
+ul.contact__list.list-unstyled {
+  text-wrap: balance;
+}
+.new-contact .contact__list {
+  row-gap: 1.6rem;
+}
+.new-contact .titel-main--para {
+  margin: 0;
+  font-size: 14px;
+  padding-bottom: 7px;
+}
+.contact .field__input{
+  font-size: 14px;
+}
+.new-contact h2.title.h3 {
+  margin-bottom: 1rem;
+}
+.new-contact a:hover {
+  color: #007bff;
+  text-decoration: underline;
+}
+@media only screen and (max-width: 749px) {
+  .new-contact .flex-div-input-field {
+    gap: 0px;
+    flex-wrap: wrap;
+  }
+  .new-contact .flex-div-option {
+    gap: 0px;
+    flex-wrap: wrap;
+  }
+  .text-area {
+    width: 100%;
+  }
+}

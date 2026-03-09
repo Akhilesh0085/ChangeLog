@@ -1,0 +1,317 @@
+.cstm_cart_footer .cart__footer>*+*{
+    margin-top: 0rem;
+}
+.cstm-cart-page .title-wrapper{
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.summery__cstm .discounts__discount{
+      color: #212529;
+    font-family: Avenir-Roman;
+    font-size: 16px;
+}
+.cstm-dis{
+  margin-top:0px;
+}
+.cstm-price-b{
+  margin-bottom: 6px !important;
+}
+.ordercstm{
+ border-top: 1px solid #dee2e6;
+  border-bottom: 1px solid #dee2e6; 
+  padding: 10px 0px;
+}
+.cstm-cart-page .title-wrapper .title{
+font-size: 30px;
+  font-family: Avenir-Medium;
+}
+.cstm-cart-page .product-option dt {
+    font-family: Avenir-Medium;
+    color: #212529;
+}
+.cstm-cart-page .product-option dd {
+color: #212529;
+}
+.summery__cstm {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    row-gap: 1.5rem;
+    column-gap: 1.5rem;
+}
+.summery__items {
+    width: 70%;
+}
+.summery___totals {
+    width: 28%;
+    background-color: #f8f8f8;
+}
+.summery__cstm .cart-items thead th{
+    color: #000;
+    text-transform: capitalize;
+    font-family: Avenir-Medium;
+}
+.summery__cstm .cart-item__media{
+    width: 10rem;
+}
+.cstm-cart-page .cart-items{
+  padding-top: 15px;
+  border-top: 1px solid #dee2e6;
+}
+span.cart_remove {
+    text-transform: capitalize;
+    letter-spacing: 0;
+    padding-left: 5px;
+    font-size: 14px;
+    font-family: Avenir-Roman;
+    font-weight: 500;
+}
+.cstm-cart-page .cart-item cart-remove-button{
+  margin:0px;
+}
+.summery__cstm p.coupon-heading {
+    font-size: 15px;
+    padding-bottom: 10px;
+}
+.discount_apply{
+  margin-bottom: 0px !important;
+margin-top: 10px !important;
+}
+.summery__cstm button.coupon-popup.add-coupon, .remove-coupon {
+    background: #bf1616;
+    font-size: 15px;
+    padding: 10px;
+    border: none;
+    color: #fff;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+.cstm_summary {
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    font-weight: 900;
+    border-bottom: 1px solid #dee2e6;
+}
+.totals .totals__subtotal, .totals .totals__subtotal-value{
+  font-size: 15px;
+}
+.totals .cstm-total{
+  font-weight:bold;
+}
+.cart__checkout-button, .cstm-continue-btn{
+  font-size:15px;
+  letter-spacing: 0px;
+   background: #bf1616;
+  border:none;
+  min-height: 0px;
+  min-width: 20rem;
+}
+.cart__checkout-button:hover {
+background: #bf1616;
+}
+.summery__cstm .quantity__button, 
+.summery__cstm .quantity__button:after {
+    border-radius: unset;
+    flex: 0 0 3rem;
+    width: 3rem;
+    height: 3rem;
+}
+.summery__cstm .quantity__input {
+    height: 3rem;
+    border: 1px solid #000;
+    margin: 0px 0.5rem;
+}
+.summery__cstm .quantity__button, 
+.summery__cstm .quantity__button:after {
+    border-radius: unset;
+    flex: 0 0 3rem;
+    width: 3rem;
+    height: 3rem;
+}
+.summery__cstm .cart_del{
+    box-shadow: none;
+    min-width: 0rem;
+}
+.summery__cstm .cart-items *.right {
+    text-align: start;
+}
+.summery__cstm .cart-item__price-wrapper,
+.summery__cstm .price bdi{
+    display: flex;
+    align-items: center;
+  font-size:16px;
+  font-family: Avenir-Roman;
+}
+.summery__cstm .custom_compare_price{
+    position: relative;
+    font-size: 13px;
+    color: #c5c5c5;
+}
+.summery__cstm .custom_compare_price:before{
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    border-bottom: 0.1rem solid #c5c5c5;
+    opacity: .7;
+    transform: rotate(0);
+}
+.summery__cstm .price .price__prefix,
+.summery__cstm .price .price__suffix{
+    font-size: unset;
+}
+.summery__cstm .totals {
+    justify-content: space-between;
+}
+.summery__cstm .totals {
+    justify-content: space-between;
+    margin: 2rem 1rem;
+}
+.summery__cstm .button{
+   float: right;
+}
+span.cstm_add_price {
+    color: #bf1616;
+    font-weight: 900;
+}
+.cart-recommendate{
+  display: flex;
+   width: 70%;
+}
+.cart-recommendate .desktop_view_product_details .button{
+  background: #bf1616;
+  border-color: #bf1616;
+}
+.cstm-continue{
+  display: flex;
+   width: 70%;
+  justify-content: right;
+  padding-right: 3rem;
+}
+.cstm-continue-btn:hover{
+  background: #bf1616;
+}
+@media(min-width:750px){
+.summery__cstm .cart-items thead th{
+    font-size: 16px;
+}
+.summery___totals {
+    padding: 0px 10px;
+}
+.summery__cstm .cstm_summary {
+  font-size: 18px;
+  text-transform: uppercase;
+   font-family: Avenir-Medium;
+}
+.summery__cstm span.mobile__price.mobile_view {
+    display: none;
+}
+.summery__cstm .subtotal_amount {
+    display: flex;
+    align-items: center;
+}
+}
+@media(max-width:749px){
+      .summery__cstm ul.discounts.list-unstyled{
+        display: flex;
+        align-items: center;
+        margin: 0;
+      }
+  .summery__cstm .discounts__discount {
+        margin-right: 8px;
+    }
+.summery__cstm span.mobile__price.mobile_view {
+    display: block;
+}
+  .cart-recommendate{
+    width:100%;
+    display:block;
+  }
+  .cart__checkout-button, .cstm-continue{
+    position: fixed;
+    bottom: 0;
+    width:50%;
+    z-index: 9;
+  }
+  .cart__checkout-button{
+ right: 0;
+  }
+  .cstm-continue-btn{
+    padding:0px 16px;
+    width:100%;
+  }
+  .cart__checkout-button, .cstm-continue-btn {
+    font-size:13.3px;
+    height: 45px;
+    min-width: unset;
+  }
+  .cstm-continue{
+    left:0;
+    width:100%;
+    border-right: 1px solid #fff;
+    padding-right: 0px;
+    display:block;
+    background:#fff;
+  }
+  .cstm-cart-page .title-wrapper .title{
+        font-size: 23px;
+    margin-top: 2rem;
+  }
+  .cstm-cart-page .cart-items {
+   border:none;
+   padding-top: 0px;
+  }
+.summery__cstm .cart-item{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 8px;
+    box-shadow: 0 0 3px 0 #c5c5c5;
+}
+.summery__cstm .cart-items thead tr{
+    display: none;
+}
+.summery__cstm .cstm_summary{
+    font-size: 16px;
+}
+.summery__cstm td.cart-item__details {
+    width: 80%;
+}
+.summery__cstm .cart-items *.right,
+.summery__cstm .cart-item__quantity,
+.cart-item__discount
+  {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.summery__cstm .cart-item__price-wrapper.medium-up {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.summery__cstm .subtotal_amount {
+    display: flex;
+    align-items: center;
+}
+.template-cart .cart__contents{
+    margin-top: 0rem;
+  }
+}
+@media(max-width:550px){
+.summery__cstm .cart-item__media {
+    width: 7rem;
+}
+.summery__cstm td.cart-item__details {
+    width: 66%;
+}
+}
+@media(max-width:989px){
+.summery__items,
+.summery___totals{
+    width: 100%;
+}
+}

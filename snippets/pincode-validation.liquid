@@ -1,0 +1,139 @@
+{% comment %}
+  <div class="cstmfield font-bold-heading">
+    <span class="eta-msg">CHECK DELIVERY IN YOUR AREA:</span>
+    <div class="pincodeDiv font-bold-heading">
+      <input
+        id="checkPin"
+        type="text"
+        placeholder="Enter Pincode"
+        maxlength="6"
+        pattern="[1-9][0-9]{5}"
+        onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')"
+      >
+    </div>
+    <p class="checkStatus font-bold-heading"></p>
+    <p class="checkout_error font-bold-heading"></p>
+  </div>
+{% endcomment %}
+ <script src="{{ 'pincode-js.js' | asset_url }}" defer="defer"></script>
+<style>
+ .pincodeDiv input[type="text"] {
+              padding: 10px;
+              margin: 5px 0;
+              font-size: 12px;
+              border: 1px solid #ccc;
+              border-radius: 5px;
+              width: 110px;
+              height: 40px;
+}
+            .pincodeDiv input[type="text"]:focus-visible{
+             outline: none;
+            box-shadow:none;
+            }
+            .pincodeDiv input[type="button"] {
+              background-color: #154f76;
+              color: #fff;
+              border: none;
+              cursor: pointer;
+              font-weight: 600;
+              padding: 10px 30px;
+              margin: 5px;
+              border: 1px solid #ccc;
+              border-radius: 5px;
+            }
+
+            .pincodeDiv input[type="button"]:hover {
+              background-color: #0056b3;
+            }
+
+            .checkStatus {
+              margin-top: 10px;
+            }
+            span.greenPincode {
+              display: flex;
+            align-items: flex-start;
+              display: block;
+        font-size: 12px;
+        padding: 2px;
+        line-height: 15px;
+                color: #1ac11a;
+        font-family: Avenir-Medium;
+
+          }
+      span.greenPincode::before {
+      padding-right: 5px;
+        display: inline-block;
+        line-height: 15px;
+        text-align: left;
+        position: relative;
+        content: "\f09d";
+        font: normal normal normal 14px / 1 FontAwesome;
+        font-size: 13px;
+        width: 20px;
+          }
+  span.greenPincode1::before {
+        padding-right: 5px;
+    display: inline-block;
+    line-height: 15px;
+    text-align: left;
+    position: relative;
+      content: "\f072";
+    font: normal normal normal 14px / 1 FontAwesome;
+    bottom: -2px;
+    font-size: 15px;
+    width: 20px;
+          }
+            span.redPincode {
+              display: flex;
+            align-items: flex-start;
+            /* text-align: center; */
+              color: red;
+              /* font-weight: 600; */
+              /* font-size: 16px; */
+          }
+      span.redPincode::before {
+      content: "\f06a";
+        font: normal normal normal 14px / 1 FontAwesome;
+        padding-right: 0;
+        display: inline-block;
+        font-size: 16px;
+        line-height: 15px;
+        width: 18px;
+        position: relative;
+        text-align: left;
+      }
+      .errorMsg {
+        color: red;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+    .errorMsg::before {
+      content: "\f06a";
+      font: normal normal normal 14px / 1 FontAwesome;
+      padding-right: 0;
+      display: inline-block;
+      font-size: 16px;
+      line-height: 15px;
+      width: 18px;
+      position: relative;
+      text-align: left;
+  }
+      /* span.greenPincode svg {
+              fill: green;
+            height: 25px;
+            width: 25px;
+            margin-right: 5px;
+        }
+        span.redPincode svg {
+              fill: red;
+            height: 25px;
+            width: 25px;
+            margin-right: 5px;
+        } */
+
+      .checkout_error {
+          color: red;
+          font-size: 14px;
+          margin-top: 5px;
+        }
+</style>

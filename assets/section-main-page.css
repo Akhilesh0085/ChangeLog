@@ -1,0 +1,55 @@
+.page-title {
+  margin-top: 0;
+  margin-bottom: 3rem;
+}
+h1.page-heading {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  position: relative;
+}
+h1.page-heading:after {
+  height: 2px;
+  width: 60px;
+  content: "";
+  display: block;
+  margin: 10px auto 20px;
+  background-color: #fbb03b;
+}
+@media (min-width: 990px) {
+  .font-bold-heading {
+    font-family: Avenir-Roman;
+  }
+}
+@media screen and (min-width: 750px) {
+  .page-title {
+    margin-bottom: 4rem;
+  }
+}
+.page-placeholder-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.page-placeholder {
+  width: 52.5rem;
+  height: 52.5rem;
+}
+
+tbody,
+td,
+tr {
+  border: 1px solid #dee2e6;
+}
+.table-bordered tbody p {
+  margin: 0;
+}
+.table-bordered {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.table td,
+.table th {
+  padding: 0.75rem;
+  vertical-align: top;
+}

@@ -1,0 +1,278 @@
+{% layout 'theme' %}
+
+<section class="wishlist-wrapper page-width">
+  <h1 class="wishlist-title">My Wishlist</h1>
+  <div id="wishlistPage"></div>
+  <div id="wishlistPopup" style="display: none;"><p></p></div>
+</section>
+
+<script>
+  // Ensure routes are available
+  window.routes = window.routes || {};
+  window.routes.account_login_url = "{{ routes.account_login_url }}";
+
+  $(document).ready(function () {
+    // Ensure jQuery is loaded
+    if (typeof $ === "undefined") {
+      console.error("jQuery is not loaded.");
+      return;
+    }
+
+    // Helper functions
+    function getWishlist() {
+      var list = localStorage.getItem("wishlist");
+      return list ? JSON.parse(list) : [];
+    }
+
+    function saveWishlist(list) {
+      localStorage.setItem("wishlist", JSON.stringify(list));
+    }
+
+    function showPopup(popupId, message) {
+      var popup = document.getElementById(popupId);
+      if (popup) {
+        popup.querySelector("p").textContent = message;
+        popup.style.display = "block";
+        setTimeout(function () {
+          popup.style.display = "none";
+        }, 3000);
+      }
+    }
+
+    function rawToRupees(raw) {
+      if (!Number.isFinite(raw)) return 0;
+      return treatAsPaise ? raw / 100 : raw;
+    }
+
+    function limitChars(str, limit) {
+      return str.length > limit ? str.substring(0, limit) + "..." : str;
+    }
+
+    function formatINRNumber(rupeeNumber) {
+      return new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "INR",
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }).format(rupeeNumber);
+    }
+
+    // Global price handling variable
+    var treatAsPaise = false;
+
+    // Fetch and render wishlist
+    function refreshWishlist(customerEmail) {
+      const $wishlistPage = $("#wishlistPage");
+      $wishlistPage.html('<p>Loading wishlist...</p>');
+
+      if (!customerEmail) {
+        $wishlistPage.html(
+          `<p>Please <a href="${window.routes.account_login_url}" class="button">Login</a> to view your wishlist.</p>`
+        );
+        return;
+      }
+
+      fetch(`https://shopify.shopforaurelia.com/wishlist/getdatabyuser/${customerEmail}`, {
+        method: "GET",
+        headers: {
+          "Cache-Control": "no-cache",
+        },
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((result) => {
+          if (!result.success || !result.data || !result.data.variantid || result.data.variantid.length === 0) {
+            $wishlistPage.html("<p>No items in your wishlist.</p>");
+            saveWishlist([]);
+            return;
+          }
+
+          // Map raw items
+          var apiItems = result.data.variantid.map(function (item) {
+            return {
+              variantId: item.id ? String(item.id).replace("gid://shopify/ProductVariant/", "") : "",
+              priceRaw: item.price !== undefined ? Number(item.price) : 0,
+              compareRaw: item.compareAtPrice !== undefined ? Number(item.compareAtPrice) : 0,
+              productTitle: item.product ? item.product.title : "",
+              productHandle: item.product ? item.product.handle : "",
+              productImage:
+                item.product && item.product.images && item.product.images[0]
+                  ? item.product.images[0].url
+                  : "",
+              variantTitle: item.title || "",
+              product_checker: item.availableForSale || false,
+              productId: item.product && item.product.id ? String(item.product.id).replace("gid://shopify/Product/", "") : "",
+              customerEmail: result.data.useremail || "",
+              customerPhone: result.data.phone || "",
+              wishlistDate: result.data.wishlist_date || "",
+            };
+          });
+
+          // Price handling
+          var paiseCount = 0;
+          var fractionFound = false;
+          apiItems.forEach(function (it) {
+            if (!Number.isFinite(it.priceRaw)) it.priceRaw = 0;
+            if (!Number.isFinite(it.compareRaw)) it.compareRaw = 0;
+            if (!Number.isInteger(it.priceRaw) || !Number.isInteger(it.compareRaw)) {
+              fractionFound = true;
+            }
+            if (Math.abs(it.priceRaw) >= 100000 || Math.abs(it.compareRaw) >= 100000) {
+              paiseCount++;
+            }
+          });
+
+          treatAsPaise = fractionFound ? false : paiseCount > apiItems.length / 2;
+
+          // Render wishlist
+          $wishlistPage.empty();
+          apiItems.forEach(function (item) {
+            var priceR = rawToRupees(item.priceRaw);
+            var compareR = rawToRupees(item.compareRaw);
+            var compareHtml = "";
+            var discountHtml = "";
+
+            if (compareR > priceR && compareR > 0) {
+              compareHtml = `<p class="compare-price">${formatINRNumber(compareR)}</p>`;
+              var discountPercent = Math.round(((compareR - priceR) / compareR) * 100);
+              var savings = compareR - priceR;
+              discountHtml = `<span class="discount__percentage__grid font-bold">- ${discountPercent}% (Save - ${formatINRNumber(
+                savings
+              )})</span>`;
+            }
+
+            var productHtml = `
+              <div class="wishlist-item">
+                <button 
+                  class="wishlist_remove_btn" 
+                  data-variant-id="${item.variantId}" 
+                  data-product-id="${item.productId}"
+                  data-wishlist-date="${item.wishlistDate || ""}"
+                  data-email="${item.customerEmail}" 
+                  data-phone="${item.customerPhone}"
+                >✖</button>
+                <a href="/products/${item.productHandle}" class="view-product" checker="${item.product_checker}">
+                  <img class="wishlisht_prd_img" src="${item.productImage}" alt="${item.productTitle}">
+                  <h4>${limitChars(item.productTitle, 25)} (${item.variantTitle})</h4>
+                  <div class="wishlist_card_price">
+                    ${compareHtml}
+                    <p class="final-price">${formatINRNumber(priceR)}</p>
+                    ${discountHtml}
+                  </div>
+                </a>
+                ${
+                  item.product_checker
+                    ? `<button class="wishlist_add_to_cart product-form__submit button button--secondary button--full-width" variant_id="${item.variantId}">Add To Cart</button>`
+                    : `<button class="wishlist_add_to_cart product-form__submit button button--secondary button--full-width disabled" disabled variant_id="${item.variantId}">Sold Out</button>`
+                }
+              </div>`;
+            $wishlistPage.append(productHtml);
+          });
+
+          // Save to localStorage
+          saveWishlist(apiItems);
+        })
+        .catch((err) => {
+          console.error("API Fetch Error:", err);
+          $wishlistPage.html("<p>Error loading wishlist. Please try again later.</p>");
+        });
+    }
+
+    // Update wishlist API
+    function updateWishlistAPI(email, phone, variantIds, productId, wishlistDate) {
+      const payload = {
+        useremail: email || "Guest",
+        variantids: variantIds,
+        phone: phone || "",
+        productid: productId || "",
+        wishlist_date: wishlistDate || "",
+      };
+
+      return fetch("https://shopify.shopforaurelia.com/wishlist/addwishlistdata", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      })
+        .then(async (response) => {
+          if (!response.ok) throw new Error(`Wishlist addwishlistdata API failed: ${response.status}`);
+          const data = await response.json();
+          return data;
+        })
+        .catch((error) => {
+          console.error("Wishlist addwishlistdata error:", error);
+          showPopup("wishlistPopup", "Error updating wishlist. Please try again.");
+          throw error;
+        });
+    }
+
+    // Remove from wishlist
+    $(document).on("click", ".wishlist_remove_btn", function () {
+      const $button = $(this);
+      const variantId = String($button.data("variant-id"));
+      const productId = String($button.data("product-id") || "");
+      const wishlistDate = String($button.data("wishlist-date") || "");
+      const customerEmail = String($button.data("email") || "");
+      const customerPhone = String($button.data("phone") || "");
+
+      $button.addClass("loading").prop("disabled", true);
+
+      let wishlist = getWishlist();
+      wishlist = wishlist.filter((item) => String(item.variantId) !== variantId);
+      saveWishlist(wishlist);
+      const remainingVariantIds = wishlist.map((item) => item.variantId);
+
+      updateWishlistAPI(customerEmail, customerPhone, remainingVariantIds, productId, wishlistDate)
+        .then(() => {
+          refreshWishlist(customerEmail);
+          showPopup("wishlistPopup", "Removed from Wishlist ❌");
+        })
+        .catch(() => {
+          // Error already handled in updateWishlistAPI
+        })
+        .finally(() => {
+          $button.removeClass("loading").prop("disabled", false);
+        });
+    });
+
+    // Add to cart from wishlist
+    $(document).on("click", ".wishlist_add_to_cart", function () {
+      var id = $(this).attr("variant_id");
+      var $button = $(this);
+      if (!id) {
+        return;
+      }
+
+      $button.addClass("loading");
+      $.ajax({
+        type: "POST",
+        url: "/cart/add.js",
+        data: {
+          id: id,
+          quantity: 1,
+        },
+        dataType: "json",
+        success: function (response) {
+          $.getJSON("/?sections=mini-cart,cart-icon-bubble,mobile-cart-icon-bubble").then((sections) => {
+            const minicart = document.querySelector("mini-cart");
+            response.sections = sections;
+            minicart.renderContents(response);
+            $button.removeClass("loading");
+            showPopup("wishlistPopup", "Added to Cart 🛒");
+          });
+        },
+        error: function () {
+          console.error("Error adding item to cart.");
+          showPopup("wishlistPopup", "Error adding to cart. Please try again.");
+          $button.removeClass("loading");
+        },
+      });
+    });
+
+    // Initial wishlist load
+    var customerEmail = "{{ customer.email }}";
+    refreshWishlist(customerEmail);
+  });
+</script>

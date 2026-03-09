@@ -1,0 +1,16 @@
+@media(min-width:750px){
+ .best_seller .card-wrapper,
+ .cstm__similer .card-wrapper{
+    border: 1px solid transparent;
+ }
+ .best_seller .card-wrapper:hover,
+ .cstm__similer .card-wrapper:hover{
+    border: 1px solid #e4e4e4;
+ }
+}
+@media(max-width:749px){
+  .best_seller .card-wrapper,
+  .cstm__similer .card-wrapper{
+    border: 1px solid #e4e4e4;
+  }
+}

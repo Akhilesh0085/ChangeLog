@@ -1,0 +1,312 @@
+<!------ /snippets/mega-menu.liquid -------->
+{%- liquid
+  assign promo_images = false
+  if block.settings.promo_image_1 != blank or block.settings.promo_image_2 != blank
+    assign promo_images = true
+  endif
+-%}
+<mega-menu class="is-megamenu{% if block.settings.show_menu_image %}{% if promo_images %} show-images{% else %} show-images-without-promo{% endif %}{% endif %}">
+  <a href="{{ link.url }}" class="header__menu-item{% if link.active or link.child_active %} header__active-menu-item{% endif %} header__menu-item--top list-menu__item focus-inset font-bold"{% if link.current %} aria-current="page"{% endif %}>
+    <span class="label-{{ link.handle }}">{{ link.title | escape }}</span>
+  </a>
+  {%- if link.links != blank or promo_images -%}
+    <div class="list-menu-dropdown hidden">
+      <div class="page-width{% if block.settings.narrow %} page-width--inner {{ link.title | escape }}{% endif %}">
+        {%- capture sizes -%}(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 10rem) / 4), (min-width: 750px) calc((100vw - 10rem) / 3), calc(100vw - 3rem){%- endcapture -%}
+
+        {%- if link.links != blank -%}
+          <div class="list-mega-menu">
+            {%- for childlink in link.links -%}
+              <div class="mega-menu__item">
+                <a href="{{ childlink.url }}" class="mega-menu__item-link list-menu__item focus-inset{% if childlink.current %} list-menu__item--active{% endif %}"{% if childlink.current %} aria-current="page"{% endif %}>
+                  {%- if childlink.type == 'collection_link' and childlink.object.image and block.settings.show_menu_image -%}
+                    <div class="image-animate media media--wide">
+                      {{ childlink.object.image | image_url: width: 1100 | image_tag:
+                        loading: 'lazy',
+                        class: 'motion-reduce',
+                        sizes: sizes,
+                        widths: '165, 360, 535, 750, 940, 1100',
+                        is: 'lazy-image'
+                      }}
+                    </div>
+                  {%- endif -%}
+                  <div class="header__menu-item">
+                    <span class="label">{{ childlink.title | escape }}</span>
+                  </div>
+                </a>
+      
+                {%- if childlink.links != blank -%}
+                  <ul class="list-menu-child list-menu">
+                    {%- for grandchildlink in childlink.links -%}
+                      <li>
+                        <a href="{{ grandchildlink.url }}" class="header__menu-item list-menu__item focus-inset{% if grandchildlink.current %} list-menu__item--active{% endif %}"{% if grandchildlink.current %} aria-current="page"{% endif %}>
+                          <span class="label">{{ grandchildlink.title | escape }}</span>
+                        </a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+            {%- if link.links.size < 4 -%}
+              <div class="mega-menu__item mega-menu__item--blank"></div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if block.settings.promo_image_1 != blank -%}
+          <div class="mega-menu__promo {{ link.handle }} {% if block.settings.promo_overlay_content_1 %} mega-menu__promo--overlay{% endif %}">
+            <a class="mega-menu__promo-link media-wrapper"{% if block.settings.promo_link_1 != blank %} href="{{ block.settings.promo_link_1 }}"{% else %} role="link" aria-disabled="true"{% endif %}>
+              <div class="image-animate media media--{{ block.settings.promo_image_ratio_1 }}"
+                style="--image-position: {{ block.settings.promo_image_position_1 }};{% if block.settings.promo_image_ratio_1 == 'adapt' %}--image-ratio-percent: {{ 1 | divided_by: block.settings.promo_image_1.aspect_ratio | times: 100 }}%;{% endif %}"
+              >
+                {% if template.name == 'product' %}
+                <img
+                  class="motion-reduce lazyload-hover-image"
+                  data-src="{{ block.settings.promo_image_1 | img_url: '1100x' }}"
+                  src="{{ block.settings.promo_image_1 | img_url: '20x' }}"
+                  alt="{{ block.settings.promo_image_1.alt | escape }}"
+                  title="{{ block.settings.promo_image_1.title | escape }}"
+                  width="665"
+                  height="1000"
+                  style="width:100%; height: auto;"
+                  loading="lazy"
+                > 
+                {% else %}
+                {{ block.settings.promo_image_1 | image_url: width: 1100 | image_tag:
+                  loading: 'lazy',
+                  class: 'motion-reduce',
+                  sizes: sizes,
+                  widths: '165, 360, 535, 750, 940, 1100',
+                  is: 'lazy-image'                                                                                                                                   
+                }}
+                {% endif %}
+              </div>
+              {%- if block.settings.promo_heading_1 != blank or block.settings.promo_text_1 != blank -%}
+                <div class="mega-menu__promo-content">
+                  {%- if block.settings.promo_heading_1 != blank -%}
+                    <div class="mega-menu__promo-heading">
+                      <span class="label">{{ block.settings.promo_heading_1 | escape }}</span>
+                    </div>
+                  {%- endif -%}
+                  <div class="mega-menu__promo-subheading">{{ block.settings.promo_text_1 | escape }}</div>
+                </div>
+              {%- endif -%}
+            </a>
+          </div>
+        {%- endif -%}
+
+        {%- if block.settings.promo_image_2 != blank -%}
+          <div class="mega-menu__promo {{ link.handle }} {% if block.settings.promo_overlay_content_2 %} mega-menu__promo--overlay{% endif %}">
+            <a class="mega-menu__promo-link media-wrapper"{% if block.settings.promo_link_2 != blank %} href="{{ block.settings.promo_link_2 }}"{% else %} role="link" aria-disabled="true"{% endif %}>
+              <div class="image-animate media media--{{ block.settings.promo_image_ratio_2 }}"
+                style="--image-position: {{ block.settings.promo_image_position_2 }};{% if block.settings.promo_image_ratio_2 == 'adapt' %}--image-ratio-percent: {{ 1 | divided_by: block.settings.promo_image_2.aspect_ratio | times: 100 }}%;{% endif %}"
+              >
+                {% if template.name == 'product' %}
+                  <img
+                    class="motion-reduce lazyload-hover-image"
+                    data-src="{{ block.settings.promo_image_2 | img_url: '1100x' }}"
+                    src="{{ block.settings.promo_image_2 | img_url: '20x' }}"
+                    alt="{{ block.settings.promo_image_2.alt | escape }}"
+                    title="{{ block.settings.promo_image_2.title | escape }}"
+                    width="665"
+                    height="1000"
+                    style="width:100%; height: auto;"
+                    loading="lazy"
+                  > 
+                  {% else %}
+                {{ block.settings.promo_image_2 | image_url: width: 1100 | image_tag:
+                  loading: 'lazy',
+                  class: 'motion-reduce',
+                  sizes: sizes,
+                  widths: '165, 360, 535, 750, 940, 1100',
+                  is: 'lazy-image'
+                }}
+                {% endif %}
+              </div>
+              {%- if block.settings.promo_heading_2 != blank or block.settings.promo_text_2 != blank -%}
+                <div class="mega-menu__promo-content">
+                  {%- if block.settings.promo_heading_2 != blank -%}
+                    <div class="mega-menu__promo-heading">
+                      <span class="label">{{ block.settings.promo_heading_2 | escape }}</span>
+                    </div>
+                  {%- endif -%}
+                  <div class="mega-menu__promo-subheading">{{ block.settings.promo_text_2 | escape }}</div>
+                </div>
+              {%- endif -%}
+            </a>
+          </div>
+        {%- endif -%}
+
+       {%- if block.settings.promo_image_3 != blank -%}
+          <div class="mega-menu__promo {{ link.handle }}{% if block.settings.promo_overlay_content_3 %} mega-menu__promo--overlay{% endif %}">
+            <a class="mega-menu__promo-link media-wrapper"{% if block.settings.promo_link_3 != blank %} href="{{ block.settings.promo_link_3 }}"{% else %} role="link" aria-disabled="true"{% endif %}>
+              <div class="image-animate media media--{{ block.settings.promo_image_ratio_3 }}"
+                style="--image-position: {{ block.settings.promo_image_position_3 }};{% if block.settings.promo_image_ratio_3 == 'adapt' %}--image-ratio-percent: {{ 1 | divided_by: block.settings.promo_image_3.aspect_ratio | times: 100 }}%;{% endif %}"
+              >
+                {% if template.name == 'product' %}
+                  <img
+                    class="motion-reduce lazyload-hover-image"
+                    data-src="{{ block.settings.promo_image_3 | img_url: '1100x' }}"
+                    src="{{ block.settings.promo_image_3 | img_url: '20x' }}"
+                    alt="{{ block.settings.promo_image_3.alt | escape }}"
+                    title="{{ block.settings.promo_image_3.title | escape }}"
+                    width="665"
+                    height="1000"
+                    style="width:100%; height: auto;"
+                    loading="lazy"
+                  > 
+                  {% else %}
+                {{ block.settings.promo_image_3 | image_url: width: 1100 | image_tag:
+                  loading: 'lazy',
+                  class: 'motion-reduce',
+                  sizes: sizes,
+                  widths: '165, 360, 535, 750, 940, 1100',
+                  is: 'lazy-image'
+                }}
+                {% endif %}
+              </div>
+              {%- if block.settings.promo_heading_3 != blank or block.settings.promo_text_3 != blank -%}
+                <div class="mega-menu__promo-content">
+                  {%- if block.settings.promo_heading_3 != blank -%}
+                    <div class="mega-menu__promo-heading">
+                      <span class="label">{{ block.settings.promo_heading_3 | escape }}</span>
+                    </div>
+                  {%- endif -%}
+                  <div class="mega-menu__promo-subheading">{{ block.settings.promo_text_3 | escape }}</div>
+                </div>
+              {%- endif -%}
+            </a>
+          </div>
+        {%- endif -%}
+
+        {%- if block.settings.promo_image_4 != blank -%}
+          <div class="mega-menu__promo {{ link.handle }}{% if block.settings.promo_overlay_content_4 %} mega-menu__promo--overlay{% endif %}">
+            <a class="mega-menu__promo-link media-wrapper"{% if block.settings.promo_link_4 != blank %} href="{{ block.settings.promo_link_4 }}"{% else %} role="link" aria-disabled="true"{% endif %}>
+              <div class="image-animate media media--{{ block.settings.promo_image_ratio_4 }}"
+                style="--image-position: {{ block.settings.promo_image_position_4 }};{% if block.settings.promo_image_ratio_4 == 'adapt' %}--image-ratio-percent: {{ 1 | divided_by: block.settings.promo_image_4.aspect_ratio | times: 100 }}%;{% endif %}"
+              >
+                {% if template.name == 'product' %}
+                  <img
+                    class="motion-reduce lazyload-hover-image"
+                    data-src="{{ block.settings.promo_image_4 | img_url: '1100x' }}"
+                    src="{{ block.settings.promo_image_4 | img_url: '20x' }}"
+                    alt="{{ block.settings.promo_image_4.alt | escape }}"
+                    title="{{ block.settings.promo_image_4.title | escape }}"
+                    width="665"
+                    height="1000"
+                    style="width:100%; height: auto;"
+                    loading="lazy"
+                  > 
+                  {% else %}
+                {{ block.settings.promo_image_4 | image_url: width: 1100 | image_tag:
+                  loading: 'lazy',
+                  class: 'motion-reduce',
+                  sizes: sizes,
+                  widths: '165, 360, 535, 750, 940, 1100',
+                  is: 'lazy-image'
+                }}
+                {% endif %}
+              </div>
+              {%- if block.settings.promo_heading_4 != blank or block.settings.promo_text_4 != blank -%}
+                <div class="mega-menu__promo-content">
+                  {%- if block.settings.promo_heading_4 != blank -%}
+                    <div class="mega-menu__promo-heading">
+                      <span class="label">{{ block.settings.promo_heading_4 | escape }}</span>
+                    </div>
+                  {%- endif -%}
+                  <div class="mega-menu__promo-subheading">{{ block.settings.promo_text_4 | escape }}</div>
+                </div>
+              {%- endif -%}
+            </a>
+          </div>
+        {%- endif -%}
+
+        {%- if block.settings.promo_image_5 != blank -%}
+          <div class="mega-menu__promo{% if block.settings.promo_overlay_content_5 %} mega-menu__promo--overlay{% endif %}">
+            <a class="mega-menu__promo-link media-wrapper"{% if block.settings.promo_link_5 != blank %} href="{{ block.settings.promo_link_5 }}"{% else %} role="link" aria-disabled="true"{% endif %}>
+              <div class="image-animate media media--{{ block.settings.promo_image_ratio_5 }}"
+                style="--image-position: {{ block.settings.promo_image_position_5 }};{% if block.settings.promo_image_ratio_5 == 'adapt' %}--image-ratio-percent: {{ 1 | divided_by: block.settings.promo_image_5.aspect_ratio | times: 100 }}%;{% endif %}"
+              >
+                {% if template.name == 'product' %}
+                  <img
+                    class="motion-reduce lazyload-hover-image"
+                    data-src="{{ block.settings.promo_image_5 | img_url: '1100x' }}"
+                    src="{{ block.settings.promo_image_5 | img_url: '20x' }}"
+                    alt="{{ block.settings.promo_image_5.alt | escape }}"
+                    title="{{ block.settings.promo_image_5.title | escape }}"
+                    width="665"
+                    height="1000"
+                    style="width:100%; height: auto;"
+                    loading="lazy"
+                  > 
+                  {% else %}
+                {{ block.settings.promo_image_5 | image_url: width: 1100 | image_tag:
+                  loading: 'lazy',
+                  class: 'motion-reduce',
+                  sizes: sizes,
+                  widths: '165, 360, 535, 750, 940, 1100',
+                  is: 'lazy-image'
+                }}
+                {% endif %}
+              </div>
+              {%- if block.settings.promo_heading_5 != blank or block.settings.promo_text_5 != blank -%}
+                <div class="mega-menu__promo-content">
+                  {%- if block.settings.promo_heading_5 != blank -%}
+                    <div class="mega-menu__promo-heading">
+                      <span class="label">{{ block.settings.promo_heading_5 | escape }}</span>
+                    </div>
+                  {%- endif -%}
+                  <div class="mega-menu__promo-subheading">{{ block.settings.promo_text_5 | escape }}</div>
+                </div>
+              {%- endif -%}
+            </a>
+          </div>
+        {%- endif -%}
+
+        {%- if block.settings.promo_image_6 != blank -%}
+          <div class="mega-menu__promo{% if block.settings.promo_overlay_content_6 %} mega-menu__promo--overlay{% endif %}">
+            <a class="mega-menu__promo-link media-wrapper"{% if block.settings.promo_link_6 != blank %} href="{{ block.settings.promo_link_6 }}"{% else %} role="link" aria-disabled="true"{% endif %}>
+              <div class="image-animate media media--{{ block.settings.promo_image_ratio_6 }}"
+                style="--image-position: {{ block.settings.promo_image_position_6 }};{% if block.settings.promo_image_ratio_6 == 'adapt' %}--image-ratio-percent: {{ 1 | divided_by: block.settings.promo_image_6.aspect_ratio | times: 100 }}%;{% endif %}"
+              >
+                {% if template.name == 'product' %}
+                  <img
+                    class="motion-reduce lazyload-hover-image"
+                    data-src="{{ block.settings.promo_image_1 | img_url: '1100x' }}"
+                    src="{{ block.settings.promo_image_1 | img_url: '20x' }}"
+                    alt="{{ block.settings.promo_image_1.alt | escape }}"
+                    title="{{ block.settings.promo_image_1.title | escape }}"
+                    width="665"
+                    height="1000"
+                    style="width:100%; height: auto;"
+                    loading="lazy"
+                  > 
+                  {% else %}
+                {{ block.settings.promo_image_6 | image_url: width: 1100 | image_tag:
+                  loading: 'lazy',
+                  class: 'motion-reduce',
+                  sizes: sizes,
+                  widths: '165, 360, 535, 750, 940, 1100',
+                  is: 'lazy-image'
+                }}
+                {% endif %}
+              </div>
+              {%- if block.settings.promo_heading_6 != blank or block.settings.promo_text_6 != blank -%}
+                <div class="mega-menu__promo-content">
+                  {%- if block.settings.promo_heading_6 != blank -%}
+                    <div class="mega-menu__promo-heading">
+                      <span class="label">{{ block.settings.promo_heading_6 | escape }}</span>
+                    </div>
+                  {%- endif -%}
+                  <div class="mega-menu__promo-subheading">{{ block.settings.promo_text_6 | escape }}</div>
+                </div>
+              {%- endif -%}
+            </a>
+          </div>
+        {%- endif -%}
+    
+      </div>
+    </div>
+  {%- endif -%}
+</mega-menu>

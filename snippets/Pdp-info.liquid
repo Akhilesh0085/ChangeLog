@@ -1,0 +1,23 @@
+<!-- ------ /snippets/offer ------------- -->
+<div class="offer_main_section">
+  <div class="offer_with_icon">
+    {% if block.settings.offer_img != blank %}
+      <img
+        loading="lazy"
+        src="{{ block.settings.offer_img | img_url:'master' }}"
+        alt="Offer Image"
+        width="auto"
+        height="auto"
+      >
+    {% endif %}
+  </div>
+</div>
+
+<style>
+  @media screen and (max-width: 991px) {
+    .offer_with_icon img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+</style>

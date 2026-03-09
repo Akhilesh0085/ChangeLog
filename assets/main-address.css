@@ -1,0 +1,283 @@
+ .account-main-section{
+   display:flex;
+   width:100%;
+   max-width:100%;
+ }
+  .accountdeatil-left{
+    width: 100%;
+    max-width: 25%;
+  }
+   .accountdeatil-right{
+     width: 100%;
+  max-width: 75%;
+     padding-left: 25px;
+   }
+#AddAddress{
+  display:none;
+}
+.cstm-order tbody td{
+  font-size: 14px;
+}
+.Columnaction{
+  /* text-align:center !important; */
+}
+.track_order_btn{
+  padding: 12px;
+  display: block;
+  width: 100%;
+  color:#fff;
+  background-color: #fbb03b;
+  border: 1px solid #fbb03b;
+  text-align:center !important;
+  font-size: 14px;
+  text-decoration:none;
+}
+.track_order_btn:hover{
+  background-color: transparent;
+  color: #fbb03b;
+  border:1px solid #fbb03b;
+}
+.cstm-order{
+  margin-top: 10px;
+}
+.cstm-order thead th{
+  text-transform: uppercase;
+  font-family: Avenir-Black;
+  font-size: 14px;
+}
+   .sidebar li a{
+     color: #252525;
+     font-size: 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+.sidebar li{
+  padding: 15px 0;
+  border-bottom: 1px solid #b2b2b2;
+}
+.accountdeatil-left ul.sidebar{
+  text-align:left;
+  list-style:none;
+  padding-inline-start: 0;
+}
+.sidebar li.active>a{
+  color: #fbb03b;
+}
+.contact-info ul li{
+  margin-top: 0px; 
+  border: none; 
+  padding: 0px;
+  text-align: left;
+}
+.contact-info .default-heading, .main-heading{
+  border-bottom: 1px solid #dee2e6;
+    padding-bottom: 10px;
+    font-size: 20px;
+  text-align: left;
+}
+.recent-div{
+  display: flex;
+    justify-content: space-between;
+}
+.recent-div .pull-right{
+  font-size: 14px;
+    color: #fbb03b;
+  text-decoration:none;
+}
+.main-heading, .defmain-heading{
+margin-bottom: 0px !important;
+/* margin-top: 1rem !important; */
+}
+.defmain-heading{
+  font-size:20px;
+}
+.viewaddresbtn, .editebtn{
+font-size: 14px;
+  color: #fbb03b;
+  letter-spacing:0px;
+  font-weight: 400;
+  text-transform: capitalize;
+  font-family: Avenir-Roman;
+  box-shadow: none;
+}
+.contact-info{
+padding-top: 15px;
+}
+    .viewaddresbtn:hover, .editebtn:hover {
+     box-shadow: none;
+     color: #fbb03b;
+      text-decoration:underline;
+    }
+.def-customer-detail{
+  display:flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #dee2e6;
+}
+.cstm-det p{
+ margin-bottom: 0px !important; 
+  font-size:14px;
+}
+.cstm-det{
+  padding-bottom:20px;
+}
+.addresslist p, .customer_details p{
+  font-size: 14px;
+}
+.addresslist{
+    display: flex;
+    flex-direction: column;
+}
+li.default_div {
+  order: -1;
+  margin-bottom: 10px;
+}
+.editebtn{
+  margin-top: 0px !important;
+  padding: 0px;
+  justify-content: left;
+}
+.updbtn{
+ font-size: 15px;
+   font-family: Avenir-Roman;
+  letter-spacing:0px;
+  font-weight:100;
+}
+.modal-title{
+ font-size:20px; 
+}
+.account-main-section form {
+    margin-top: 1rem;
+}
+.account-main-section [aria-expanded=true]~div[id] h2 {
+margin-top: 0px;
+    padding-top: 0px;
+    border-top: none;
+}
+.account-main-section [aria-expanded=true]~div[id] {
+      padding: 3rem;
+  margin: 10px 0px;
+        border: .2rem solid rgb(var(--color-border));
+}
+.order_number{
+  font-size: 12px;
+    color: #fbb03b;
+}
+.order-ship-heading{
+  font-size:16px;
+  letter-spacing:0px;
+}
+.right-side{
+  width: 150px;
+ display: inline-block;
+}
+.orderaddressmain{
+  width:100%;
+  display:flex;
+  /* justify-content: space-between; */
+}
+.ordetext{
+  text-align: right;
+}
+.orderaddressdeatils{
+  width: 100%;
+  max-width: 50%;
+  margin-top: 1.5rem !important;
+}
+.orderaddressdeatils p{
+  font-size:16px;
+  margin: 0;
+  line-height: 20px;
+  letter-spacing: 0px;
+}
+.order-details{
+  margin-top:10px;
+}
+.order-detail-item{
+  display:flex;
+  width:100%;
+}
+.order-detail-img{
+  max-width: 40%;
+}
+.trckr-main{
+  max-width: 60%;
+}
+@media screen and (max-width: 768px) {
+  .account-main-section {
+    display:block;
+  }
+  .accountdeatil-left {
+    max-width: 100%;
+}
+  .accountdeatil-right {
+padding-left: 0px;
+     max-width: 100%;
+  }
+  .editebtn{
+    width: 40% !important;
+  }
+  .def-customer-detail, .recent-div, .viewaddresbtn{
+    display: block;
+  }
+  .viewaddresbtn{
+    padding-left: 0px;
+  }
+  .recent-div .pull-right{
+    float:unset;
+  }
+  .orderaddressmain{
+    display:block;
+  }
+  .ordetext {
+    text-align: left;
+}
+  .right-side {
+  display: unset;
+  }
+  .recent-div .defmain-heading, .customer_details .main-heading{
+    margin-top: 10px;
+  }
+  .cstm-order tbody td:first-of-type {
+    padding-top: 0;
+}
+  .cstm-order tbody td:last-of-type {
+    padding-bottom: 0;
+}
+  .cstm-order tbody tr{
+    padding-top: 12px;
+   box-shadow: 0 0 3px 0 #878787;
+    margin-top: 10px;
+  }
+  .track_order_btn{
+    padding: 10px 0px;
+    font-size: 12px;
+    width: 31%;
+  }
+  .addresslist p, .customer_details p{
+    margin:0px;
+  }
+  .defmain-heading{
+  margin-top: 0px;
+  }
+  .cstm-det {
+    padding-bottom:0px;
+}
+  .orderaddressdeatils{
+    max-width:100%;
+  }
+  .accountdeatil-left ul.sidebar {
+    margin-bottom: 2rem !important;
+     margin-top: 10px !important;
+  }
+  .cstm-order tbody td{
+    padding: 15px;
+    border-bottom: 1px solid #b2b2b2;
+  }
+  .cstm-order td:before {
+  font-weight: 700;
+   text-transform: capitalize;
+  }
+  .contact-info{
+padding-top: 0px;
+}
+}

@@ -1,0 +1,13 @@
+{% if template.name == 'product' %}
+  {% render 'lazy-css', filename: 'wizzyCustom.css', loading: 'lazy' %}
+  {% render 'lazy-css', filename: 'component-quick-view.css', loading: 'lazy' %}
+{% else %}
+  <link rel="preload" href="{{ 'wizzyCustom.css' | asset_url }}" as="style" fetchpriority="low">
+  <link rel="preload" href="{{ 'component-quick-view.css' | asset_url }}" as="style" fetchpriority="low">
+
+  {{ 'wizzyCustom.css' | asset_url | stylesheet_tag }}
+  {{ 'component-quick-view.css' | asset_url | stylesheet_tag }}
+  {% comment %}
+    {{ 'wizzy-quick-view.css' | asset_url | stylesheet_tag }}
+  {% endcomment %}
+{% endif %}

@@ -1,0 +1,152 @@
+<!----------- /section/custom-announcement.liquid --------->
+  <div class="announcement-bar header-section--padding">
+    <div class="page-width">
+     <div class="track_announcement">
+      <a class="track_order_details desktop_view" target="_blank" href="https://buywclothes.com/app/misadmin/track-order.php"><b>Track Order</b></a>
+        <div class="announcement-slider">
+          {%- for block in section.blocks -%}
+             <marquee class="def_anno" width="100%" direction="left" height="100%" scrollamount="4">
+               <span>{{ block.settings.text }}</span>
+             </marquee>                       
+          {%- endfor -%}
+        </div>
+     </div>
+    </div>
+  </div>
+  
+
+
+{% schema %}
+{
+  "name": "Custom Announcement",
+  "class": "announcement",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.all.colors.header.content",
+      "info": "t:sections.all.colors.header.info"
+    },
+    {
+      "type": "color",
+      "id": "colors_text",
+      "label": "t:sections.all.colors.colors_text.label",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "colors_background",
+      "label": "t:sections.all.colors.colors_background.label",
+      "default": "#1a1b18"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 36,
+      "step": 2,
+      "unit": "t:sections.all.padding.padding_top.unit",
+      "label": "t:sections.all.padding.padding_top.label",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 36,
+      "step": 2,
+      "unit": "t:sections.all.padding.padding_bottom.unit",
+      "label": "t:sections.all.padding.padding_bottom.label",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "announcement",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "default": "Welcome to our store",
+          "label": "t:sections.announcement-bar.blocks.announcement.settings.text.label"
+        },
+        {
+          "type": "range",
+          "id": "text_size",
+          "default": 13,
+          "min": 10,
+          "max": 20,
+          "step": 1,
+          "label": "t:sections.announcement-bar.blocks.announcement.settings.text_size.label",
+          "unit": "t:sections.announcement-bar.blocks.announcement.settings.text_size.unit"
+        }
+      ]
+    }
+  ],
+ "presets":[
+   {
+     "name":"Custom Announcement"
+   }
+ ]
+}
+{% endschema %}
+<style>
+.announcement{
+    position: sticky;
+    top: 0px;
+}
+.announcement .def_anno{
+    align-items: center;
+    display: flex;
+}
+.track_announcement {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  font-family: none;
+}
+.announcement .announcement-bar{
+    background-color: {{ section.settings.colors_background }};
+    color: {{ section.settings.colors_text }};
+    padding-top:{{ section.settings.padding_top }}px;
+    padding-bottom:{{ section.settings.padding_bottom }}px;
+    height: 30px;
+}
+.announcement .def_anno span{
+    font-size: 15px; 
+  color:#000;
+}
+a.track_order_details {
+    width: 100px;
+    font-size: 14px;
+    color: #fff;
+    text-decoration: none;
+}
+a.track_order_details:hover{
+    text-decoration: underline;
+}
+.announcement-slider {
+    width: 100%;
+}
+@media(min-width:750px){
+  .announcement{
+      z-index: 40;
+  }
+  .mini-cart--open .announcement{
+      z-index: 1;
+  }
+  .announcement .page-width {
+      padding-left: 2rem;
+      padding-right: 3rem;
+  }
+}
+@media(max-width:749px){
+  .announcement{
+      z-index: 9;
+  }
+}
+</style>

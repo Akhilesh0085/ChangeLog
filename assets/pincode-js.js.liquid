@@ -1,0 +1,95 @@
+var Enable_pincode = {{settings.enable_pincode}};
+if (Enable_pincode) {
+    const Date_value = [];
+    [
+        { pincodevalue: '{{ settings.pincode_date_1 | strip }}', pincodes: '{{ settings.pincode_list_1 | strip }}' },
+        { pincodevalue: '{{ settings.pincode_date_2 | strip }}', pincodes: '{{ settings.pincode_list_2 | strip }}' },
+        { pincodevalue: '{{ settings.pincode_date_3 | strip }}', pincodes: '{{ settings.pincode_list_3 | strip }}' },
+        { pincodevalue: '{{ settings.pincode_date_4 | strip }}', pincodes: '{{ settings.pincode_list_4 | strip }}' },
+        { pincodevalue: '{{ settings.pincode_date_5 | strip }}', pincodes: '{{ settings.pincode_list_5 | strip }}' },
+        { pincodevalue: '{{ settings.pincode_date_6 | strip }}', pincodes: '{{ settings.pincode_list_6 | strip }}' },
+        { pincodevalue: '{{ settings.pincode_date_7 | strip }}', pincodes: '{{ settings.pincode_list_7 | strip }}' }
+    ].forEach(item => {
+        item.pincodes = item.pincodes.split(',');
+        Date_value.push(item);
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const pinField = document.getElementById('checkPin');
+        const pinError = document.querySelector('.checkout_error');
+        const pinStatus = document.querySelector('.checkStatus');
+        
+        const pin_regex = /^[1-9][0-9]{5}$/;
+
+        pinField.addEventListener('keyup', function() {
+            this.value = this.value.replace(/\D/g, '');
+            pincodeValidation();
+        });
+
+        function pincodeValidation() {
+            const pinValue = pinField.value.trim();
+
+            if (pinValue.length < 6 || !pin_regex.test(pinValue)) {
+                displayError("Please enter a valid Pincode");
+                return;
+            }
+
+            // const location = Date_value.find(item => item.pincodes.includes(pinValue));
+            // if (!location) {
+            //     displayError("Delivery pincode not serviceable.");
+            //     return;
+            // }
+            const apiUrl = `https://shopify.wforwoman.com/pincodes/service/${pinValue}`;
+                $.ajax({
+                url: apiUrl,
+                method: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                  if (response.success) {
+                     const tatMax = response.data.TaTMax;
+                    //  localStorage.setItem('ExistPincode', pincode);
+                    //  localStorage.setItem('TAT', tatMax);
+                    // // Call the function with tatMax
+                    //  getDeliveryData(tatMax);
+                    const delivery_day = tatMax;
+            localStorage.setItem('ExistPincode', pinValue);
+            localStorage.setItem('DeliveryDays', delivery_day);
+            displayDeliveryDate(delivery_day);
+        } else {
+           displayError("Delivery pincode not serviceable.");
+        }
+    },
+    error: function() {
+        // $('#responsemessage').text('Error fetching data. Please ensure the API is working.');
+    }
+});
+
+            
+        }
+
+        function displayError(message) {
+            pinError.innerHTML = `<span class="errorMsg">${message}</span>`;
+            pinStatus.innerHTML = '';
+            pinStatus.classList.remove('success');
+        }
+
+        function displayDeliveryDate(delivery_day) {
+            const next_dt = new Date();
+            next_dt.setDate(next_dt.getDate() + delivery_day);
+
+            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+            const deliveryMessage = `${dayNames[next_dt.getDay()]}, ${monthNames[next_dt.getMonth()]} ${next_dt.getDate()}`;
+            pinStatus.innerHTML = `<span class="greenPincode1"><u>FREE delivery:</u></span><b style="font-size:14px;letter-spacing: 0px; font-family: Avenir-Roman;"> ${deliveryMessage}</b><span class="greenPincode"><span class="freegreen">Free delivery</span></span>`;
+            pinStatus.classList.add('success');
+            pinError.innerHTML = '';
+        }
+
+        const existingPin = localStorage.getItem('ExistPincode');
+        const existingDays = parseInt(localStorage.getItem('DeliveryDays'));
+
+        if (existingPin) pinField.value = existingPin;
+        if (!isNaN(existingDays)) displayDeliveryDate(existingDays);
+    });
+}

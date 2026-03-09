@@ -1,0 +1,20 @@
+<div data-v-5a7d893b="" class="row mt-4 mb-1"><div data-v-5a7d893b="" class="col-md-6 col-sm-6 col-12 billing-address">
+  <p data-v-5a7d893b=""><span data-v-5a7d893b="" class="font-bold">Ship To</span></p> <p data-v-5a7d893b="">{{  order.shipping_address.name }}</p>
+  <p data-v-5a7d893b="">
+   {{ order.shipping_address.address1 }}{% if order.shipping_address.address2 %},{{ order.shipping_address.address2 }}{% endif %}{% if order.shipping_address.city %},{{ order.shipping_address.city |upcase }}{% endif %}{% if order.shipping_address.province %},{{ order.shipping_address.province |upcase}}{% endif %}{% if order.shipping_address.zip %},{{ order.shipping_address.zip }}{% endif %}</p>
+  {% if order.shipping_address.phone %} <p data-v-5a7d893b="">
+    T: {{ order.shipping_address.phone }}</p>
+    {% endif %}
+</div> 
+  <div data-v-5a7d893b="" class="col-md-6 col-sm-6 col-12 billing-address text-right">
+    <p data-v-5a7d893b="">
+      <span data-v-5a7d893b="" class="font-bold">
+        Payment Information</span></p>
+    <p data-v-5a7d893b=""><span data-v-5a7d893b="">Subtotal :</span>
+      <span data-v-5a7d893b="" class="right-side">{{ order.total_price|plus:order.total_discounts |money }}</span>
+    </p> 
+    <p data-v-5a7d893b=""><span data-v-5a7d893b="">Coupon Discount :</span> <span data-v-5a7d893b="" class="right-side">{{ order.total_discounts |money }}</span></p>
+    <p data-v-5a7d893b=""><span data-v-5a7d893b="">Shipping &amp; Handling :</span> <span data-v-5a7d893b="" class="right-side">{{ order.shipping_price |money }}</span></p> 
+   <p data-v-5a7d893b=""><span data-v-5a7d893b="">Payment Method :</span> <span data-v-5a7d893b="" class="right-side">{{ order.transactions.first.gateway }}</span></p>
+    <p data-v-5a7d893b=""><span data-v-5a7d893b="" class="font-bold">Grand Total :</span><span data-v-5a7d893b="" class="right-side font-bold">{{ order.line_items_subtotal_price |plus:order.shipping_price  |money  }}</span></p>
+  </div></div>

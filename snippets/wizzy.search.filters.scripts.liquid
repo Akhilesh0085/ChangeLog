@@ -1,0 +1,16 @@
+{% comment %}<script src="{{ 'wizzyCustom.js' | asset_url }}" defer></script>{% endcomment %}
+ 
+{% if settings.wizzy_is_lazy_init == 'true' %}
+  <script type="text/javascript">
+    window.wizzyLazyAssets = window.wizzyLazyAssets ? window.wizzyLazyAssets : [];
+    window.wizzyLazyAssets.push('{{ 'wizzyCustom.js' | asset_url  }}','scripts');
+    // window.wizzyLazyAssets.push('{{ 'wizzyCustom.css' | asset_url  }}','styles');
+    // window.wizzyLazyAssets.push('{{ 'component-quick-view.css' | asset_url  }}','styles');
+  </script>
+{% else %}
+  <script type="text/javascript" src="{{ 'wizzyCustom.js' | asset_url  }}" defer></script>
+{% endif %}
+
+<script type="text/template" id="wizzy-search-results-product-new"> {% render 'wizzy.search.results.product' %} </script>
+
+<script type="text/template" id="wizzy-autocomplete-topproducts-new"> {% render 'wizzy.autocomplete.topproducts' %} </script>

@@ -1,0 +1,110 @@
+<div class="return exchange_overlay">
+  <div class="main_exchange_container">
+    <div class="main_exchange_container_inner">
+      <div class="exchange_pop_heading">
+        <a class="close_exchange" href="#">&times;</a>
+        <div class="font-medium def_exchge">Your exchange has been confirm.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% style %}
+  .exchange_overlay{
+      display:none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #0003;
+      z-index: 200;
+    }
+  .main_exchange_container{
+    position:relative;
+  }
+  .main_exchange_container_inner{
+      position: absolute;
+      background: #fff;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, 100px);
+      border-radius: 8px;
+      border: 1px solid rgba(0, 0, 0, .2);
+  }
+
+  .exchange_pop_heading .def_exchge{
+      font-size: 15px;
+      margin: 0;
+      letter-spacing: 0;
+      color: #333;
+
+  }
+  .exchange_pop_heading a.close_exchange {
+      font-size: 32px;
+      text-decoration: none;
+      color: #000;
+      text-align: right;
+      width: 100%;
+      display: block;
+      line-height: normal;
+  }
+  .exchange_pop_heading {
+      padding: 10px;
+      text-align: center;
+  }
+  .exchange_confirm_btn{
+      width: 9.5em;
+      height: 2.3em;
+      margin: 0.5em;
+      background: black;
+      color: white;
+      border: none;
+      border-radius: 0.625em;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+  }
+
+  .exchange_confirm_btn:hover {
+     color: black;
+  }
+  .exchange_confirm_btn:after {
+     content: "";
+     background: white;
+     position: absolute;
+     z-index: -1;
+     left: -20%;
+     right: -20%;
+     top: 0;
+     bottom: 0;
+     transform: skewX(-45deg) scale(0, 1);
+     transition: all 0.5s;
+  }
+  .exchange_confirm_btn:hover:after {
+    transform: skewX(-45deg) scale(1, 1);
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+  }
+  @media(max-width:749px){
+    .main_exchange_container_inner{
+      width:70%;
+    }
+  }
+  @media(min-width:750px){
+    .main_exchange_container_inner{
+      width:40%;
+    }
+  }
+{% endstyle %}
+
+<script>
+  $(document).ready(function () {
+    $('body').on('click', '.close_exchange', function () {
+      $('.return.exchange_overlay').hide();
+    });
+  });
+</script>
