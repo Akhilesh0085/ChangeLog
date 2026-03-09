@@ -1,3 +1,10 @@
+ {%- assign w3_script_type = '' -%}
+    {%- assign w3_css_type = '' -%}
+    {%- unless request.design_mode or template contains 'cart' or template contains 'checkout' -%}
+        {%- assign w3_script_type = ' type="lazyJs"' -%}
+        {%- assign w3_css_type = ' data-' -%}
+    {%- endunless -%}
+    
 <link rel="preload" href="{{ 'component-quick-view.css' | asset_url }}" as="style" fetchpriority="low">
 <!-- --------- /section/main-product-modal.liquid ------- -->
 {% comment %}theme-check-disable TemplateLength{% endcomment %}
@@ -710,7 +717,7 @@
 
       {%- if product.media.size > 0 -%}
         {% render 'product-media-modal', product: product, variant_images: variant_images %}
-        <script src="{{ 'product-modal.js' | asset_url }}" defer="defer"></script>
+        <script {{w3_script_type}} src="{{ 'product-modal.js' | asset_url }}" defer="defer"></script>
       {%- endif -%}
 
       {%- assign popups = section.blocks | where: 'type', 'popup' -%}

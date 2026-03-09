@@ -1,3 +1,10 @@
+ {%- assign w3_script_type = '' -%}
+    {%- assign w3_css_type = '' -%}
+    {%- unless request.design_mode or template contains 'cart' or template contains 'checkout' -%}
+        {%- assign w3_script_type = ' type="lazyJs"' -%}
+        {%- assign w3_css_type = ' data-' -%}
+    {%- endunless -%}
+    
 {%- liquid
   assign show_popup = true
 
@@ -45,7 +52,7 @@
 
   <link rel="stylesheet" href="{{ 'section-popup.css' | asset_url }}" media="print" onload="this.media='all'">
   <noscript>{{ 'section-popup.css' | asset_url | stylesheet_tag }}</noscript>
-  <script src="{{ 'popup.js' | asset_url }}" defer="defer"></script>
+  <script {{w3_script_type}} src="{{ 'popup.js' | asset_url }}" defer="defer"></script>
 
   <promo-popup data-section-id="{{ section.id }}" class="hidden" data-delay="{{ section.settings.delay }}" data-expiry="{{ section.settings.expiry }}" data-test-mode="{% if section.settings.mode == 'testing' %}true{% else %}false{% endif %}">
     {%- assign floating = section.blocks | where: "type", "floating" | first -%}

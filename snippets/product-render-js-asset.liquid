@@ -1,1 +1,8 @@
-<script src="{{ 'product-render-on-event.js'| asset_url }}" async></script>
+ {%- assign w3_script_type = '' -%}
+    {%- assign w3_css_type = '' -%}
+    {%- unless request.design_mode or template contains 'cart' or template contains 'checkout' -%}
+        {%- assign w3_script_type = ' type="lazyJs"' -%}
+        {%- assign w3_css_type = ' data-' -%}
+    {%- endunless -%}
+    
+<script {{w3_script_type}} src="{{ 'product-render-on-event.js'| asset_url }}" async></script>

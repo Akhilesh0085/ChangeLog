@@ -1,3 +1,10 @@
+ {%- assign w3_script_type = '' -%}
+    {%- assign w3_css_type = '' -%}
+    {%- unless request.design_mode or template contains 'cart' or template contains 'checkout' -%}
+        {%- assign w3_script_type = ' type="lazyJs"' -%}
+        {%- assign w3_css_type = ' data-' -%}
+    {%- endunless -%}
+    
 {% render 'lazy-css', filename: 'section-main-product.css', loading: 'preload' %}
 {% render 'lazy-css', filename: 'component-slider.css', loading: 'preload' %}
 {% render 'lazy-css', filename: 'custom-product.css', loading: 'preload' %}
@@ -604,7 +611,7 @@
               {%- endfor -%}
             </product-thumbnails>
           </div>
-          <script src="{{ 'product-thumbnails.js' | asset_url }}" defer="defer"></script>
+          <script {{w3_script_type}} src="{{ 'product-thumbnails.js' | asset_url }}" defer="defer"></script>
         {%- endif -%}
       </media-gallery>
     </div>
@@ -1817,7 +1824,7 @@
     {{ product.media | where: 'media_type', 'model' | json }}
   </script>
 
-  <script src="{{ 'product-model.js' | asset_url }}" defer></script>
+  <script {{w3_script_type}} src="{{ 'product-model.js' | asset_url }}" defer></script>
 {%- endif -%}
 
 {%- liquid
@@ -4012,4 +4019,4 @@
   });
 </script>
 
-<script src="{{ 'pdp-images-lazyload.js' | asset_url }}" defer="defer"></script>
+<script {{w3_script_type}} src="{{ 'pdp-images-lazyload.js' | asset_url }}" defer="defer"></script>

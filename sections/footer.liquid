@@ -1,3 +1,10 @@
+ {%- assign w3_script_type = '' -%}
+    {%- assign w3_css_type = '' -%}
+    {%- unless request.design_mode or template contains 'cart' or template contains 'checkout' -%}
+        {%- assign w3_script_type = ' type="lazyJs"' -%}
+        {%- assign w3_css_type = ' data-' -%}
+    {%- endunless -%}
+    
 {%- style -%}
   #shopify-section-{{ section.id }} {
     --gradient-background: {% if section.settings.gradient_background != blank %}{{ section.settings.gradient_background }}{% else %}{{ section.settings.colors_background }}{% endif %};
@@ -29,7 +36,7 @@
   <noscript>{{ 'component-rte.css' | asset_url | stylesheet_tag }}</noscript>
   <noscript>{{ 'disclosure.css' | asset_url | stylesheet_tag }}</noscript>
 
-  <script src="{{ 'footer-accordion.js' | asset_url }}" defer="defer"></script>
+  <script {{w3_script_type}} src="{{ 'footer-accordion.js' | asset_url }}" defer="defer"></script>
 
 {% else %}
   {% render 'lazy-css', filename: 'section-footer.css', loading: 'lazy' %}
