@@ -1,4 +1,3 @@
-{% comment %} <style>
 @font-face{font-family:muli;src:url('https://cdn.shopify.com/s/files/1/0808/5618/7185/files/Muli.woff?v=1692182522')}
 @font-face{font-family:muli-light;src:url('https://cdn.shopify.com/s/files/1/0808/5618/7185/files/Muli-Light.woff?v=1692182576')}
 @font-face{font-family:muli-bold;src:url('https://cdn.shopify.com/s/files/1/0808/5618/7185/files/Muli-Bold.woff?v=1692182630')}
@@ -16,38 +15,22 @@
 @font-face{font-family:DreamCatcher;src:url('https://cdn.shopify.com/s/files/1/0808/5618/7185/files/DreamCatcher.ff7c7ea.ttf?v=1692183305')}.font-book{font-family:Avenir-Book}.font-regular{font-family:Avenir-Roman}.font-medium{font-family:Avenir-Medium!important}.font-bold{font-family:Avenir-Black}
 @font-face{font-family:font-icon;src:url('https://cdn.shopify.com/s/files/1/0808/5618/7185/files/fontello.41e3916.woff2?v=1692183351') format("woff2"),url('https://cdn.shopify.com/s/files/1/0808/5618/7185/files/fontello.d3bf3d4.woff?v=1692183716') format("woff");font-weight:400;font-style:normal}
 @font-face{font-family:"font-new-m";src:url('https://cdn.shopify.com/s/files/1/0808/5618/7185/files/fontello-new-m.21844fc.woff2?v=1692183400') format("woff2"),url('https://cdn.shopify.com/s/files/1/0808/5618/7185/files/fontello-new-m.3a2cc9e.woff?v=1692183777') format("woff");font-weight:400;font-style:normal}
-@font-face{font-family:"font-m";src:url('https://cdn.shopify.com/s/files/1/0808/5618/7185/files/fontello-m.e6fdbbf.woff2?v=1692183448') format("woff2"),url('https://cdn.shopify.com/s/files/1/0808/5618/7185/files/fontello-m.06e3c00.woff?v=1692183833') format("woff");
-</style> {% endcomment %}
+@font-face{font-family:"font-m";src:url('https://cdn.shopify.com/s/files/1/0808/5618/7185/files/fontello-m.e6fdbbf.woff2?v=1692183448') format("woff2"),url('https://cdn.shopify.com/s/files/1/0808/5618/7185/files/fontello-m.06e3c00.woff?v=1692183833') format("woff");}
 
-{% comment %} {{ 'fonts.css' | asset_url | stylesheet_tag: preload: true }} {% endcomment %}
+ @font-face {
+  font-family: "Playfair Display";
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("//shopforaurelia.com/cdn/fonts/playfair_display/playfairdisplay_n7.592b3435e0fff3f50b26d410c73ae7ec893f6910.woff2") format("woff2"),
+       url("//shopforaurelia.com/cdn/fonts/playfair_display/playfairdisplay_n7.998b1417dec711058cce2abb61a0b8c59066498f.woff") format("woff");
+}
 
-<style>
-  @font-face{font-family:Avenir-Black;src:url('https://cdn.shopify.com/s/files/1/0808/5618/7185/files/AvenirL-Black.b13b191.woff?v=1692182755')}
-  @font-face{font-family:Avenir-Book;src:url('https://cdn.shopify.com/s/files/1/0808/5618/7185/files/AvenirL-Book.5642e36.woff?v=1692182940')}
-  @font-face{font-family:Avenir-Roman;src:url('https://cdn.shopify.com/s/files/1/0808/5618/7185/files/AvenirL-Roman.4a60712.woff?v=1692183002')}
-  @font-face{font-family:Avenir-Medium;src:url('https://cdn.shopify.com/s/files/1/0808/5618/7185/files/AvenirL-Medium.6a172b9.woff?v=1692183047')}
-</style>
-
-<link data-href="{{ 'fonts.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-
-<style>
-  .font-medium {
-    font-family: Avenir-Medium;
-  }
-  @media(min-width:990px){
-    .font-bold {
-      font-family: Avenir-Black;
-    }
-     .font-bold-heading {
-      font-family: Avenir-Roman;
-    }
-  }
-  @media(max-width:989px){
-    .font-bold {
-      font-family: Avenir-Black;
-    }
-    .font-bold-heading{
-      font-family: Avenir-Roman;
-    }
-  }
-</style>
+  @font-face {
+  font-family: "Playfair Display";
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url("//shopforaurelia.com/cdn/fonts/playfair_display/playfairdisplay_n6.41e9dda2e7301ca861c0ec25a53c1bdf16b6624d.woff2") format("woff2"),
+       url("//shopforaurelia.com/cdn/fonts/playfair_display/playfairdisplay_n6.3fecbbfefcd2c3e39326078af5db97c0302e18b5.woff") format("woff");
+}

@@ -1,3 +1,10 @@
+ {%- assign w3_script_type = '' -%}
+    {%- assign w3_css_type = '' -%}
+    {%- unless request.design_mode or template contains 'cart' or template contains 'checkout' -%}
+        {%- assign w3_script_type = ' type="lazyJs"' -%}
+        {%- assign w3_css_type = ' data-' -%}
+    {%- endunless -%}
+    
 {%- unless template == 'password' -%}
   {%- style -%}
     {%- if section.settings.use_custom_colors -%}
@@ -17,7 +24,7 @@
   {% if template.name != 'product' %}
     <link rel="stylesheet" href="{{ 'section-mobile-dock.css' | asset_url }}" media="print" onload="this.media='all'">
     <noscript>{{ 'section-mobile-dock.css' | asset_url | stylesheet_tag }}</noscript>
-    <script src="{{ 'mobile-dock.js' | asset_url }}" defer="defer"></script>
+    <script  {{w3_script_type}} src="{{ 'mobile-dock.js' | asset_url }}" defer="defer"></script>
   {% else %}
     {% render 'lazy-css', filename: 'section-mobile-dock.css', loading: 'lazy' %}
     {% render 'lazy-js', filename: 'mobile-dock.js', loading: 'lazy' %}

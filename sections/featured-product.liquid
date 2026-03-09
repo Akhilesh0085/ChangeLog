@@ -1,3 +1,10 @@
+ {%- assign w3_script_type = '' -%}
+    {%- assign w3_css_type = '' -%}
+    {%- unless request.design_mode or template contains 'cart' or template contains 'checkout' -%}
+        {%- assign w3_script_type = ' type="lazyJs"' -%}
+        {%- assign w3_css_type = ' data-' -%}
+    {%- endunless -%}
+    
 {% comment %}theme-check-disable TemplateLength{% endcomment %}
 {%- liquid
   assign product = section.settings.product
@@ -658,14 +665,14 @@
 </div>
 
 {%- if product.media.size > 0 -%}
-  <script src="{{ 'product-modal.js' | asset_url }}" defer="defer"></script>
+  <script {{w3_script_type}} src="{{ 'product-modal.js' | asset_url }}" defer="defer"></script>
 {%- endif -%}
 
 {%- if first_3d_model -%}
   <script type="application/json" id="ProductJSON-{{ product.id }}">
     {{ product.media | where: 'media_type', 'model' | json }}
   </script>
-  <script src="{{ 'product-model.js' | asset_url }}" defer></script>
+  <script {{w3_script_type}} src="{{ 'product-model.js' | asset_url }}" defer></script>
 {%- endif -%}
 
 {%- liquid

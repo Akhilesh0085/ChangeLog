@@ -1,3 +1,10 @@
+ {%- assign w3_script_type = '' -%}
+    {%- assign w3_css_type = '' -%}
+    {%- unless request.design_mode or template contains 'cart' or template contains 'checkout' -%}
+        {%- assign w3_script_type = ' type="lazyJs"' -%}
+        {%- assign w3_css_type = ' data-' -%}
+    {%- endunless -%}
+    
 {% comment %}
   <div class="cstmfield font-bold-heading">
     <span class="eta-msg">CHECK DELIVERY IN YOUR AREA:</span>
@@ -15,7 +22,7 @@
     <p class="checkout_error font-bold-heading"></p>
   </div>
 {% endcomment %}
- <script src="{{ 'pincode-js.js' | asset_url }}" defer="defer"></script>
+ <script {{w3_script_type}} src="{{ 'pincode-js.js' | asset_url }}" defer="defer"></script>
 <style>
  .pincodeDiv input[type="text"] {
               padding: 10px;

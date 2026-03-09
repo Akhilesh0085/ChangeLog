@@ -1,3 +1,10 @@
+ {%- assign w3_script_type = '' -%}
+    {%- assign w3_css_type = '' -%}
+    {%- unless request.design_mode or template contains 'cart' or template contains 'checkout' -%}
+        {%- assign w3_script_type = ' type="lazyJs"' -%}
+        {%- assign w3_css_type = ' data-' -%}
+    {%- endunless -%}
+    
 
  {%- style -%}
   /* #shopify-section-{{ section.id }} .main__look:not(slick-initialized) {
@@ -508,7 +515,7 @@
   "templates": ["404", "article", "blog", "cart", "collection", "list-collections", "index", "page", "product", "search"]
 }
 {% endschema %}
-<script>
+<script {{w3_script_type}}>
   $(document).ready(function(){
    $('#shopify-section-{{ section.id }} .main__look').slick({
     dots: false,

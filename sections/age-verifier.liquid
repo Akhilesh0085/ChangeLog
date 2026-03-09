@@ -1,3 +1,10 @@
+  {%- assign w3_script_type = '' -%}
+    {%- assign w3_css_type = '' -%}
+    {%- unless request.design_mode or template contains 'cart' or template contains 'checkout' -%}
+        {%- assign w3_script_type = ' type="lazyJs"' -%}
+        {%- assign w3_css_type = ' data-' -%}
+    {%- endunless -%}
+    
 {%- liquid
   assign show_image = false
   if section.settings.image != blank
@@ -47,7 +54,7 @@
 
 <link rel="stylesheet" href="{{ 'section-age-verifier.css' | asset_url }}" media="print" onload="this.media='all'">
 <noscript>{{ 'section-age-verifier.css' | asset_url | stylesheet_tag }}</noscript>
-<script src="{{ 'age-verifier.js' | asset_url }}" defer="defer"></script>
+<script {{w3_script_type}} src="{{ 'age-verifier.js' | asset_url }}" defer="defer"></script>
 
 <age-verifier data-section-id="{{ section.id }}" class="hidden" data-expiry="{{ section.settings.expiry }}" data-test-mode="{% if section.settings.mode == 'testing' %}true{% else %}false{% endif %}" data-blur-image="{{ section.settings.blur_image }}">
   <div class="promo-popup" data-position="center">

@@ -406,7 +406,7 @@
               {% for media in card_product.media %}
                 {% if media.media_type == 'image' %}
                   <img data-class="LazyLoad"
-                    {{imgdata_type}}src="{{ media.preview_image | image_url: width: 600 }}"
+                    src="{{ media.preview_image | image_url: width: 600 }}"
                     alt="{{ card_product.title | escape }}"
                     loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
                     class="{% if forloop.first %}active{% endif %}"
