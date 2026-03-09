@@ -1,10 +1,3 @@
- {%- assign w3_script_type = '' -%}
-    {%- assign w3_css_type = '' -%}
-    {%- unless request.design_mode or template contains 'cart' or template contains 'checkout' -%}
-        {%- assign w3_script_type = ' type="lazyJs"' -%}
-        {%- assign w3_css_type = ' data-' -%}
-    {%- endunless -%}
-    
 <div class="similar_main_pop_up">
  <div class="sub_similar_main_pop_up">
    <div class="pop-up-content">
@@ -95,7 +88,7 @@
  }
 </style>
 
-<script {{w3_script_type}}>
+<script>
     $(document).ready(function(){
      $('body').on('click','.main_similar',function(){
      var i =  $(this).attr('product-handle');

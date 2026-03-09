@@ -3,10 +3,8 @@
   <div class="offer_with_icon">
     {% if block.settings.offer_img != blank %}
       <img
-        src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='1'%20height='1'%3E%3Crect%20width='100%25'%20height='100%25'%20opacity='0'/%3E%3C/svg%3E"
-        data-class="LazyLoad"
         loading="lazy"
-        data-src="{{ block.settings.offer_img | img_url:'master' }}"
+        src="{{ block.settings.offer_img | img_url:'master' }}"
         alt="Offer Image"
         width="auto"
         height="auto"

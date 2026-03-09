@@ -1,10 +1,3 @@
- {%- assign w3_script_type = '' -%}
-    {%- assign w3_css_type = '' -%}
-    {%- unless request.design_mode or template contains 'cart' or template contains 'checkout' -%}
-        {%- assign w3_script_type = ' type="lazyJs"' -%}
-        {%- assign w3_css_type = ' data-' -%}
-    {%- endunless -%}
-
 {%- liquid
   assign show_announcement_bar = true
 
@@ -113,7 +106,7 @@
 
   {%- unless request.design_mode -%}
     {% if template.name != 'product' %}
-      <script {{w3_script_type}} src="{{ 'announcement-bar.js' | asset_url }}" defer="defer"></script>
+      <script src="{{ 'announcement-bar.js' | asset_url }}" defer="defer"></script>
     {% else %}
       {% render 'lazy-js', filename: 'announcement-bar.js', loading: 'lazy' %}
     {% endif %}
@@ -122,7 +115,7 @@
 
 {%- if request.design_mode -%}
   {% if template.name != 'product' %}
-    <script {{w3_script_type}} src="{{ 'announcement-bar.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'announcement-bar.js' | asset_url }}" defer="defer"></script>
   {% else %}
     {% render 'lazy-js', filename: 'announcement-bar.js', loading: 'lazy' %}
   {% endif %}

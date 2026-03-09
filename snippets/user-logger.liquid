@@ -1,11 +1,4 @@
- {%- assign w3_script_type = '' -%}
-    {%- assign w3_css_type = '' -%}
-    {%- unless request.design_mode or template contains 'cart' or template contains 'checkout' -%}
-        {%- assign w3_script_type = ' type="lazyJs"' -%}
-        {%- assign w3_css_type = ' data-' -%}
-    {%- endunless -%}
-
-<script type="lazyJs" data-w3-type="module"  >
+<script type="module">
   // ==================================================
   // GLOBAL FLAG
   // ==================================================
@@ -243,6 +236,7 @@ document.body.addEventListener(
     setTimeout(() => {
       trackCheckoutClick(e, currentConfig);
     }, 0);
+    
   },
   true
 );

@@ -1,13 +1,5 @@
- {%- assign w3_script_type = '' -%}
-    {%- assign w3_css_type = '' -%}
-    {%- unless request.design_mode or template contains 'cart' or template contains 'checkout' -%}
-        {%- assign w3_script_type = ' type="lazyJs"' -%}
-        {%- assign w3_css_type = ' data-' -%}
-    {%- endunless -%}
-
-
 {% if template.name == 'product' %}
-  <script {{w3_script_type}} defer>
+  <script defer>
     (function () {
       function loadScript(src, callback) {
         var s = document.createElement('script');
@@ -28,9 +20,9 @@
   </script>
 
 {% else %}
-  <script  {{w3_script_type}} src="{{ 'jquery.min.js' | asset_url }}"></script>
-  <script {{w3_script_type}} src="{{ 'slick.min.js' | asset_url }}" defer></script>
-  <script {{w3_script_type}} src="{{ 'custom.min.js' | asset_url }}" defer></script>
+  <script src="{{ 'jquery.min.js' | asset_url }}"></script>
+  <script type="text/javascript" src="{{ 'slick.min.js' | asset_url }}" defer></script>
+  <script src="{{ 'custom.min.js' | asset_url }}" defer></script>
 {% endif %}
 
 {% if template.name == 'product' %}
@@ -38,9 +30,9 @@
 {% endif %}
 
 {% if template.name != 'product' %}
-  <script {{w3_script_type}} src="{{ 'vendor-v4.js' | asset_url | split: '?' | first }}" defer></script>
-  <script {{w3_script_type}} src="{{ 'pubsub.js' | asset_url }}" defer></script>
-  <script {{w3_script_type}} src="{{ 'global.js' | asset_url }}" defer></script>
+  <script src="{{ 'vendor-v4.js' | asset_url | split: '?' | first }}" defer></script>
+  <script src="{{ 'pubsub.js' | asset_url }}" defer></script>
+  <script src="{{ 'global.js' | asset_url }}" defer></script>
 {% else %}
   {% render 'lazy-js', filename: 'vendor-v4.js', loading: 'lazy' %}
   {% render 'lazy-js', filename: 'pubsub.js', loading: 'lazy' %}

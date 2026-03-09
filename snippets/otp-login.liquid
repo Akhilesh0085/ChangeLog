@@ -1,12 +1,4 @@
- {%- assign w3_script_type = '' -%}
-    {%- assign w3_css_type = '' -%}
-    {%- unless request.design_mode or template contains 'cart' or template contains 'checkout' -%}
-        {%- assign w3_script_type = ' type="lazyJs"' -%}
-        {%- assign w3_css_type = ' data-' -%}
-    {%- endunless -%}
-    
 {% render 'lazy-css', filename: 'otp-overlay.css', loading: 'preload' %}
-
 
 <div class="otp_overlay">
   <div class="main_otp_container">
@@ -57,8 +49,8 @@
 
 
 
-<script {{w3_script_type}} src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script {{w3_script_type}}>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
 $(document).ready(function(){
 var register = false;
   $('body').on('click','.close_otp',function(){

@@ -1,11 +1,3 @@
-
- {%- assign w3_script_type = '' -%}
-    {%- assign w3_css_type = '' -%}
-    {%- unless request.design_mode or template contains 'cart' or template contains 'checkout' -%}
-        {%- assign w3_script_type = ' type="lazyJs"' -%}
-        {%- assign w3_css_type = ' data-' -%}
-    {%- endunless -%}
-
 {%- liquid
   assign products_per_row = section.settings.products_per_row
   assign products_per_page = section.settings.products_per_row | times: section.settings.rows_per_page
@@ -54,7 +46,7 @@
 {%- endif -%}
 {%- if section.settings.pagination == 'infinite' or section.settings.pagination == 'click' -%}
   <link rel="stylesheet" href="{{ 'component-infinite-scroll.css' | asset_url }}" media="print" onload="this.media='all'">
-  <script  {{w3_script_type}} src="{{ 'infinite-scroll.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'infinite-scroll.js' | asset_url }}" defer="defer"></script>
 {%- endif -%}
 
 <div class="template-search{% unless search.performed and search.results_count > 0 %} template-search--empty{% endunless %} section--padding">
@@ -145,7 +137,7 @@
     {%- if enable_filtering or enable_sorting or enable_viewing -%}
       {%- if search.performed -%}
         {{ 'component-facets.css' | asset_url | stylesheet_tag }}
-        <script {{w3_script_type}} src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+        <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
   
         {%- liquid
           if blocks_count == 0 and search.filters.size > 0
