@@ -7,15 +7,15 @@
         {%- assign widths = '450, 900, 1320, 1800, 2136, 2400, 3600, 4680' -%}
         {%- capture sizes -%}calc(100vw / 1.667){%- endcapture -%}
       {%- else -%}
-        {%- assign widths = '375, 750, 1100, 2136, 2400' -%}
+        {%- assign widths = '375, 750, 1100, 1500, 1780, 2000, 3000, 3840' -%}
         {%- capture sizes -%}100vw{%- endcapture -%}
       {%- endif -%}
       {%- liquid
         if block.settings.image_mobile == blank
-          echo block.settings.image | image_url: width: 3840 | image_tag: loading: lazy, fetchpriority: fetchpriority, sizes: sizes, widths: widths, is: 'lazy-image'
+          echo block.settings.image | image_url: width: 3840 | image_tag: loading: loading, fetchpriority: fetchpriority, sizes: sizes, widths: widths, is: 'lazy-image'
         else
-          echo block.settings.image_mobile | image_url: width: 3840 | image_tag: loading: lazy, fetchpriority: fetchpriority, class: 'medium-hide large-up-hide', sizes: sizes, widths: widths, is: 'lazy-image'
-          echo block.settings.image | image_url: width: 3840 | image_tag: loading: lazy, fetchpriority: fetchpriority, class: 'small-hide', sizes: sizes, widths: widths, is: 'lazy-image'
+          echo block.settings.image_mobile | image_url: width: 3840 | image_tag: loading: loading, fetchpriority: fetchpriority, class: 'medium-hide large-up-hide', sizes: sizes, widths: widths, is: 'lazy-image'
+          echo block.settings.image | image_url: width: 3840 | image_tag: loading: loading, fetchpriority: fetchpriority, class: 'small-hide', sizes: sizes, widths: widths, is: 'lazy-image'
         endif
       -%}
       </div>

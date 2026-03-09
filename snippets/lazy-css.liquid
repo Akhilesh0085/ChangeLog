@@ -49,7 +49,7 @@
     {% endif %}
 
   {% when 'lazy' %}
-    <script {{w3_script_type}}>
+    <script>
       window._lazyCSS = window._lazyCSS || [];
       {% if device == 'desktop' %}
         if (window.innerWidth >= 768) {

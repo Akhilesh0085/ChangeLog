@@ -1,12 +1,3 @@
-
-
-{%- assign w3_script_type = '' -%}
-    {%- assign w3_css_type = '' -%}
-    {%- unless request.design_mode or template contains 'cart' or template contains 'checkout' -%}
-        {%- assign w3_script_type = ' type="lazyJs"' -%}
-        {%- assign w3_css_type = ' data-' -%}
-    {%- endunless -%}
-
 {%- liquid
   assign logo_position = section.settings.logo_position
   assign enable_transparent_header = false
@@ -163,7 +154,7 @@
 {%- if enable_dropdown_menu -%}
   {% render 'lazy-css', filename: 'component-menu-dropdown.css', loading: 'low' %}
   {% if template.name != 'product' %}
-    <script {{w3_script_type}} src="{{ 'menu-dropdown.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'menu-dropdown.js' | asset_url }}" defer="defer"></script>
   {% else %}
     {% render 'lazy-js', filename: 'menu-dropdown.js', loading: 'lazy' %}
   {% endif %}
@@ -184,7 +175,7 @@
 {% if template.name == 'product' %}
   {% render 'lazy-js', filename: 'search-modal.js', loading: 'lazy' %}
 {% else %}
-  <script  {{w3_script_type}}src="{{ 'search-modal.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'search-modal.js' | asset_url }}" defer="defer"></script>
 {% endif %}
 
 {%- if settings.cart_recommendations_enabled -%}
@@ -192,7 +183,7 @@
     {% render 'lazy-css', filename: 'component-cart-recommendations.css', loading: 'lazy' %}
     {% render 'lazy-js', filename: 'cart-recommendations.js', loading: 'lazy' %}
   {% else %}
-    <script {{w3_script_type}} src="{{ 'cart-recommendations.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'cart-recommendations.js' | asset_url }}" defer="defer"></script>
     <link rel="stylesheet" href="{{ 'component-cart-recommendations.css' | asset_url }}" media="print" onload="this.media='all'">
   {% endif %}
 {%- endif -%}
@@ -795,7 +786,7 @@
 {%- endif -%}
 
 {% comment %} <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script> {% endcomment %}
-<script {{w3_script_type}} src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
 
 {% schema %}
 {
@@ -1807,8 +1798,8 @@
 {% endschema %}
 
 
-<script {{w3_script_type}} src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script {{w3_script_type}}>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
 $(document).ready(function(){
 $(".menu_manage-order").click(function(e){
   {% if customer %}

@@ -1,10 +1,3 @@
- {%- assign w3_script_type = '' -%}
-    {%- assign w3_css_type = '' -%}
-    {%- unless request.design_mode or template contains 'cart' or template contains 'checkout' -%}
-        {%- assign w3_script_type = ' type="lazyJs"' -%}
-        {%- assign w3_css_type = ' data-' -%}
-    {%- endunless -%}
-    
 {%- style -%}
   #shopify-section-{{ section.id }} {
     --section-padding-top: {{ section.settings.padding_top }}px;
@@ -88,7 +81,7 @@
   </div>
 {%- endpaginate -%}
 
-<script {{w3_script_type}} src="{{ 'blog.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'blog.js' | asset_url }}" defer="defer"></script>
 
 {% schema %}
 {
