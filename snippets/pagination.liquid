@@ -1,3 +1,10 @@
+ {%- assign w3_script_type = '' -%}
+    {%- assign w3_css_type = '' -%}
+    {%- unless request.design_mode or template contains 'cart' or template contains 'checkout' -%}
+        {%- assign w3_script_type = ' type="lazyJs"' -%}
+        {%- assign w3_css_type = ' data-' -%}
+    {%- endunless -%}
+    
 {% comment %}
   Renders a set of links for paginated results. Must be used within paginate tags.
 
@@ -92,7 +99,7 @@
 }
 </style>
  
-<script>
+<script {{w3_script_type}}>
 document.addEventListener("click", async (e) => {
   const btn = e.target.closest("#ShowMoreBtn");
   if (!btn) return;

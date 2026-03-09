@@ -1,3 +1,10 @@
+ {%- assign w3_script_type = '' -%}
+    {%- assign w3_css_type = '' -%}
+    {%- unless request.design_mode or template contains 'cart' or template contains 'checkout' -%}
+        {%- assign w3_script_type = ' type="lazyJs"' -%}
+        {%- assign w3_css_type = ' data-' -%}
+    {%- endunless -%}
+    
 <!-------- /section/contact-form.liquid ------------->
 {%- style -%}
   #shopify-section-{{ section.id }} {
@@ -8,7 +15,7 @@
 
 {{ 'section-contact-form.css' | asset_url | stylesheet_tag }}
 {{ 'contact-us.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'contact-us.js' | asset_url }}" defer="defer"></script>
+<script {{w3_script_type}} src="{{ 'contact-us.js' | asset_url }}" defer="defer"></script>
 {%- assign custom_fields = section.blocks | where: "type", "custom_field" -%}
 <div class="section--padding{% if section.settings.show_divider %} section--divider{% endif %}">
   <div class="contact page-width{% unless section.blocks.size > 0 and section.blocks.size > custom_fields.size %} page-width--inner{% endunless %}">

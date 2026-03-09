@@ -1,3 +1,10 @@
+ {%- assign w3_script_type = '' -%}
+    {%- assign w3_css_type = '' -%}
+    {%- unless request.design_mode or template contains 'cart' or template contains 'checkout' -%}
+        {%- assign w3_script_type = ' type="lazyJs"' -%}
+        {%- assign w3_css_type = ' data-' -%}
+    {%- endunless -%}
+    
 <div class="main__cart_card">
   <div class="inner_cart_card">
     <div class="close__cart_card">
@@ -10,7 +17,7 @@
   </div>
 </div>
 
-<script>
+<script {{w3_script_type}}>
   document.addEventListener('DOMContentLoaded', () => {
     const removeErrors = () => document.querySelectorAll('.size_error').forEach((error) => error.remove());
     const hideCartCard = () => {

@@ -1,10 +1,17 @@
+ {%- assign w3_script_type = '' -%}
+    {%- assign w3_css_type = '' -%}
+    {%- unless request.design_mode or template contains 'cart' or template contains 'checkout' -%}
+        {%- assign w3_script_type = ' type="lazyJs"' -%}
+        {%- assign w3_css_type = ' data-' -%}
+    {%- endunless -%}
+
 {%- if settings.image_loading_bar_enabled %}
-  <script src="{{ 'lazyimage.js' | asset_url }}" async></script>
+  <script {{w3_script_type}} src="{{ 'lazyimage.js' | asset_url }}" async></script>
 {% endif -%}
 
 {%- if settings.predictive_search_enabled -%}
   {% if template.name != 'product' %}
-    <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
+    <script  src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
   {% else %}
     {% render 'lazy-js', filename: 'predictive-search.js', loading: 'lazy' %}
   {% endif %}
@@ -12,7 +19,7 @@
 
 {%- if settings.quick_view_enabled -%}
   {% if template.name != 'product' %}
-    <script src="{{ 'quick-view.js' | asset_url }}" defer="defer"></script>
+    <script {{w3_script_type}} src="{{ 'quick-view.js' | asset_url }}" defer="defer"></script>
   {% else %}
     {% render 'lazy-js', filename: 'quick-view.js', loading: 'lazy' %}
   {% endif %}
@@ -20,7 +27,7 @@
 
 {%- if settings.color_swatches_enabled -%}
   {% if template.name != 'product' %}
-    <script src="{{ 'color-swatches.js' | asset_url }}" defer="defer"></script>
+    <script {{w3_script_type}} src="{{ 'color-swatches.js' | asset_url }}" defer="defer"></script>
   {% else %}
     {% render 'lazy-js', filename: 'color-swatches.js', loading: 'lazy' %}
   {% endif %}
@@ -28,7 +35,7 @@
 
 {%- if linklists['gift-wrapping'].links != blank and linklists['gift-wrapping'].links.first.type == 'product_link' -%}
   {% if template.name != 'product' %}
-    <script src="{{ 'gift-wrapping.js' | asset_url }}" defer="defer"></script>
+    <script {{w3_script_type}} src="{{ 'gift-wrapping.js' | asset_url }}" defer="defer"></script>
   {% else %}
     {% render 'lazy-js', filename: 'gift-wrapping.js', loading: 'lazy' %}
   {% endif %}

@@ -13,6 +13,33 @@
     {%- if page_description -%}
       <meta name="description" content="{{ page_description | escape }}">
     {%- endif -%}
+
+  
+      {% comment %} <link
+      rel="preload"
+      href="/cdn/fonts/playfair_display/playfairdisplay_n6.41e9dda2e7301ca861c0ec25a53c1bdf16b6624d.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+      > {% endcomment %}
+        
+     <link rel="preload" href="https://cdn.shopify.com/s/files/1/0808/5618/7185/files/AvenirL-Black.b13b191.woff?v=1692182755" as="font" type="font/woff" crossorigin>
+      <link rel="preload" href="https://cdn.shopify.com/s/files/1/0808/5618/7185/files/AvenirL-Roman.4a60712.woff?v=1692183002" as="font" type="font/woff" crossorigin>
+      <link rel="preload" href="https://cdn.shopify.com/s/files/1/0808/5618/7185/files/AvenirL-Medium.6a172b9.woff?v=1692183047" as="font" type="font/woff" crossorigin>
+
+
+
+
+     {%- assign w3_script_type = '' -%}
+    {%- assign w3_css_type = '' -%}
+    {%- unless request.design_mode or template contains 'cart' or template contains 'checkout' -%}
+        {%- assign w3_script_type = ' type="lazyJs"' -%}
+        {%- assign w3_css_type = ' data-' -%}
+        {% render 'w3_header' %}
+    {%- endunless -%}
+
+
+
     {% render 'meta-tags' %}
     {% render 'canonical_url' %}
     {% render 'favicon' %}
@@ -36,14 +63,37 @@
       </title>
     {% endif %}
 
-    {% if template.name == 'index' %}
+    {% comment %} <link rel="preload" href="https://cdn.shopify.com/s/files/1/0808/5618/7185/files/Muli.woff?v=1692182522" as="font" type="font/woff" crossorigin>
+    <link rel="preload" href="https://cdn.shopify.com/s/files/1/0808/5618/7185/files/Muli-Bold.woff?v=1692182630" as="font" type="font/woff" crossorigin>
+    <style>
+      @font-face {
+        font-family: 'Muli';
+        src: url('https://cdn.shopify.com/s/files/1/0808/5618/7185/files/Muli.woff?v=1692182522') format('woff');
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Muli';
+        src: url('https://cdn.shopify.com/s/files/1/0808/5618/7185/files/Muli-Bold.woff?v=1692182630') format('woff');
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+      }
+    </style> {% endcomment %}
+
+      
+
+    {% comment %} {% if template.name == 'index' %}
       <link
         fetchpriority="high"
         rel="preload"
         href="https://shopforaurelia.com/cdn/shop/files/Valentine_s_Day-mob-Banner_copy_588f7b5a-7d58-40b2-b461-4ca877b828e9.jpg?v=1770958747&width=1100"
         as="image"
       >
-    {% endif %}
+    {% endif %} {% endcomment %}
+
 
     {% if template contains 'product' %}
       <link rel="preload" fetchpriority="high" as="image" oott href="{{ product.media[0] | image_url:width:596}}">
@@ -75,9 +125,9 @@
     {% render 'shopforaureliain' %}
 
     
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script type="lazyJs" src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script type="lazyJs" src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script type="lazyJs" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
     {% render 'robots_tag' %}
 
@@ -85,12 +135,48 @@
     {% render 'core-assets' %}
 
     {% render 'theme-css' %}
-    <script src="{{ 'jquery.min.js' | asset_url }}" defer></script>
+    <script {{w3_script_type}} src="{{ 'jquery.min.js' | asset_url }}" defer></script>
 
     {% render 'theme-scripts' %}
 
     {% comment %} Shopify Content {% endcomment %}
+
+    
+    {% comment %} {{ content_for_header }} {% endcomment %}
+
+
+     {%- if request.design_mode or template contains 'cart' or template contains 'checkout' -%}
     {{ content_for_header }}
+{%- else -%}
+    {% capture content_for_header2 %}{{ content_for_header }}{% endcapture %}
+        <template id="custom-content-header" style="display:none;">
+ 
+            {{ content_for_header2 }}
+ 
+        </template>
+ 
+        <script type="lazyJs">
+            customProcessor.processContentHeader();
+        </script>
+ 
+{%- endif -%}
+
+
+    {% if template contains 'collection' or request.path == '/pages/return-and-refund-policy' %}
+      <style>
+         @font-face {
+            font-family: "Playfair Display";
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+            src: url("//shopforaurelia.com/cdn/fonts/playfair_display/playfairdisplay_n7.592b3435e0fff3f50b26d410c73ae7ec893f6910.woff2") format("woff2"),
+                url("//shopforaurelia.com/cdn/fonts/playfair_display/playfairdisplay_n7.998b1417dec711058cce2abb61a0b8c59066498f.woff") format("woff");
+          }
+
+      </style>
+    {% endif %}
+
+
 
     {% comment %} CSS Variables & JS Variables {% endcomment %}
     {% render 'css-variables' %}
@@ -109,10 +195,83 @@
     {% comment %} Admitad Tracking {% endcomment %}
     {% comment %} {% render 'admitad-tracking' %} {% endcomment %}
 
-    <script type="text/javascript" src="{{ 'slick.min.js' | asset_url }}" defer></script>
-    <script src="{{ 'custom.min.js' | asset_url }}" defer></script>
-    <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
-    <script src="{{ 'wishlist-notify.js' | asset_url }}" defer="defer"></script>
+    <style>
+
+      html:not(.jsload) body.template-index slideshow-component .slideshow__image.media {
+          transform: scale(1) !important
+      }
+
+      #wishlistPage {
+        min-height: 82px;
+    }
+
+      @media screen and (min-width: 750px) {
+            footer .footer__content-top details summary {
+                margin-bottom: 0 !important;
+            }
+        }
+      @media screen and (min-width: 1200px) {
+        header.header.header--top-left span.header__heading img.header__heading-logo {
+            min-height: 68px;
+        }
+           .template-product .product__media-list > li.product__media-item modal-opener .product__media img {
+                min-width: 614px;
+            }
+            .template-product ul.thumbnail-list:not(.slick-initialized) > li.thumbnail-list__item:nth-child(n+6) {
+                display: none;
+            }
+        }
+        
+      @media (max-width: 767px) {
+        #wishlistPage {
+          min-height: 103px;
+      }
+        html:not(.w3_js) .template-product .product__info-wrapper.grid__item a.cstm_varient_img img.prod_img {
+              aspect-ratio: 60/86;
+          }
+ 
+
+          footer  details summary {
+           padding: 0 !important;
+            margin-bottom: 1.5rem;
+        }
+        .d__flex.footer-block__details-content {
+            padding-top: 1.5rem;
+        }
+   
+
+          .template-product .product__media-list:not(.slick-initialized) li.product__media-item:nth-child(n+2) {
+            display: none;
+            }
+        }
+    </style>
+
+
+
+    <script {{w3_script_type}} src="{{ 'slick.min.js' | asset_url }}" defer></script>
+    <script {{w3_script_type}} src="{{ 'custom.min.js' | asset_url }}" defer></script>
+    <script {{w3_script_type}} src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
+    <script {{w3_script_type}} src="{{ 'wishlist-notify.js' | asset_url }}" defer="defer"></script>
+
+
+    {%- unless request.design_mode or template contains 'cart' or template contains 'checkout' -%}
+    {% capture custom_header %}
+        <template id="custom-header" style="display:none;">
+
+        </head> 
+
+        </template>
+    {% endcapture %}
+{{ custom_header }}
+<script type="lazyJs">
+    customProcessor.processCustomHeader();
+</script>
+{% endunless %}
+
+
+
+
+
   </head>
 
   <body
@@ -222,8 +381,8 @@
     {% render 'wizzy.search.filters.scripts' %}
     {% render 'wizzy.search.filters.styles' %}
     {%- render 'user-logger' -%}
-    <script defer="true" src="https://connect.facebook.net/en_US/fbevents.js"></script>
-    <script defer>
+    <script {{w3_script_type}} defer="true" src="https://connect.facebook.net/en_US/fbevents.js"></script>
+    <script {{w3_script_type}} defer>
       !(function (f, b, e, v, n, t, s) {
         if (f.fbq) return;
         n = f.fbq = function () {
@@ -244,5 +403,27 @@
       fbq('init', '777144885825576');
       fbq('track', 'PageView');
     </script>
+
+    <script>
+     document.querySelectorAll('.search__input').forEach(input => {
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+
+      const parent = this.closest('[data-entity-id="Search_our"]');
+      if (parent) {
+        parent.removeAttribute('open');
+      }
+
+      document.body.classList.remove('search-modal--open');
+
+    }
+  });
+});
+    </script>
+
+    {%- unless request.design_mode or template contains 'cart' or template contains 'checkout' -%}
+    {% render 'w3_footer' %}
+{%- endunless -%}    
+
   </body>
 </html>

@@ -1,3 +1,10 @@
+ {%- assign w3_script_type = '' -%}
+    {%- assign w3_css_type = '' -%}
+    {%- unless request.design_mode or template contains 'cart' or template contains 'checkout' -%}
+        {%- assign w3_script_type = ' type="lazyJs"' -%}
+        {%- assign w3_css_type = ' data-' -%}
+    {%- endunless -%}
+    
 <!---------- /section/main-collection-product-grid.liquid ----------->
 {%- liquid
   assign products_per_row = section.settings.products_per_row
@@ -63,7 +70,8 @@
     media="print"
     onload="this.media='all'"
   >
-  <script src="{{ 'infinite-scroll.js' | asset_url }}" defer="defer"></script>
+  <script  {{w3_script_type}}
+    src="{{ 'infinite-scroll.js' | asset_url }}" defer="defer"></script>
 {%- endif -%}
 
 <div class="page-width page-bread">
@@ -78,7 +86,7 @@
   {%- if enable_filtering or enable_sorting or enable_viewing -%}
     {%- if collection.all_products_count > 0 -%}
       {{ 'component-facets.css' | asset_url | stylesheet_tag }}
-      <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+      <script {{w3_script_type}} src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
 
       {%- liquid
         if blocks_count == 0

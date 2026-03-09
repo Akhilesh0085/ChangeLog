@@ -1,3 +1,10 @@
+     {%- assign w3_script_type = '' -%}
+    {%- assign w3_css_type = '' -%}
+    {%- unless request.design_mode or template contains 'cart' or template contains 'checkout' -%}
+        {%- assign w3_script_type = ' type="lazyJs"' -%}
+        {%- assign w3_css_type = ' data-' -%}
+    {%- endunless -%}
+
 {% layout 'theme' %}
 
 <section class="wishlist-wrapper page-width">
@@ -6,7 +13,19 @@
   <div id="wishlistPopup" style="display: none;"><p></p></div>
 </section>
 
-<script>
+<style>
+    @font-face {
+            font-family: "Playfair Display";
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+            src: url("//shopforaurelia.com/cdn/fonts/playfair_display/playfairdisplay_n7.592b3435e0fff3f50b26d410c73ae7ec893f6910.woff2") format("woff2"),
+                url("//shopforaurelia.com/cdn/fonts/playfair_display/playfairdisplay_n7.998b1417dec711058cce2abb61a0b8c59066498f.woff") format("woff");
+          }
+</style>
+
+
+<script {{ w3_script_type }}>
   // Ensure routes are available
   window.routes = window.routes || {};
   window.routes.account_login_url = "{{ routes.account_login_url }}";

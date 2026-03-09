@@ -1,3 +1,10 @@
+ {%- assign w3_script_type = '' -%}
+    {%- assign w3_css_type = '' -%}
+    {%- unless request.design_mode or template contains 'cart' or template contains 'checkout' -%}
+        {%- assign w3_script_type = ' type="lazyJs"' -%}
+        {%- assign w3_css_type = ' data-' -%}
+    {%- endunless -%}
+    
 <!--------------Snippet/collection-faq.liquid---------------->
 
 
@@ -137,7 +144,7 @@ line-height: 1.5;
 </style>
 
 
-<script>
+<script {{w3_script_type}}>
 document.addEventListener("DOMContentLoaded", function() {
   const faqs = document.querySelectorAll(".collection_faq-item");
 

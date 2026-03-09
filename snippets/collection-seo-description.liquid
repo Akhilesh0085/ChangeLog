@@ -1,3 +1,10 @@
+ {%- assign w3_script_type = '' -%}
+    {%- assign w3_css_type = '' -%}
+    {%- unless request.design_mode or template contains 'cart' or template contains 'checkout' -%}
+        {%- assign w3_script_type = ' type="lazyJs"' -%}
+        {%- assign w3_css_type = ' data-' -%}
+    {%- endunless -%}
+    
 <!------ /snippet/collection-seo-description.liquid -------->
 {% if collection.description.size > 50 %}
   <div class="product-description-short">
@@ -40,7 +47,7 @@
 }
 </style>
 
-<script>
+<script {{w3_script_type}}>
   $(document).ready(function(){
     $('body').on('click','.readmore',function(e){
       e.preventDefault();

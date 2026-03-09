@@ -1,3 +1,10 @@
+ {%- assign w3_script_type = '' -%}
+    {%- assign w3_css_type = '' -%}
+    {%- unless request.design_mode or template contains 'cart' or template contains 'checkout' -%}
+        {%- assign w3_script_type = ' type="lazyJs"' -%}
+        {%- assign w3_css_type = ' data-' -%}
+    {%- endunless -%}
+    
 <!---------/sections/tab-collection-load-more.liquid------------>
 
 {%- style -%}
@@ -533,7 +540,7 @@ display: none;
 
 </style>
 
-<script>
+<script {{w3_script_type}}>
   $(".tab__heading").click(function(){
     const $section = $(this).closest(".page-width--inner");
 
@@ -561,7 +568,7 @@ display: none;
     });
 </script>
 
-<script>
+<script {{w3_script_type}}>
 document.addEventListener("DOMContentLoaded", function () {
 
   document.querySelectorAll(".load-more-btn").forEach(function (button) {
